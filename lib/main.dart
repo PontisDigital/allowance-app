@@ -5,12 +5,22 @@ import 'package:myapp/utils.dart';
 import 'package:myapp/page-1/loading-page-done.dart';
 import 'package:myapp/page-1/home-page-done.dart';
 
-void main() => runApp(MyApp());
+import 'package:firebase_core/firebase_core.dart';
+import '../firebase_options.dart';
+
+void main() async
+{
+	WidgetsFlutterBinding.ensureInitialized();
+	  await Firebase.initializeApp(
+		options: DefaultFirebaseOptions.currentPlatform,
+	  );
+	runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
 	@override
 	Widget build(BuildContext context) {
-		bool isLoggedIn = true;
+		bool isLoggedIn = false;
 		return MaterialApp(
 			title: 'Flutter',
 			debugShowCheckedModeBanner: false,
