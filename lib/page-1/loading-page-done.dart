@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myapp/page-1/onboarding-1-done.dart';
-import 'package:myapp/utils.dart';
+import 'package:allowance/page-1/onboarding-1-done.dart';
+import 'package:allowance/utils.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
 
   void navigateToOnboarding(BuildContext context)
   {
-	Navigator.push(context,
+	Navigator.pushReplacement(context,
 	  MaterialPageRoute(builder: (context) => OnboardingStartPage()));
   }
 

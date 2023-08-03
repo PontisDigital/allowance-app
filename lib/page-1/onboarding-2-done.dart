@@ -2,15 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myapp/utils.dart';
+import 'package:allowance/utils.dart';
 
-class OnboardPasswordPage extends StatelessWidget {
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class OnboardPasswordPage extends StatefulWidget
+{
+  final String emailInput;
+  final String usernameInput;
+
+  String password = "";
+  String passwordConfirm = "";
+
+  OnboardPasswordPage({required this.emailInput, required this.usernameInput});
+
+  @override
+  _OnboardPasswordPageState createState() => _OnboardPasswordPageState();
+}
+
+class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 390;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
-    return Container(
+    return Scaffold(
+	  body: SingleChildScrollView(
+		child: Container(
       width: double.infinity,
       child: Container(
         // onboarding2doneVh9 (301:1091)
@@ -187,6 +207,13 @@ class OnboardPasswordPage extends StatelessWidget {
                                                 height: 1.26*ffem/fem,
                                                 color: Color(0xff000000),
                                               ),
+                                              onChanged: (value)
+                                              {
+                                                setState(()
+                                                  {
+                                                    widget.password = value;
+                                                  });
+                                              },
                                             ),
                                           ),
                                         ),
@@ -254,6 +281,13 @@ class OnboardPasswordPage extends StatelessWidget {
                                                 height: 1.26*ffem/fem,
                                                 color: Color(0xff000000),
                                               ),
+                                              onChanged: (value)
+                                              {
+                                                setState(()
+                                                {
+                                                  widget.passwordConfirm = value;
+                                                });
+                                              },
                                             ),
                                           ),
                                         ),
@@ -269,7 +303,7 @@ class OnboardPasswordPage extends StatelessWidget {
                           // continuebuttoncm5 (301:1109)
                           margin: EdgeInsets.fromLTRB(55*fem, 0*fem, 32*fem, 0*fem),
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () => createAccount(),
                             style: TextButton.styleFrom (
                               padding: EdgeInsets.zero,
                             ),
@@ -305,6 +339,22 @@ class OnboardPasswordPage extends StatelessWidget {
           ],
         ),
       ),
-          );
+	),
+	),
+	);
+  }
+
+  createAccount() async
+  {
+    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: widget.emailInput,
+      password: widget.password,
+    );
+    String uid = userCredential.user!.uid;
+
+    await FirebaseFirestore.instance.collection('users').doc(uid).set({
+      'email': userCredential.user!.email,
+      'username': widget.usernameInput,
+    });
   }
 }
