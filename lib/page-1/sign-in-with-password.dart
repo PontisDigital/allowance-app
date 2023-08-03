@@ -1,3 +1,4 @@
+import 'package:allowance/page-1/home-page-done.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
@@ -5,18 +6,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:allowance/utils.dart';
 import 'package:allowance/page-1/onboarding-2-done.dart';
 
-class OnboardingSignUpPage extends StatefulWidget
+import 'package:firebase_auth/firebase_auth.dart';
+
+class SignInWithPasswordPage extends StatefulWidget
 {
 	final String emailInput;
-	String usernameInput = "";
+	String passwordInput = "";
 
-	OnboardingSignUpPage({required this.emailInput});
+	SignInWithPasswordPage({required this.emailInput});
 
 	@override
-	_OnboardingSignUpPageState createState() => _OnboardingSignUpPageState();
+	_SignInWithPasswordPageState createState() => _SignInWithPasswordPageState();
 }
 
-class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
+class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +120,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 								  maxWidth: 260*fem,
 								),
 								child: Text(
-								  'Create your username, get your allowance.',
+								  'Enter your password',
 								  textAlign: TextAlign.center,
 								  style: SafeGoogleFont (
 									'Outfit',
@@ -147,7 +150,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 									width: 92*fem,
 									height: 26*fem,
 									child: Text(
-									  'Username',
+									  'Password',
 									  style: SafeGoogleFont (
 										'Outfit',
 										fontSize: 20*ffem,
@@ -173,6 +176,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 										color: Color(0xff63666a),
 									  ),
 									  child: TextField(
+										  obscureText: true,
 										decoration: InputDecoration (
 										  border: InputBorder.none,
 										  focusedBorder: InputBorder.none,
@@ -180,7 +184,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 										  errorBorder: InputBorder.none,
 										  disabledBorder: InputBorder.none,
 										  contentPadding: EdgeInsets.fromLTRB(11*fem, 5*fem, 11*fem, 4*fem),
-										  hintText: 'jackthebulldog',
+										  hintText: 'password',
 										  hintStyle: TextStyle(color:Color(0x99ffffff)),
 										),
 										style: SafeGoogleFont (
@@ -194,7 +198,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 										{
 											setState(()
 											{
-												widget.usernameInput = value;
+												widget.passwordInput = value;
 											});
 										},
 									  ),
@@ -209,7 +213,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 						  // continuebuttonQ47 (301:1089)
 						  margin: EdgeInsets.fromLTRB(55*fem, 0*fem, 55*fem, 0*fem),
 						  child: TextButton(
-							onPressed: () => moveToOnboardingPart2(context),
+							onPressed: () => signIn(context),
 							style: TextButton.styleFrom (
 							  padding: EdgeInsets.zero,
 							),
@@ -223,8 +227,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 							  child: Center(
 								child: Text(
 								  'continue',
-								  textAlign: TextAlign.center,
-								  style: SafeGoogleFont (
+								  textAlign: TextAlign.center, style: SafeGoogleFont (
 									'Outfit',
 									fontSize: 25*ffem,
 									fontWeight: FontWeight.w600,
@@ -247,8 +250,9 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 	);
   }
 
-  moveToOnboardingPart2(BuildContext context)
+  signIn(BuildContext context) async
   {
-	  Navigator.push(context, MaterialPageRoute(builder: (context) => OnboardPasswordPage(emailInput: widget.emailInput, usernameInput: widget.usernameInput,)));
+	  await FirebaseAuth.instance.signInWithEmailAndPassword(email: widget.emailInput, password: widget.passwordInput);
+	  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SingleChildScrollView(child: HomePage())));
   }
 }

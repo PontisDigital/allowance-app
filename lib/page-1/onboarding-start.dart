@@ -1,22 +1,22 @@
+import 'package:allowance/page-1/onboarding-1-done.dart';
+import 'package:allowance/page-1/sign-in-with-password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:allowance/utils.dart';
 import 'package:allowance/page-1/onboarding-2-done.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class OnboardingSignUpPage extends StatefulWidget
+class OnboardingStartPage extends StatefulWidget
 {
-	final String emailInput;
-	String usernameInput = "";
-
-	OnboardingSignUpPage({required this.emailInput});
-
 	@override
-	_OnboardingSignUpPageState createState() => _OnboardingSignUpPageState();
+	_OnboardingStartPageState createState() => _OnboardingStartPageState();
 }
 
-class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
+class _OnboardingStartPageState extends State<OnboardingStartPage> {
+
+	String emailInput = "";
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +117,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 								  maxWidth: 260*fem,
 								),
 								child: Text(
-								  'Create your username, get your allowance.',
+								  'Give us your email, or else many will suffer',
 								  textAlign: TextAlign.center,
 								  style: SafeGoogleFont (
 									'Outfit',
@@ -139,7 +139,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 						  child: Stack(
 							children: [
 							  Positioned(
-								// usernametxw (301:1086)
+								// emailxw (301:1086)
 								left: 0*fem,
 								top: 0*fem,
 								child: Align(
@@ -147,7 +147,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 									width: 92*fem,
 									height: 26*fem,
 									child: Text(
-									  'Username',
+									  'Email',
 									  style: SafeGoogleFont (
 										'Outfit',
 										fontSize: 20*ffem,
@@ -180,7 +180,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 										  errorBorder: InputBorder.none,
 										  disabledBorder: InputBorder.none,
 										  contentPadding: EdgeInsets.fromLTRB(11*fem, 5*fem, 11*fem, 4*fem),
-										  hintText: 'jackthebulldog',
+										  hintText: 'jack@georgetown.edu',
 										  hintStyle: TextStyle(color:Color(0x99ffffff)),
 										),
 										style: SafeGoogleFont (
@@ -192,9 +192,8 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 										),
 										onChanged: (value)
 										{
-											setState(()
-											{
-												widget.usernameInput = value;
+											setState(() {
+												emailInput = value;
 											});
 										},
 									  ),
@@ -209,7 +208,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 						  // continuebuttonQ47 (301:1089)
 						  margin: EdgeInsets.fromLTRB(55*fem, 0*fem, 55*fem, 0*fem),
 						  child: TextButton(
-							onPressed: () => moveToOnboardingPart2(context),
+							onPressed: () => handleGivenEmail(context),
 							style: TextButton.styleFrom (
 							  padding: EdgeInsets.zero,
 							),
@@ -247,8 +246,27 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
 	);
   }
 
+  handleGivenEmail(BuildContext context) async
+  {
+	  List<String> signInMethods = await FirebaseAuth.instance.fetchSignInMethodsForEmail(emailInput);
+
+	  if (signInMethods.isNotEmpty)
+	  {
+		  moveToSignOnWithPassword(context);
+	  }
+	  else
+	  {
+		  moveToOnboardingPart2(context);
+	  }
+  }
+
+  moveToSignOnWithPassword(BuildContext context)
+  {
+	  Navigator.push(context, MaterialPageRoute(builder: (context) => SignInWithPasswordPage(emailInput: emailInput)));
+  }
+
   moveToOnboardingPart2(BuildContext context)
   {
-	  Navigator.push(context, MaterialPageRoute(builder: (context) => OnboardPasswordPage(emailInput: widget.emailInput, usernameInput: widget.usernameInput,)));
+	  Navigator.push(context, MaterialPageRoute(builder: (context) => OnboardingSignUpPage(emailInput: emailInput)));
   }
 }

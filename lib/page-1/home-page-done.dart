@@ -728,10 +728,10 @@ class _HomePageState extends State<HomePage> {
           );
   }
 
-  signOut(BuildContext context) async
+  signOut(BuildContext context)
   {
-    await FirebaseAuth.instance.signOut();
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LandingPage()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SingleChildScrollView(child: LandingPage())));
+    FirebaseAuth.instance.signOut();
   }
 
   Future<void> getUsernameFromFirestore() async {

@@ -359,6 +359,6 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
       'username': widget.usernameInput,
     });
 
-	Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+	Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SingleChildScrollView(child: HomePage())));
   }
 }
