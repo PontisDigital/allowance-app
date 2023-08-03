@@ -1,12 +1,23 @@
+import 'package:allowance/page-1/loading-page-done.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:allowance/utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget
+{
+  String nameTest = "ahh";
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+	getUsernameFromFirestore();
     double baseWidth = 386.4799804688;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -287,7 +298,7 @@ class HomePage extends StatelessWidget {
                                 ),
                                 child: TextButton(
                                   // sendbuttonSRM (324:437)
-                                  onPressed: () {},
+                                  onPressed: () => signOut(context),
                                   style: TextButton.styleFrom (
                                     padding: EdgeInsets.zero,
                                   ),
@@ -716,4 +727,34 @@ class HomePage extends StatelessWidget {
       ),
           );
   }
+
+  signOut(BuildContext context) async
+  {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LandingPage()));
+  }
+
+  Future<void> getUsernameFromFirestore() async {
+	String userId = FirebaseAuth.instance.currentUser!.uid;
+  try {
+    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    if (userSnapshot.exists) {
+      Map<String, dynamic>? userData = userSnapshot.data() as Map<String, dynamic>?;
+      if (userData != null) {
+		setState(()
+		  {
+			widget.nameTest = userData['username'] as String;
+		  });
+		return;
+      }
+    }
+    print('User not found in Firestore');
+    return;
+  } catch (e) {
+    print('Error getting username from Firestore: $e');
+    return;
+  }
+}
+  
+
 }
