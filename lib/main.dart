@@ -5,6 +5,7 @@ import 'package:allowance/page-1/loading-page-done.dart';
 import 'package:allowance/page-1/home-page-done.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../firebase_options.dart';
 
 void main() async
@@ -13,13 +14,13 @@ void main() async
 	  await Firebase.initializeApp(
 		options: DefaultFirebaseOptions.currentPlatform,
 	  );
+	FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
 	runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
 	@override
 	Widget build(BuildContext context) {
-		bool isLoggedIn = false;
 		return MaterialApp(
 			title: 'Flutter',
 			debugShowCheckedModeBanner: false,
@@ -27,10 +28,27 @@ class MyApp extends StatelessWidget {
 			theme: ThemeData(
 			primarySwatch: Colors.blue,
 			),
-			home: Scaffold(
-				body: SingleChildScrollView(
-					child: isLoggedIn ? HomePage() : LandingPage(),
-				),
+			home: StreamBuilder<User?>(
+				stream: FirebaseAuth.instance.authStateChanges(),
+				builder: (context, snapshot)
+				{
+					if (snapshot.connectionState == ConnectionState.waiting)
+					{
+						return CircularProgressIndicator();
+					}
+					else if (snapshot.hasData)
+					{
+						return SingleChildScrollView(
+							child: HomePage(),
+						);
+					}
+					else
+					{
+						return SingleChildScrollView(
+							child: LandingPage(),
+						);
+					}
+				},
 			),
 		);
 	}

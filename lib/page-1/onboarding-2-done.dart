@@ -1,3 +1,4 @@
+import 'package:allowance/page-1/home-page-done.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
@@ -303,7 +304,7 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                           // continuebuttoncm5 (301:1109)
                           margin: EdgeInsets.fromLTRB(55*fem, 0*fem, 32*fem, 0*fem),
                           child: TextButton(
-                            onPressed: () => createAccount(),
+                            onPressed: () => createAccount(context),
                             style: TextButton.styleFrom (
                               padding: EdgeInsets.zero,
                             ),
@@ -344,17 +345,20 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
 	);
   }
 
-  createAccount() async
+  createAccount(BuildContext context) async
   {
     UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: widget.emailInput,
       password: widget.password,
     );
+
     String uid = userCredential.user!.uid;
 
     await FirebaseFirestore.instance.collection('users').doc(uid).set({
       'email': userCredential.user!.email,
       'username': widget.usernameInput,
     });
+
+	Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
   }
 }
