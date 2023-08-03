@@ -44,40 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCWSaTXomHiw49SmHC1DAwolLu2msr0ayk',
-    appId: '1:109373102144:web:a115e7f4be851c725ea7a5',
-    messagingSenderId: '109373102144',
-    projectId: 'allowance-38891',
-    authDomain: 'allowance-38891.firebaseapp.com',
-    storageBucket: 'allowance-38891.appspot.com',
-    measurementId: 'G-L0PBRH96FH',
+    apiKey: '',
+    appId: '1:402277201733:web:dc6a4d20834a5e5229702c',
+    messagingSenderId: '402277201733',
+    projectId: 'allowance-fa781',
+    authDomain: 'allowance-fa781.firebaseapp.com',
+    storageBucket: 'allowance-fa781.appspot.com',
+    measurementId: 'G-PLG4JJN224',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDOuib78vRsbeCHaDaZAkeuTv8mZD_X1yw',
-    appId: '1:109373102144:android:a4d85ec8df37b9bf5ea7a5',
-    messagingSenderId: '109373102144',
-    projectId: 'allowance-38891',
-    storageBucket: 'allowance-38891.appspot.com',
+    apiKey: '',
+    appId: '1:402277201733:android:fe5abbcf3cdc3b3629702c',
+    messagingSenderId: '402277201733',
+    projectId: 'allowance-fa781',
+    storageBucket: 'allowance-fa781.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD68kA_S5ELSVdaTLqO5ozFEMUrkqStwMY',
-    appId: '1:109373102144:ios:8065729ee1aa88455ea7a5',
-    messagingSenderId: '109373102144',
-    projectId: 'allowance-38891',
-    storageBucket: 'allowance-38891.appspot.com',
-    iosClientId: '109373102144-tcr53durclg0su3fljtaachumqib7e2i.apps.googleusercontent.com',
+    apiKey: '',
+    appId: '1:402277201733:ios:84fe0cfd7545e74d29702c',
+    messagingSenderId: '402277201733',
+    projectId: 'allowance-fa781',
+    storageBucket: 'allowance-fa781.appspot.com',
+    iosClientId: '402277201733-th8d9nr5noosv96a0frodclg6p2l8g9g.apps.googleusercontent.com',
     iosBundleId: 'com.example.test',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyD68kA_S5ELSVdaTLqO5ozFEMUrkqStwMY',
-    appId: '1:109373102144:ios:8065729ee1aa88455ea7a5',
-    messagingSenderId: '109373102144',
-    projectId: 'allowance-38891',
-    storageBucket: 'allowance-38891.appspot.com',
-    iosClientId: '109373102144-tcr53durclg0su3fljtaachumqib7e2i.apps.googleusercontent.com',
+    apiKey: '',
+    appId: '1:402277201733:ios:6c818971812244d129702c',
+    messagingSenderId: '402277201733',
+    projectId: 'allowance-fa781',
+    storageBucket: 'allowance-fa781.appspot.com',
+    iosClientId: '402277201733-th8d9nr5noosv96a0frodclg6p2l8g9g.apps.googleusercontent.com',
     iosBundleId: 'com.example.test',
   );
 }

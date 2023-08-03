@@ -2,15 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myapp/utils.dart';
+import 'package:allowance/utils.dart';
+import 'package:allowance/page-1/onboarding-2-done.dart';
 
-class OnboardingStartPage extends StatelessWidget {
+class OnboardingStartPage extends StatefulWidget
+{
+	@override
+	_OnboardingStartPageState createState() => _OnboardingStartPageState();
+}
+
+class _OnboardingStartPageState extends State<OnboardingStartPage> {
+
+	String emailInput = "";
+	String usernameInput = "";
 
   @override
   Widget build(BuildContext context) {
     double baseWidth = 390;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
+
     return 
 		Scaffold(
 		  body: SingleChildScrollView(
@@ -126,6 +137,79 @@ class OnboardingStartPage extends StatelessWidget {
 						  child: Stack(
 							children: [
 							  Positioned(
+								// emailxw (301:1086)
+								left: 0*fem,
+								top: 0*fem,
+								child: Align(
+								  child: SizedBox(
+									width: 92*fem,
+									height: 26*fem,
+									child: Text(
+									  'Email',
+									  style: SafeGoogleFont (
+										'Outfit',
+										fontSize: 20*ffem,
+										fontWeight: FontWeight.w500,
+										height: 1.26*ffem/fem,
+										color: Color(0x99ffffff),
+									  ),
+									),
+								  ),
+								),
+							  ),
+							  Positioned(
+								// frame37154P91 (301:1087)
+								left: 0*fem,
+								top: 25*fem,
+								child: Align(
+								  child: SizedBox(
+									width: 300*fem,
+									height: 35*fem,
+									child: Container(
+									  decoration: BoxDecoration (
+										borderRadius: BorderRadius.circular(10*fem),
+										color: Color(0xff63666a),
+									  ),
+									  child: TextField(
+										decoration: InputDecoration (
+										  border: InputBorder.none,
+										  focusedBorder: InputBorder.none,
+										  enabledBorder: InputBorder.none,
+										  errorBorder: InputBorder.none,
+										  disabledBorder: InputBorder.none,
+										  contentPadding: EdgeInsets.fromLTRB(11*fem, 5*fem, 11*fem, 4*fem),
+										  hintText: 'jack@georgetown.edu',
+										  hintStyle: TextStyle(color:Color(0x99ffffff)),
+										),
+										style: SafeGoogleFont (
+										  'Outfit',
+										  fontSize: 20*ffem,
+										  fontWeight: FontWeight.w500,
+										  height: 1.26*ffem/fem,
+										  color: Color(0xff000000),
+										),
+										onChanged: (value)
+										{
+											setState(() {
+												emailInput = value;
+											});
+										},
+									  ),
+									),
+								  ),
+								),
+							  ),
+							],
+						  ),
+						),
+						Container(
+						  // entryfieldmtK (301:1085)
+						  margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 31*fem),
+						  width: double.infinity,
+						  height: 60*fem,
+						  child: Stack(
+							children: [
+							  Positioned(
 								// usernametxw (301:1086)
 								left: 0*fem,
 								top: 0*fem,
@@ -177,6 +261,13 @@ class OnboardingStartPage extends StatelessWidget {
 										  height: 1.26*ffem/fem,
 										  color: Color(0xff000000),
 										),
+										onChanged: (value)
+										{
+											setState(()
+											{
+												usernameInput = value;
+											});
+										},
 									  ),
 									),
 								  ),
@@ -189,7 +280,7 @@ class OnboardingStartPage extends StatelessWidget {
 						  // continuebuttonQ47 (301:1089)
 						  margin: EdgeInsets.fromLTRB(55*fem, 0*fem, 55*fem, 0*fem),
 						  child: TextButton(
-							onPressed: () {},
+							onPressed: () => moveToOnboardingPart2(context),
 							style: TextButton.styleFrom (
 							  padding: EdgeInsets.zero,
 							),
@@ -225,5 +316,10 @@ class OnboardingStartPage extends StatelessWidget {
 		),
 		),
 	);
+  }
+
+  moveToOnboardingPart2(BuildContext context)
+  {
+	  Navigator.push(context, MaterialPageRoute(builder: (context) => OnboardPasswordPage(emailInput: emailInput, usernameInput: usernameInput,)));
   }
 }
