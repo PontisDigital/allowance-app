@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:allowance/page-1/onboarding-1-done.dart';
 import 'package:allowance/utils.dart';
+import 'package:allowance/page-1/onboarding-start.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});

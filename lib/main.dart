@@ -15,6 +15,7 @@ void main() async
 		options: DefaultFirebaseOptions.currentPlatform,
 	  );
 	FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
+
 	runApp(MyApp());
 }
 
