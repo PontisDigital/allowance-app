@@ -7,6 +7,7 @@ import 'package:allowance/utils.dart';
 import 'package:allowance/page-1/onboarding-2-done.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 class SignInWithPasswordPage extends StatefulWidget
 {
@@ -253,6 +254,6 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
   signIn(BuildContext context) async
   {
 	  await FirebaseAuth.instance.signInWithEmailAndPassword(email: widget.emailInput, password: widget.passwordInput);
-	  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SingleChildScrollView(child: HomePage())));
+	  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChangeNotifierProvider(create: (context) => UserHomeDataProvider(), child: SingleChildScrollView(child: HomePage()))));
   }
 }

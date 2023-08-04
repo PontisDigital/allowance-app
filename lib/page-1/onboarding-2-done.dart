@@ -7,6 +7,7 @@ import 'package:allowance/utils.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
 class OnboardPasswordPage extends StatefulWidget
 {
@@ -359,6 +360,6 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
       'username': widget.usernameInput,
     });
 
-	Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SingleChildScrollView(child: HomePage())));
+	Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChangeNotifierProvider(create: (context) => UserHomeDataProvider(), child: SingleChildScrollView(child: HomePage()))));
   }
 }
