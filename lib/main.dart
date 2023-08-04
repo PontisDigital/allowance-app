@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
 import 'package:allowance/utils.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
 import 'package:allowance/page-1/home-page-done.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart'; import '../firebase_options.dart';
 
 void main() async
 {
@@ -39,8 +40,11 @@ class MyApp extends StatelessWidget {
 					}
 					else if (snapshot.hasData)
 					{
-						return SingleChildScrollView(
-							child: HomePage(),
+						return ChangeNotifierProvider(
+								create: (context) => UserHomeDataProvider(),
+								child: SingleChildScrollView(
+									child: HomePage(),
+								   ),
 						);
 					}
 					else

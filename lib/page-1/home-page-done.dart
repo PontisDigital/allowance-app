@@ -6,18 +6,76 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:allowance/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'dart:convert';
+
+class UserHomeData
+{
+  final String balance;
+  UserHomeData({required this.balance});
+}
+
+class UserHomeDataProvider extends ChangeNotifier {
+  UserHomeData _userHomeData = UserHomeData(balance: "...");
+
+  UserHomeData get userHomeData => _userHomeData;
+
+  void updateUserBalance(String newBalance) {
+    _userHomeData = UserHomeData(balance: newBalance);
+    notifyListeners();
+  }
+}
 
 class HomePage extends StatefulWidget
 {
-  String nameTest = "ahh";
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserBalance();
+  }
+
+  Future<void> _fetchUserBalance() async {
+    try {
+	  final Uri uri = Uri.parse('https://api.rainyday.deals/allowance');
+
+	  final String? auth_token = await FirebaseAuth.instance.currentUser!.getIdToken();
+      final response = await http.post(
+
+
+		uri,
+		body: jsonEncode(
+		{
+		  "request_type": "get_home_data",
+		  "auth_token": auth_token,
+		}
+		),
+
+	  );
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final String newBalance = data['balance'];
+        Provider.of<UserHomeDataProvider>(context, listen: false)
+            .updateUserBalance(newBalance);
+      } else {
+        // Handle API error here
+      }
+    } catch (e) {
+      // Handle error here
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-	getUsernameFromFirestore();
+	final userHomeDataProvider = Provider.of<UserHomeDataProvider>(context);
+	final userHomeData = userHomeDataProvider.userHomeData;
+
     double baseWidth = 386.4799804688;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -79,8 +137,8 @@ class _HomePageState extends State<HomePage> {
                               child: SizedBox(
                                 width: 311*fem,
                                 height: 107*fem,
-                                child: Text(
-                                  '\$43.32',
+                                child: Center(child: Text(
+                                  '${userHomeData.balance}',
                                   style: SafeGoogleFont (
                                     'Inter',
                                     fontSize: 87.7027130127*ffem,
@@ -88,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                                     height: 1.2125*ffem/fem,
                                     color: Color(0xffffffff),
                                   ),
-                                ),
+                                )),
                               ),
                             ),
                           ),
@@ -743,7 +801,7 @@ class _HomePageState extends State<HomePage> {
       if (userData != null) {
 		setState(()
 		  {
-			widget.nameTest = userData['username'] as String;
+			//widget.nameTest = userData['username'] as String;
 		  });
 		return;
       }
