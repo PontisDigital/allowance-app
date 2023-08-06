@@ -1,3 +1,4 @@
+import 'package:allowance/home_allowance_entry.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
@@ -10,19 +11,36 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'dart:convert';
 
-class UserHomeData
+class Allowance
 {
   final String balance;
-  UserHomeData({required this.balance});
+  final String imageUrl;
+
+  Allowance({required this.balance, required this.imageUrl});
+
+  factory Allowance.fromJson(Map<String, dynamic> json)
+  {
+	return Allowance(
+	  balance: json['amount'],
+	  imageUrl: json['logo_url'],
+	);
+  }
+}
+
+class UserHomeData
+{
+  final String totalAllowance;
+  final List<Allowance> allowances;
+  UserHomeData({required this.totalAllowance, required this.allowances});
 }
 
 class UserHomeDataProvider extends ChangeNotifier {
-  UserHomeData _userHomeData = UserHomeData(balance: "...");
+  UserHomeData _userHomeData = UserHomeData(totalAllowance: "...", allowances: List<Allowance>.empty());
 
   UserHomeData get userHomeData => _userHomeData;
 
-  void updateUserBalance(String newBalance) {
-    _userHomeData = UserHomeData(balance: newBalance);
+  void updateHomeData(String newBalance, List<Allowance> newAllowances) {
+    _userHomeData = UserHomeData(totalAllowance: newBalance, allowances: newAllowances);
     notifyListeners();
   }
 }
@@ -60,9 +78,12 @@ class _HomePageState extends State<HomePage> {
 	  );
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        final String newBalance = data['balance'].toString();
+        final String newBalance = data['total_allowance'].toString();
+		final List<dynamic> allowanceData = data['allowance'];
+		List<Allowance> allowanceList = allowanceData.map((item) => Allowance.fromJson(item)).toList();
+
         Provider.of<UserHomeDataProvider>(context, listen: false)
-            .updateUserBalance(newBalance);
+            .updateHomeData(newBalance, allowanceList);
       } else {
         // Handle API error here
       }
@@ -138,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                                 width: 311*fem,
                                 height: 107*fem,
                                 child: Center(child: Text(
-                                  '${userHomeData.balance}',
+                                  '${userHomeData.totalAllowance}',
                                   style: SafeGoogleFont (
                                     'Inter',
                                     fontSize: 87.7027130127*ffem,
@@ -432,348 +453,21 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          // storecardoHq (324:463)
-                          padding: EdgeInsets.fromLTRB(11*fem, 15*fem, 11*fem, 36*fem),
-                          width: double.infinity,
-                          decoration: BoxDecoration (
-                            borderRadius: BorderRadius.circular(26.3999996185*fem),
-                            gradient: LinearGradient (
-                              begin: Alignment(-1.001, -0.052),
-                              end: Alignment(1.002, -0.001),
-                              colors: <Color>[Color(0xfff8b4b5), Color(0xffeba4e8), Color(0xffb4f2e1)],
-                              stops: <double>[0, 0.494, 1],
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                // frame37165pyd (324:464)
-                                margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 14*fem),
-                                width: double.infinity,
-                                height: 84.7*fem,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      // frame37164xK9 (324:465)
-                                      margin: EdgeInsets.fromLTRB(0*fem, 4.35*fem, 18*fem, 4.35*fem),
-                                      height: double.infinity,
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            // availableallowanceUoH (324:466)
-                                            margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 8*fem),
-                                            child: Text(
-                                              'available allowance',
-                                              style: SafeGoogleFont (
-                                                'Inter',
-                                                fontSize: 16.5*ffem,
-                                                fontWeight: FontWeight.w400,
-                                                height: 1.3333333333*ffem/fem,
-                                                color: Color(0xff525354),
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            // aLX (324:467)
-                                            '\$15.32',
-                                            style: SafeGoogleFont (
-                                              'Inter',
-                                              fontSize: 59.4000015259*ffem,
-                                              fontWeight: FontWeight.w700,
-                                              height: 0.7618519237*ffem/fem,
-                                              letterSpacing: -0.5940000153*fem,
-                                              color: Color(0xff08090a),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      // logoudh (324:468)
-                                      padding: EdgeInsets.fromLTRB(7.7*fem, 5.5*fem, 7.7*fem, 4.4*fem),
-                                      height: double.infinity,
-                                      decoration: BoxDecoration (
-                                        color: Color(0xffffffff),
-                                        borderRadius: BorderRadius.circular(16.5*fem),
-                                      ),
-                                      child: Center(
-                                        // corp1Evs (324:470)
-                                        child: SizedBox(
-                                          width: 104.5*fem,
-                                          height: 74.8*fem,
-                                          child: Image.asset(
-                                            'assets/page-1/images/corp-1.png',
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                // keepshoppingtorefillyourallowa (324:472)
-                                margin: EdgeInsets.fromLTRB(3.65*fem, 0*fem, 0*fem, 0*fem),
-                                child: Text(
-                                  'keep shopping to refill your allowance',
-                                  style: SafeGoogleFont (
-                                    'Inter',
-                                    fontSize: 12.1000003815*ffem,
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.8181817609*ffem/fem,
-                                    color: Color(0xff525354),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 14*fem,
-                        ),
-                        Container(
-                          // storecard24uu (324:476)
-                          padding: EdgeInsets.fromLTRB(11*fem, 15*fem, 11*fem, 36*fem),
-                          width: double.infinity,
-                          decoration: BoxDecoration (
-                            borderRadius: BorderRadius.circular(26.3999996185*fem),
-                            gradient: RadialGradient (
-                              center: Alignment(-0.024, 0.037),
-                              radius: 0.49,
-                              colors: <Color>[Color(0xfffffcdc), Color(0xffd9a7c7)],
-                              stops: <double>[0, 1],
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                // frame37170L6j (324:477)
-                                margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 14*fem),
-                                width: double.infinity,
-                                height: 84.7*fem,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      // frame37168Th9 (324:478)
-                                      margin: EdgeInsets.fromLTRB(0*fem, 4.35*fem, 44*fem, 4.35*fem),
-                                      height: double.infinity,
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            // availableallowanceC8w (324:479)
-                                            margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 8*fem),
-                                            child: Text(
-                                              'available allowance',
-                                              style: SafeGoogleFont (
-                                                'Inter',
-                                                fontSize: 16.5*ffem,
-                                                fontWeight: FontWeight.w400,
-                                                height: 1.3333333333*ffem/fem,
-                                                color: Color(0xff525354),
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            // i7H (324:480)
-                                            '\$8.69',
-                                            style: SafeGoogleFont (
-                                              'Inter',
-                                              fontSize: 59.4000015259*ffem,
-                                              fontWeight: FontWeight.w700,
-                                              height: 0.7618519237*ffem/fem,
-                                              letterSpacing: -0.5940000153*fem,
-                                              color: Color(0xff08090a),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      // logorDV (324:482)
-                                      padding: EdgeInsets.fromLTRB(19.2*fem, 1.6*fem, 19.2*fem, 1.6*fem),
-                                      height: double.infinity,
-                                      decoration: BoxDecoration (
-                                        color: Color(0xffffffff),
-                                        borderRadius: BorderRadius.circular(16.5*fem),
-                                      ),
-                                      child: Center(
-                                        // download11z4o (324:484)
-                                        child: SizedBox(
-                                          width: 81.5*fem,
-                                          height: 81.5*fem,
-                                          child: Image.asset(
-                                            'assets/page-1/images/download-1-1.png',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                // keepshoppingtorefillyourallowa (324:486)
-                                margin: EdgeInsets.fromLTRB(3.65*fem, 0*fem, 0*fem, 0*fem),
-                                child: Text(
-                                  'keep shopping to refill your allowance',
-                                  style: SafeGoogleFont (
-                                    'Inter',
-                                    fontSize: 12.1000003815*ffem,
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.8181817609*ffem/fem,
-                                    color: Color(0xff525354),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 14*fem,
-                        ),
-                        Container(
-                          // storecard32GP (324:490)
-                          padding: EdgeInsets.fromLTRB(11*fem, 15*fem, 11*fem, 30*fem),
-                          width: double.infinity,
-                          height: 179.7*fem,
-                          decoration: BoxDecoration (
-                            borderRadius: BorderRadius.circular(26.3999996185*fem),
-                            gradient: LinearGradient (
-                              begin: Alignment(0, -1),
-                              end: Alignment(0, 1),
-                              colors: <Color>[Color(0xffb4f2e1), Color(0xfff8b4b4)],
-                              stops: <double>[0, 1],
-                            ),
-                          ),
-                          child: Container(
-                            // frame37187HCK (324:491)
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  // frame37184S5D (324:492)
-                                  margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 23*fem),
-                                  width: double.infinity,
-                                  height: 84.7*fem,
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        // frame37173A1D (324:493)
-                                        margin: EdgeInsets.fromLTRB(0*fem, 4.35*fem, 25*fem, 4.35*fem),
-                                        height: double.infinity,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              // availableallowance69m (324:494)
-                                              margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 8*fem),
-                                              child: Text(
-                                                'available allowance',
-                                                style: SafeGoogleFont (
-                                                  'Inter',
-                                                  fontSize: 16.5*ffem,
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 1.3333333333*ffem/fem,
-                                                  color: Color(0xff525354),
-                                                ),
-                                              ),
-                                            ),
-                                            Text(
-                                              // QAT (324:495)
-                                              '\$24.17',
-                                              style: SafeGoogleFont (
-                                                'Inter',
-                                                fontSize: 59.4000015259*ffem,
-                                                fontWeight: FontWeight.w700,
-                                                height: 0.7618519237*ffem/fem,
-                                                letterSpacing: -0.5940000153*fem,
-                                                color: Color(0xff08090a),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        // logoYGf (324:497)
-                                        padding: EdgeInsets.fromLTRB(7.7*fem, 2.2*fem, 9.2*fem, 0.66*fem),
-                                        height: double.infinity,
-                                        decoration: BoxDecoration (
-                                          color: Color(0xffffffff),
-                                          borderRadius: BorderRadius.circular(16.5*fem),
-                                        ),
-                                        child: Align(
-                                          // tile11GiT (324:499)
-                                          alignment: Alignment.bottomCenter,
-                                          child: SizedBox(
-                                            width: 103*fem,
-                                            height: 81.84*fem,
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(18.3919868469*fem),
-                                              child: Image.asset(
-                                                'assets/page-1/images/tile1-1.png',
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  // frame37186nB1 (324:500)
-                                  width: 325.6*fem,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        // keepshoppingtorefillyourallowa (324:501)
-                                        margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 0*fem, 4.79*fem),
-                                        child: Text(
-                                          'keep shopping to refill your allowance',
-                                          style: SafeGoogleFont (
-                                            'Inter',
-                                            fontSize: 12.1000003815*ffem,
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.8181817609*ffem/fem,
-                                            color: Color(0xff525354),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        // frame37182EYo (324:502)
-                                        width: double.infinity,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              // vector5a6s (324:504)
-                                              width: 155.45*fem,
-                                              height: 0.21*fem,
-                                              child: Image.asset(
-                                                'assets/page-1/images/vector-5.png',
-                                                width: 155.45*fem,
-                                                height: 0.21*fem,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+						ListView.builder(
+						  shrinkWrap: true,
+						  physics: NeverScrollableScrollPhysics(),
+						  itemCount: userHomeData.allowances.length,
+						  itemBuilder: (context, index)
+						  {
+							return Column(children: [
+							  StoreCardWidget(allowance: userHomeData.allowances[index]),
+							  SizedBox(
+								height: 14*fem,
+							  ),
+							],
+							);
+						  },
+						),
                       ],
                     ),
                   ),
