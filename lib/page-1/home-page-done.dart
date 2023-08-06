@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
 	  );
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        final String newBalance = data['balance'];
+        final String newBalance = data['balance'].toString();
         Provider.of<UserHomeDataProvider>(context, listen: false)
             .updateUserBalance(newBalance);
       } else {
