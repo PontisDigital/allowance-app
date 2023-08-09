@@ -43,6 +43,7 @@ dependencies:
   cloud_firestore: ^4.8.4
   http: ^1.1.0
   provider: ^6.0.5
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:
@@ -76,11 +77,8 @@ flutter:
     - assets/page-1/images/vector-5.png
     - assets/page-1/images/rectangle-10-5jm.png
     - assets/page-1/images/vector.png
-    - assets/page-1/images/corp-1.png
-    - assets/page-1/images/tile1-1.png
     - assets/page-1/images/smiling-face-with-sunglasses.png
     - assets/page-1/images/smiling-face-with-sunglasses-mhZ.png
-    - assets/page-1/images/download-1-1.png
     - assets/page-1/images/helpcenter.png
     - assets/page-1/images/jack-the-bulldog.png
     - assets/page-1/images/group-14.png

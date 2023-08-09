@@ -23,13 +23,7 @@ class StoreCardWidget extends StatelessWidget {
 	final imageHeight = 74.8;
 
 
-    return Card(
-	  shape: RoundedRectangleBorder(
-		borderRadius: BorderRadius.circular(26.3999996185 * fem),
-	  ),
-	  child: InkWell(
-      onTap: () => navigateToPayPrompt(context),
-      child: Container(
+      return Container(
         // storecardoHq (324:463)
         padding: EdgeInsets.fromLTRB(11 * fem, 15 * fem, 11 * fem, 36 * fem),
         width: double.infinity,
@@ -123,8 +117,6 @@ class StoreCardWidget extends StatelessWidget {
             ),
           ],
         ),
-      ),
-	  ),
     );
   }
 }

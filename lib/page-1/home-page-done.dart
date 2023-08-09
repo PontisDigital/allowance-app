@@ -1,5 +1,6 @@
 import 'package:allowance/home_allowance_entry.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
+import 'package:allowance/page-1/pay-1-done.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
@@ -377,7 +378,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 child: TextButton(
                                   // sendbuttonSRM (324:437)
-                                  onPressed: () => signOut(context),
+                                  onPressed: () => navigateToQRCodePage(context),
                                   style: TextButton.styleFrom (
                                     padding: EdgeInsets.zero,
                                   ),
@@ -486,27 +487,9 @@ class _HomePageState extends State<HomePage> {
     FirebaseAuth.instance.signOut();
   }
 
-  Future<void> getUsernameFromFirestore() async {
-	String userId = FirebaseAuth.instance.currentUser!.uid;
-  try {
-    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(userId).get();
-    if (userSnapshot.exists) {
-      Map<String, dynamic>? userData = userSnapshot.data() as Map<String, dynamic>?;
-      if (userData != null) {
-		setState(()
-		  {
-			//widget.nameTest = userData['username'] as String;
-		  });
-		return;
-      }
-    }
-    print('User not found in Firestore');
-    return;
-  } catch (e) {
-    print('Error getting username from Firestore: $e');
-    return;
+  navigateToQRCodePage(BuildContext context)
+  {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SingleChildScrollView(child: QRCodePage())));
   }
-}
-  
 
 }
