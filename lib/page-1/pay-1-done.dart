@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:allowance/utils.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class QRCodePage extends StatelessWidget {
   @override
@@ -102,9 +104,11 @@ class QRCodePage extends StatelessWidget {
                       child: SizedBox(
                         width: 325*fem,
                         height: 325*fem,
-                        child: Image.asset(
-                          'assets/page-1/images/rectangle-10-QRd.png',
-                          fit: BoxFit.cover,
+                        child: QrImageView(
+                          data: FirebaseAuth.instance.currentUser!.uid,
+                          version: QrVersions.auto,
+                          backgroundColor: Colors.white,
+                          size: 200.0,
                         ),
                       ),
                     ),
