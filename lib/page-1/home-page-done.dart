@@ -1,6 +1,7 @@
 import 'package:allowance/home_allowance_entry.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
 import 'package:allowance/page-1/pay-1-done.dart';
+import 'package:allowance/page-1/send-1-done.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
@@ -436,7 +437,8 @@ class _HomePageState extends State<HomePage> {
                                         margin: EdgeInsets.fromLTRB(
                                             0 * fem, 0 * fem, 8 * fem, 0 * fem),
                                         child: TextButton(
-                                          onPressed: () => navigateToQRCodePage(context),
+                                          onPressed: () =>
+                                              navigateToQRCodePage(context),
                                           style: TextButton.styleFrom(
                                             padding: EdgeInsets.zero,
                                           ),
@@ -468,7 +470,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       TextButton(
                                         // sendbuttonWjq (324:441)
-                                        onPressed: () {},
+                                        onPressed: () => navigateToSendPage(),
                                         style: TextButton.styleFrom(
                                           padding: EdgeInsets.zero,
                                         ),
@@ -556,5 +558,13 @@ class _HomePageState extends State<HomePage> {
         context,
         MaterialPageRoute(
             builder: (context) => SingleChildScrollView(child: QRCodePage())));
+  }
+
+  navigateToSendPage() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                SingleChildScrollView(child: SendSelectUserPage())));
   }
 }
