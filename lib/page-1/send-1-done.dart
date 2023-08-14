@@ -169,6 +169,7 @@ class _SendSelectUserPageState extends State<SendSelectUserPage> {
                           .map((user) => UserCard(
                                 username: user.username,
                                 imageUrl: null,
+								isButton: true,
                               ))
                           .toList(),
                     ),
