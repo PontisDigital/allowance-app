@@ -23,7 +23,7 @@ class UserCard extends StatelessWidget {
 
     return Container(
       // group18LF1 (301:1227)
-      margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 559.61 * fem),
+      margin: EdgeInsets.only(bottom: 10.0 * fem),
       width: double.infinity,
       height: 60.39 * fem,
       decoration: BoxDecoration(
