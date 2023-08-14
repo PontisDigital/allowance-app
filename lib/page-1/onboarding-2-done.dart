@@ -1,3 +1,4 @@
+import 'package:allowance/main.dart';
 import 'package:allowance/page-1/home-page-done.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
@@ -8,6 +9,8 @@ import 'package:allowance/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class OnboardPasswordPage extends StatefulWidget {
   final String emailInput;
@@ -385,24 +388,33 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
   }
 
   createAccount(BuildContext context) async {
-    UserCredential userCredential =
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: widget.emailInput,
-      password: widget.password,
-    );
+    final String apiUrl = 'https://api.allowance.fund/register';
 
-    String uid = userCredential.user!.uid;
+    final Map<String, dynamic> requestData = {
+      "email": widget.emailInput,
+      "username": widget.usernameInput,
+      "password": widget.password,
+    };
 
-    await FirebaseFirestore.instance.collection('users').doc(uid).set({
-      'email': userCredential.user!.email,
-      'username': widget.usernameInput,
-    });
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(requestData),
+      );
 
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ChangeNotifierProvider(
-                create: (context) => UserHomeDataProvider(),
-                child: SingleChildScrollView(child: HomePage()))));
+      if (response.statusCode == 200) {
+        print('Request sent successfully');
+        // You can handle the response here if needed
+		await FirebaseAuth.instance.signInWithEmailAndPassword(email: widget.emailInput, password: widget.password);
+		Navigator.pop(context);
+		Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
+
+      } else {
+        print('Request failed with status: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error sending request: $error');
+    }
   }
 }

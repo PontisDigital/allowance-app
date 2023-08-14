@@ -1,3 +1,4 @@
+import 'package:allowance/main.dart';
 import 'package:allowance/page-1/home-page-done.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
@@ -287,11 +288,6 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
   signIn(BuildContext context) async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: widget.emailInput, password: widget.passwordInput);
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ChangeNotifierProvider(
-                create: (context) => UserHomeDataProvider(),
-                child: SingleChildScrollView(child: HomePage()))));
+	Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
   }
 }
