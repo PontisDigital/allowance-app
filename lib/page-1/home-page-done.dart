@@ -288,42 +288,64 @@ class _HomePageState extends State<HomePage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  // frame37188rg7 (324:429)
-                                  margin: EdgeInsets.fromLTRB(0*fem, 41.7*fem, 25*fem, 43.21*fem),
-                                  height: double.infinity,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        // thatsenoughforBiP (324:430)
-                                        'that’s enough for',
-                                        style: SafeGoogleFont (
-                                          'Inter',
-                                          fontSize: 20*ffem,
-                                          fontWeight: FontWeight.w400,
-                                          height: 1.1*ffem/fem,
+                                // frame37188rg7 (324:429)
+                                margin: EdgeInsets.fromLTRB(0*fem, 41.7*fem, 25*fem, 43.21*fem),
+                                height: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      // thatsenoughforBiP (324:430)
+                                      'Keep shopping',
+                                      style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 21*ffem,
+                                        fontWeight: FontWeight.normal,
+                                        height: 1.1*ffem/fem,
+                                        color: Color(0xff525354),
+                                      ),
+                                    ),
+                                    Container(
+                                      // achaiteaatmidnightmugu8b (324:431)
+                                      constraints: BoxConstraints(
+                                        maxWidth: 203*fem,
+                                      ),
+                                      child: Text(
+                                        '@ Hop, Cask & Barrel',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontSize: 30*ffem,
+                                          fontWeight: FontWeight.w700,
+                                          height: 1*ffem/fem,
                                           color: Color(0xff525354),
                                         ),
                                       ),
-                                      Container(
-                                        // achaiteaatmidnightmugu8b (324:431)
-                                        constraints: BoxConstraints (
-                                          maxWidth: 203*fem,
+                                    ),
+                                    SizedBox(height: 10), // Add some space between the texts
+                                    RichText(
+                                      text: TextSpan(
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontSize: 21*ffem,
+                                          fontWeight: FontWeight.normal,
+                                          height: 1.1*ffem/fem,
+                                          color: Color(0xff525354),
                                         ),
-                                        child: Text(
-                                          'a Chai Tea at Midnight Mug',
-                                          style: SafeGoogleFont (
-                                            'Inter',
-                                            fontSize: 30*ffem,
-                                            fontWeight: FontWeight.w700,
-                                            height: 1*ffem/fem,
-                                            color: Color(0xff525354),
+                                        children: [
+                                          TextSpan(text: 'to receive '),
+                                          TextSpan(
+                                            text: '\$150',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                           ),
-                                        ),
+                                          TextSpan(text: ' of allowance this semester.'),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
+                              ),
                                 Container(
                                   // frame37163QLF (324:432)
                                   height: double.infinity,
