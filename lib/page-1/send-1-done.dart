@@ -9,6 +9,23 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
+class UserData {
+  final String email;
+  final String username;
+
+  UserData({
+    required this.email,
+    required this.username,
+  });
+
+  factory UserData.fromJson(Map<String, dynamic> json) {
+    return UserData(
+      email: json['email'],
+      username: json['username'],
+    );
+  }
+}
+
 class SendSelectUserPage extends StatefulWidget {
   @override
   _SendSelectUserPageState createState() => _SendSelectUserPageState();
@@ -17,18 +34,19 @@ class SendSelectUserPage extends StatefulWidget {
 class _SendSelectUserPageState extends State<SendSelectUserPage> {
   TextEditingController _textFieldController = TextEditingController();
   String _inputValue = '';
-  String _oldInputValue = '';
+  String _oldInputValue = 'old';
+  List<UserData> _userList = [];
   Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(milliseconds: 1000), _sendInputToAPI);
+    _timer = Timer.periodic(Duration(milliseconds: 250), _sendInputToAPI);
   }
 
   @override
   void dispose() {
-	_timer?.cancel();
+    _timer?.cancel();
     _textFieldController.dispose();
     super.dispose();
   }
@@ -40,8 +58,8 @@ class _SendSelectUserPageState extends State<SendSelectUserPage> {
   }
 
   void _sendInputToAPI(Timer timer) async {
-  if (_inputValue == _oldInputValue) return;
-  _oldInputValue = _inputValue;
+    if (_inputValue == _oldInputValue) return;
+    _oldInputValue = _inputValue;
     final String apiUrl = 'https://api.allowance.fund/search';
     final Map<String, dynamic> requestData = {
       "query": _inputValue,
@@ -58,6 +76,12 @@ class _SendSelectUserPageState extends State<SendSelectUserPage> {
       if (response.statusCode == 200) {
         print('Request sent successfully');
         // You can handle the response here if needed
+        final jsonResponse = jsonDecode(response.body);
+        final userList = List<UserData>.from(
+            jsonResponse['users'].map((user) => UserData.fromJson(user)));
+        setState(() {
+          _userList = userList;
+        });
       } else {
         print('Request failed with status: ${response.statusCode}');
       }
@@ -140,9 +164,13 @@ class _SendSelectUserPageState extends State<SendSelectUserPage> {
                         ),
                       ),
                     ),
-                    child: UserCard(
-                      username: "test",
-                      imageUrl: null,
+                    child: Column(
+                      children: _userList
+                          .map((user) => UserCard(
+                                username: user.username,
+                                imageUrl: null,
+                              ))
+                          .toList(),
                     ),
                   ),
                 ],
