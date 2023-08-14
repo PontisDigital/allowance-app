@@ -72,7 +72,7 @@ Timer? _timer;
 
   Future<void> _fetchUserBalance(Timer? timer) async {
     try {
-      final Uri uri = Uri.parse('https://api.rainyday.deals/allowance');
+      final Uri uri = Uri.parse('https://api.allowance.fund/home');
 
       final String? auth_token =
           await FirebaseAuth.instance.currentUser!.getIdToken();
