@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:allowance/home_allowance_entry.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
 import 'package:allowance/page-1/pay-1-done.dart';
@@ -52,13 +54,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+Timer? _timer;
+
   @override
   void initState() {
     super.initState();
-    _fetchUserBalance();
+	_fetchUserBalance(null);
+    _timer = Timer.periodic(Duration(milliseconds: 10000), _fetchUserBalance);
   }
 
-  Future<void> _fetchUserBalance() async {
+  @override
+  void dispose() {
+	_timer?.cancel();
+	super.dispose();
+  }
+
+  Future<void> _fetchUserBalance(Timer? timer) async {
     try {
       final Uri uri = Uri.parse('https://api.rainyday.deals/allowance');
 

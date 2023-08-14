@@ -242,6 +242,8 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
     if (response.statusCode == 200) {
       // Request successful, handle the response if needed
       print('Allowance sent successfully');
+	  Navigator.pop(context);
+	  Navigator.pop(context);
     } else {
       // Request failed, handle the error
       print('Error sending allowance: ${response.statusCode}');
