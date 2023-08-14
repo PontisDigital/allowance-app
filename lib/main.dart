@@ -23,13 +23,32 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int _selectedIndex = 0;
+
+  static List<Widget> _widgetOptions = <Widget>[
+	HomePage(),
+	Text(
+	  'Index 1: Settings',
+	),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter',
       debugShowCheckedModeBanner: false,
-      scrollBehavior: MyCustomScrollBehavior(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -41,8 +60,28 @@ class MyApp extends StatelessWidget {
           } else if (snapshot.hasData) {
             return ChangeNotifierProvider(
               create: (context) => UserHomeDataProvider(),
-              child: SingleChildScrollView(
-                child: HomePage(),
+              child: Scaffold(
+                backgroundColor: Color.fromRGBO(4, 30, 66, 1),
+                bottomNavigationBar: BottomNavigationBar(
+                  items: const <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      label: 'Home',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.settings),
+                      label: 'Settings',
+                    ),
+                  ],
+                  selectedItemColor: Colors.white,
+                  backgroundColor: Color.fromRGBO(14, 15, 160, 1),
+                  unselectedItemColor: Colors.grey.shade400,
+				  currentIndex: _selectedIndex,
+				  onTap: _onItemTapped,
+                ),
+                body: SingleChildScrollView(
+                  child: _widgetOptions.elementAt(_selectedIndex),
+                ),
               ),
             );
           } else {
