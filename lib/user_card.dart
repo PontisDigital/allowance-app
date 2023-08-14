@@ -1,17 +1,30 @@
 import 'package:allowance/page-1/home-page-done.dart';
 import 'package:allowance/page-1/search-page-done.dart';
+import 'package:allowance/page-1/send-2-done.dart';
 import 'package:allowance/utils.dart';
 import 'package:flutter/material.dart';
 
 class UserCard extends StatelessWidget {
   final String username;
   final String? imageUrl;
+  final bool isButton;
 
   const UserCard({
     super.key,
     required this.username,
     required this.imageUrl,
+	required this.isButton,
   });
+
+  void navigateToSendMoney(BuildContext context)
+  {
+  	Navigator.push(
+	  context,
+	  MaterialPageRoute(
+		builder: (context) => SingleChildScrollView(child: SendEnterAmountPage(username: username, currentBalance: '\$10.00')),
+	  ),
+	);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,9 +116,10 @@ class UserCard extends StatelessWidget {
               ),
             ),
           ),
+		  (!isButton) ? Container() :
           Positioned.fill(
             child: ElevatedButton(
-              onPressed: () => {},
+              onPressed: () => navigateToSendMoney(context),
               child: Text(''),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
