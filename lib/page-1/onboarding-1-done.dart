@@ -30,18 +30,18 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
             Navigator.pop(context);
           },
         ),
-		backgroundColor: Color(0xff041e42),
-		centerTitle: true,
-		title: Text(
-		  'Sign Up',
-		  style: SafeGoogleFont(
-			'Outfit',
-			fontSize: 25 * ffem,
-			fontWeight: FontWeight.w700,
-			height: 1.26 * ffem / fem,
-			color: Color(0xffffffff),
-		  ),
-		),
+        backgroundColor: Color(0xff041e42),
+        centerTitle: true,
+        title: Text(
+          'Sign Up',
+          style: SafeGoogleFont(
+            'Outfit',
+            fontSize: 25 * ffem,
+            fontWeight: FontWeight.w700,
+            height: 1.26 * ffem / fem,
+            color: Color(0xffffffff),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -210,9 +210,13 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
                                         color: Color(0xff000000),
                                       ),
                                       onChanged: (value) {
+									  	print("AHIWHEPOFHWEPOFHWEOPIFHWOEPIFHWIOEHFPOWHEFWOP:EHF");
+									  	print(value);
                                         setState(() {
                                           widget.usernameInput = value;
-                                        });
+                                        }
+										);
+										print(widget.usernameInput);
                                       },
                                     ),
                                   ),
@@ -266,12 +270,14 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
   }
 
   moveToOnboardingPart2(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => OnboardPasswordPage(
-                  emailInput: widget.emailInput,
-                  usernameInput: widget.usernameInput,
-                )));
+    if (widget.usernameInput.isNotEmpty) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => OnboardPasswordPage(
+                    emailInput: widget.emailInput,
+                    user: widget.usernameInput,
+                  )));
+    }
   }
 }
