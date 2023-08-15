@@ -83,41 +83,40 @@ class _MyAppState extends State<MyApp> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           } else if (snapshot.hasData) {
-            return 
-              Scaffold(
-                appBar: AppBar(
-                  centerTitle: true,
-                  title: Text(
-                    'hoya allowance',
-                    style: SafeGoogleFont(
-                      'Outfit',
-                      fontSize: 25 * ffem,
-                      fontWeight: FontWeight.w700,
-                      height: 1.26 * ffem / fem,
-                      color: Color(0xffffffff),
-                    ),
+            return Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                title: Text(
+                  'hoya allowance',
+                  style: SafeGoogleFont(
+                    'Outfit',
+                    fontSize: 25 * ffem,
+                    fontWeight: FontWeight.w700,
+                    height: 1.26 * ffem / fem,
+                    color: Color(0xffffffff),
                   ),
-                  backgroundColor: Color.fromRGBO(4, 30, 66, 1),
                 ),
                 backgroundColor: Color.fromRGBO(4, 30, 66, 1),
-                bottomNavigationBar: BottomNavigationBar(
-                  items: const <BottomNavigationBarItem>[
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: 'Home',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.settings),
-                      label: 'Settings',
-                    ),
-                  ],
-                  selectedItemColor: Colors.white,
-                  backgroundColor: Color.fromRGBO(14, 15, 160, 1),
-                  unselectedItemColor: Colors.grey.shade400,
-                  currentIndex: _selectedIndex,
-                  onTap: _onItemTapped,
-                ),
-                body: _widgetOptions.elementAt(_selectedIndex),
+              ),
+              backgroundColor: Color.fromRGBO(4, 30, 66, 1),
+              bottomNavigationBar: BottomNavigationBar(
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    label: 'Home',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.settings),
+                    label: 'Settings',
+                  ),
+                ],
+                selectedItemColor: Colors.white,
+                backgroundColor: Color.fromRGBO(14, 15, 160, 1),
+                unselectedItemColor: Colors.grey.shade400,
+                currentIndex: _selectedIndex,
+                onTap: _onItemTapped,
+              ),
+              body: _widgetOptions.elementAt(_selectedIndex),
             );
           } else {
             return Scaffold(
