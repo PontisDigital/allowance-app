@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:allowance/page-1/onboarding-start.dart';
 import 'package:allowance/page-1/pay-1-done.dart';
 import 'package:allowance/page-1/search-page-done.dart';
 import 'package:allowance/page-1/send-2-done.dart';
@@ -121,8 +122,9 @@ class _MyAppState extends State<MyApp> {
               ),
             );
           } else {
-            return SingleChildScrollView(
-              child: LandingPage(),
+            return Scaffold(
+              backgroundColor: Color.fromRGBO(4, 30, 66, 1),
+              body: LandingPage(),
             );
           }
         },
