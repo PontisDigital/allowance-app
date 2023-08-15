@@ -37,7 +37,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int _selectedIndex = 0;
 
-  final List<Widget> _widgetOptions = <Widget>[
+  List<Widget> _widgetOptions = <Widget>[
     HomePage(),
   ];
 
@@ -47,7 +47,13 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void addSettingsToList() async {
+  @override
+  initState() {
+    super.initState();
+    addSettingsToList();
+  }
+
+  Future<void> addSettingsToList() async {
     // get username from firestore
     String username = await FirebaseFirestore.instance
         .collection('users')
@@ -56,14 +62,7 @@ class _MyAppState extends State<MyApp> {
         .then((value) {
       return value['username'];
     });
-
     _widgetOptions.add(AllowanceSettings(username: username));
-  }
-
-  @override
-  void initState() {
-    addSettingsToList();
-    super.initState();
   }
 
   @override

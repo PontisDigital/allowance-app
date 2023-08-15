@@ -1,4 +1,5 @@
 import 'package:allowance/user_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,8 @@ class AllowanceSettings extends StatefulWidget {
 }
 
 class _AllowanceSettingsState extends State<AllowanceSettings> {
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -59,9 +62,54 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.red),
                                   onPressed: () {
-                                    FirebaseAuth.instance.currentUser!.delete();
-                                    FirebaseAuth.instance.signOut();
-									Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                    // reauthenticate
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                                'Enter Email and Password'),
+                                            content: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  TextField(
+                                                    controller:
+                                                        _emailController,
+                                                    decoration: InputDecoration(
+                                                      hintText: 'Email',
+                                                    ),
+                                                  ),
+                                                  TextField(
+                                                    controller:
+                                                        _passwordController,
+                                                    obscureText: true,
+                                                    decoration: InputDecoration(
+                                                      hintText: 'Password',
+                                                    ),
+                                                  ),
+                                                ]),
+                                            actions: [
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text('Cancel'),
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () =>
+                                                    _deleteAccount(),
+                                                child:
+                                                    Text('Delete Account Now'),
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.red,
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        });
                                   },
                                 ),
                                 ElevatedButton(
@@ -86,5 +134,26 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
             ]),
       ],
     );
+  }
+
+  void _deleteAccount() async {
+    AuthCredential cred = EmailAuthProvider.credential(email: _emailController.text, password: _passwordController.text);
+    print("============================");
+    print("Reauthenticating...");
+    print("============================");
+    if (FirebaseAuth.instance.currentUser == null) {
+      print("Reauth Failed!!");
+    } else {
+      User user = FirebaseAuth.instance.currentUser!;
+      print((await user.reauthenticateWithCredential(cred))
+          .toString());
+      print("============================");
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .delete();
+      FirebaseAuth.instance.currentUser!.delete();
+      FirebaseAuth.instance.signOut();
+    }
   }
 }
