@@ -28,6 +28,26 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
     double ffem = fem * 0.97;
 
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+		backgroundColor: Color(0xff041e42),
+		centerTitle: true,
+		title: Text(
+		  'Sign In',
+		  style: SafeGoogleFont(
+			'Outfit',
+			fontSize: 25 * ffem,
+			fontWeight: FontWeight.w700,
+			height: 1.26 * ffem / fem,
+			color: Color(0xffffffff),
+		  ),
+		),
+      ),
       body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
@@ -49,22 +69,6 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      // hoyaallowanceP7V (26:49)
-                      margin: EdgeInsets.fromLTRB(
-                          3 * fem, 0 * fem, 0 * fem, 68 * fem),
-                      child: Text(
-                        'hoya allowance',
-                        textAlign: TextAlign.center,
-                        style: SafeGoogleFont(
-                          'Outfit',
-                          fontSize: 25 * ffem,
-                          fontWeight: FontWeight.w700,
-                          height: 1.26 * ffem / fem,
-                          color: Color(0xffffffff),
-                        ),
-                      ),
-                    ),
                     Container(
                       // frame37251tK9 (26:50)
                       width: double.infinity,
@@ -288,6 +292,7 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
   signIn(BuildContext context) async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: widget.emailInput, password: widget.passwordInput);
-	Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => MyApp()));
   }
 }

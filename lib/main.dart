@@ -33,11 +33,23 @@ class _MyAppState extends State<MyApp> {
 
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    Center(
-        child: Text(
-      'Settings',
-      style: TextStyle(color: Colors.white, fontSize: 30),
-    )),
+    Column(
+      children: [
+        Center(
+            child: Text(
+          'Settings',
+          style: TextStyle(color: Colors.white, fontSize: 30),
+        )),
+        Center(
+          child: TextButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
+            child: Text('Sign Out'),
+          ),
+        ),
+      ],
+    ),
   ];
 
   void _onItemTapped(int index) {
@@ -67,7 +79,7 @@ class _MyAppState extends State<MyApp> {
               create: (context) => UserHomeDataProvider(),
               child: Scaffold(
                 appBar: AppBar(
-				centerTitle: true,
+                  centerTitle: true,
                   title: Text(
                     'hoya allowance',
                     style: SafeGoogleFont(
