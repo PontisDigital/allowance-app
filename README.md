@@ -1,3 +1,4 @@
+[![Codemagic build status](https://api.codemagic.io/apps/64dab0700430d4ecc64f5ab4/64dab0700430d4ecc64f5ab3/status_badge.svg)](https://codemagic.io/apps/64dab0700430d4ecc64f5ab4/64dab0700430d4ecc64f5ab3/latest_build)
 # Allowance MVP App
 
 A new Flutter project.
