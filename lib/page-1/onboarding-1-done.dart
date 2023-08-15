@@ -193,11 +193,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
                                         enabledBorder: InputBorder.none,
                                         errorBorder: InputBorder.none,
                                         disabledBorder: InputBorder.none,
-                                        contentPadding: EdgeInsets.fromLTRB(
-                                            11 * fem,
-                                            5 * fem,
-                                            11 * fem,
-                                            4 * fem),
+                                        contentPadding: EdgeInsets.symmetric(vertical: 8 * fem, horizontal: 10 * fem),
                                         hintText: 'jackthebulldog',
                                         hintStyle:
                                             TextStyle(color: Color(0x99ffffff)),
@@ -207,7 +203,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
                                         fontSize: 20 * ffem,
                                         fontWeight: FontWeight.w500,
                                         height: 1.26 * ffem / fem,
-                                        color: Color(0xff000000),
+                                        color: Color(0xffffffff),
                                       ),
                                       onChanged: (value) {
                                         setState(() {

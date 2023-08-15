@@ -239,12 +239,7 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                                                   errorBorder: InputBorder.none,
                                                   disabledBorder:
                                                       InputBorder.none,
-                                                  contentPadding:
-                                                      EdgeInsets.fromLTRB(
-                                                          5 * fem,
-                                                          5 * fem,
-                                                          5 * fem,
-                                                          4 * fem),
+                                                  contentPadding: EdgeInsets.symmetric(vertical: 8 * fem, horizontal: 10 * fem),
                                                   hintText: '*************',
                                                   hintStyle: TextStyle(
                                                       color: Color(0x99ffffff)),
@@ -254,7 +249,7 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                                                   fontSize: 20 * ffem,
                                                   fontWeight: FontWeight.w500,
                                                   height: 1.26 * ffem / fem,
-                                                  color: Color(0xff000000),
+                                                  color: Color(0xffffffff),
                                                 ),
                                                 onChanged: (value) {
                                                   setState(() {
@@ -332,12 +327,7 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                                                           InputBorder.none,
                                                       disabledBorder:
                                                           InputBorder.none,
-                                                      contentPadding:
-                                                          EdgeInsets.fromLTRB(
-                                                              5 * fem,
-                                                              5 * fem,
-                                                              5 * fem,
-                                                              4 * fem),
+                                                      contentPadding: EdgeInsets.symmetric(vertical: 8 * fem, horizontal: 10 * fem),
                                                       hintText: '*************',
                                                       hintStyle: TextStyle(
                                                           color: Color(
@@ -349,7 +339,7 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                                                       fontWeight:
                                                           FontWeight.w500,
                                                       height: 1.26 * ffem / fem,
-                                                      color: Color(0xff000000),
+                                                      color: Color(0xffffffff),
                                                     ),
                                                     onChanged: (value) {
                                                       setState(() {
