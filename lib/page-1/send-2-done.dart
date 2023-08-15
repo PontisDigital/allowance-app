@@ -3,6 +3,7 @@ import 'package:allowance/user_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/services.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:allowance/utils.dart';
@@ -28,208 +29,136 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
 
   @override
   Widget build(BuildContext context) {
+    final usdInputFormatter = FilteringTextInputFormatter.allow(
+        RegExp(r'^\d+(\.\d{0,2})?$')); // Allows up to 2 decimal places
     double baseWidth = 390;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return Scaffold(
       appBar: AppBar(
-	  leading: IconButton(
-	    icon: Icon(Icons.arrow_back),
-	    onPressed: () {
-	      Navigator.pop(context);
-	    },
-	  ),
-		// send2doneappbar (301:1192)
-		backgroundColor: Color(0xff041e42),
-		centerTitle: true,
-		title: Text(
-		  'hoya allowance',
-		  style: SafeGoogleFont(
-			'Outfit',
-			fontSize: 25 * ffem,
-			fontWeight: FontWeight.w700,
-			height: 1.26 * ffem / fem,
-			color: Color(0xffffffff),
-		  ),
-		),
-	  ),
-      body: Container(
-        width: double.infinity,
-        child: Container(
-          // send2doneoef (301:1193)
-          padding: EdgeInsets.fromLTRB(
-              25.6 * fem, 34 * fem, 25.6 * fem, 361.5 * fem),
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Color(0xff041e42),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                // frame37207DCb (301:1196)
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      // frame37204kyD (301:1197)
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 0 * fem, 49 * fem),
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            // enteramountJUw (301:1198)
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 0 * fem, 1 * fem),
-                            child: Text(
-                              'enter amount',
-                              textAlign: TextAlign.center,
-                              style: SafeGoogleFont(
-                                'Outfit',
-                                fontSize: 40 * ffem,
-                                fontWeight: FontWeight.w700,
-                                height: 1.26 * ffem / fem,
-                                color: Color(0xffffffff),
-                              ),
-                            ),
-                          ),
-                          UserCard(
-                              username: widget.username,
-                              imageUrl: null,
-                              isButton: false,
-							  currentBalance: '',
-						  )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      // frame37206pEK (301:1205)
-                      margin: EdgeInsets.fromLTRB(
-                          39.9 * fem, 0 * fem, 39.9 * fem, 0 * fem),
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            // frame37205js5 (301:1206)
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 0 * fem, 1 * fem),
-                            width: double.infinity,
-                            height: 139 * fem,
-                            child: Column(
-                              children: [
-                                Positioned(
-                                  // availableGc7 (301:1207)
-                                  left: 0 * fem,
-                                  top: 0 * fem,
-                                  child: Align(
-                                    child: SizedBox(
-                                      width: 259 * fem,
-                                      height: 42 * fem,
-                                      child: Text(
-                                        widget.currentBalance + ' available',
-                                        textAlign: TextAlign.center,
-                                        style: SafeGoogleFont(
-                                          'Outfit',
-                                          fontSize: 33 * ffem,
-                                          fontWeight: FontWeight.w700,
-                                          height: 1.26 * ffem / fem,
-                                          color: Color(0x66ffffff),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Card(
-                                  color: Colors.transparent,
-                                  child: TextField(
-                                    controller: amountController,
-                                    style: SafeGoogleFont(
-                                      'Outfit',
-                                      fontSize: 33 * ffem,
-                                      fontWeight: FontWeight.w700,
-                                      height: 1.26 * ffem / fem,
-                                      color: Color(0xffffffff),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                      prefixText: '\$',
-                                      prefixStyle: SafeGoogleFont(
-                                        'Outfit',
-                                        fontSize: 33 * ffem,
-                                        fontWeight: FontWeight.w700,
-                                        height: 1.26 * ffem / fem,
-                                        color: Color(0xffffffff),
-                                      ),
-                                      hintText: '0.00',
-                                      hintStyle: SafeGoogleFont(
-                                        'Outfit',
-                                        fontSize: 33 * ffem,
-                                        fontWeight: FontWeight.w700,
-                                        height: 1.26 * ffem / fem,
-                                        color: Color(0x66ffffff),
-                                      ),
-                                    ),
-                                    keyboardType:
-                                        TextInputType.numberWithOptions(
-                                            decimal: true),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            // sendbuttonesZ (301:1210)
-                            margin: EdgeInsets.fromLTRB(
-                                43.1 * fem, 0 * fem, 43.1 * fem, 0 * fem),
-                            child: TextButton(
-                              onPressed: () => sendAllowance(),
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero,
-                              ),
-                              child: Container(
-                                padding: EdgeInsets.fromLTRB(27.6 * fem,
-                                    7.2 * fem, 27.2 * fem, 7.2 * fem),
-                                width: double.infinity,
-                                height: 98.4 * fem,
-                                decoration: BoxDecoration(
-                                  color: Color(0x3f4b39ef),
-                                  borderRadius: BorderRadius.circular(
-                                      18.3050861359 * fem),
-                                  border: Border(),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'send',
-                                    style: SafeGoogleFont(
-                                      'Outfit',
-                                      fontSize: 54.0000038147 * ffem,
-                                      fontWeight: FontWeight.w700,
-                                      height: 1.26 * ffem / fem,
-                                      color: Color(0xffffffff),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        // send2doneappbar (301:1192)
+        backgroundColor: Color(0xff041e42),
+        centerTitle: true,
+        title: Text(
+          'hoya allowance',
+          style: SafeGoogleFont(
+            'Outfit',
+            fontSize: 25 * ffem,
+            fontWeight: FontWeight.w700,
+            height: 1.26 * ffem / fem,
+            color: Color(0xffffffff),
           ),
         ),
+      ),
+      backgroundColor: Color(0xff041e42),
+      body: Column(
+        children: [
+          SizedBox(height: 20),
+          Text(
+            'enter amount',
+            style: SafeGoogleFont(
+              'Outfit',
+              fontSize: 25 * ffem,
+              fontWeight: FontWeight.w700,
+              height: 1.26 * ffem / fem,
+              color: Color(0xffffffff),
+            ),
+          ),
+          SizedBox(height: 20),
+          UserCard(
+              username: widget.username,
+              imageUrl: null,
+              isButton: false,
+              currentBalance: ''),
+          SizedBox(height: 20),
+          Text(
+            '${widget.currentBalance} available',
+            textAlign: TextAlign.center,
+            style: SafeGoogleFont(
+              'Outfit',
+              fontSize: 33 * ffem,
+              fontWeight: FontWeight.w700,
+              height: 1.26 * ffem / fem,
+              color: Color(0x66ffffff),
+            ),
+          ),
+          SizedBox(height: 20),
+          Padding(
+              padding:
+                  EdgeInsets.fromLTRB(43.1 * fem, 0 * fem, 43.1 * fem, 0 * fem),
+              child: TextField(
+                controller: amountController,
+                inputFormatters: [usdInputFormatter],
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                  labelText: 'Enter USD amount',
+                  labelStyle: SafeGoogleFont(
+                    'Outfit',
+                    fontSize: 25 * ffem,
+                    fontWeight: FontWeight.w700,
+                    height: 1.26 * ffem / fem,
+                    color: Colors.white,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(18.3050861359 * fem),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(18.3050861359 * fem),
+                  ),
+                ),
+                style: SafeGoogleFont(
+                  'Outfit',
+                  fontSize: 25 * ffem, // Adjust the size as needed
+                  fontWeight: FontWeight.w700,
+                  height: 1.26 * ffem / fem,
+                  color: Colors.white,
+                ),
+              )),
+          SizedBox(height: 20),
+          Container(
+            // sendbuttonesZ (301:1210)
+            margin:
+                EdgeInsets.fromLTRB(43.1 * fem, 0 * fem, 43.1 * fem, 0 * fem),
+            child: TextButton(
+              onPressed: () => {if (amountController.text.isNotEmpty) sendAllowance()},
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+              ),
+              child: Container(
+                padding: EdgeInsets.fromLTRB(
+                    27.6 * fem, 7.2 * fem, 27.2 * fem, 7.2 * fem),
+                width: double.infinity,
+                height: 98.4 * fem,
+                decoration: BoxDecoration(
+                  color: Color(0x3f4b39ef),
+                  borderRadius: BorderRadius.circular(18.3050861359 * fem),
+                  border: Border(),
+                ),
+                child: Center(
+                  child: Text(
+                    'send',
+                    style: SafeGoogleFont(
+                      'Outfit',
+                      fontSize: 54.0000038147 * ffem,
+                      fontWeight: FontWeight.w700,
+                      height: 1.26 * ffem / fem,
+                      color: Color(0xffffffff),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -259,6 +188,25 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
       // Request failed, handle the error
       print('Error sending allowance: ${response.statusCode}');
       print('Response body: ${response.body}');
+
+      // popup dialogue saying insufficient funds
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Insufficient Funds'),
+              content: Text(
+                  'You do not have enough funds to complete this transaction.'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          });
     }
   }
 }
