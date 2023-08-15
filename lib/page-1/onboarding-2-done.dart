@@ -27,6 +27,8 @@ class OnboardPasswordPage extends StatefulWidget {
 
 class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
   late String username; // Declare a local variable to hold the username
+  late String password; // Declare a local variable to hold the password
+
   @override
   void initState() {
     super.initState();
@@ -353,7 +355,15 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                                                       setState(() {
                                                         widget.passwordConfirm =
                                                             value;
+														if (widget.password == widget.passwordConfirm) {
+															password = widget.passwordConfirm;
+														}
                                                       });
+													  print('=====================');
+													  print(password);
+													  print(widget.password);
+													  print(widget.passwordConfirm);
+													  print('=====================');
                                                     },
                                                   ),
                                                 ),
@@ -424,7 +434,7 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
     final Map<String, dynamic> requestData = {
       "email": widget.emailInput,
       "username": username,
-      "password": widget.password,
+      "password": password,
     };
 
     try {
@@ -438,7 +448,7 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
         print('Request sent successfully');
         // You can handle the response here if needed
         await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: widget.emailInput, password: widget.password);
+            email: widget.emailInput, password: password);
         Navigator.pop(context);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => MyApp()));
