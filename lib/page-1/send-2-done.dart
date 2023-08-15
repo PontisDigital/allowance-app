@@ -99,7 +99,9 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
                           UserCard(
                               username: widget.username,
                               imageUrl: null,
-                              isButton: false)
+                              isButton: false,
+							  currentBalance: '',
+						  )
                         ],
                       ),
                     ),

@@ -29,6 +29,10 @@ class UserData {
 class SendSelectUserPage extends StatefulWidget {
   @override
   _SendSelectUserPageState createState() => _SendSelectUserPageState();
+
+  final String currentBalance;
+
+  SendSelectUserPage({required this.currentBalance});
 }
 
 class _SendSelectUserPageState extends State<SendSelectUserPage> {
@@ -192,6 +196,7 @@ class _SendSelectUserPageState extends State<SendSelectUserPage> {
                                   username: user.username,
                                   imageUrl: null,
                                   isButton: true,
+								  currentBalance: widget.currentBalance,
                                 ))
                             .toList(),
                       ),

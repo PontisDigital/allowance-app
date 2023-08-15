@@ -459,7 +459,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       TextButton(
                                         // sendbuttonWjq (324:441)
-                                        onPressed: () => navigateToSendPage(),
+                                        onPressed: () => navigateToSendPage(userHomeData.totalAllowance),
                                         style: TextButton.styleFrom(
                                           padding: EdgeInsets.zero,
                                         ),
@@ -547,8 +547,8 @@ class _HomePageState extends State<HomePage> {
         context, MaterialPageRoute(builder: (context) => QRCodePage()));
   }
 
-  navigateToSendPage() {
+  navigateToSendPage(String currentBalance) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SendSelectUserPage()));
+        context, MaterialPageRoute(builder: (context) => SendSelectUserPage(currentBalance: currentBalance)));
   }
 }
