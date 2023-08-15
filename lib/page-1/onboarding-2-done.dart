@@ -1,5 +1,6 @@
 import 'package:allowance/main.dart';
 import 'package:allowance/page-1/home-page-done.dart';
+import 'package:allowance/page-1/tutorial-1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
@@ -239,7 +240,10 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                                                   errorBorder: InputBorder.none,
                                                   disabledBorder:
                                                       InputBorder.none,
-                                                  contentPadding: EdgeInsets.symmetric(vertical: 8 * fem, horizontal: 10 * fem),
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          vertical: 8 * fem,
+                                                          horizontal: 10 * fem),
                                                   hintText: '*************',
                                                   hintStyle: TextStyle(
                                                       color: Color(0x99ffffff)),
@@ -327,7 +331,11 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                                                           InputBorder.none,
                                                       disabledBorder:
                                                           InputBorder.none,
-                                                      contentPadding: EdgeInsets.symmetric(vertical: 8 * fem, horizontal: 10 * fem),
+                                                      contentPadding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 8 * fem,
+                                                              horizontal:
+                                                                  10 * fem),
                                                       hintText: '*************',
                                                       hintStyle: TextStyle(
                                                           color: Color(
@@ -345,9 +353,12 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                                                       setState(() {
                                                         widget.passwordConfirm =
                                                             value;
-														if (widget.password == widget.passwordConfirm) {
-															password = widget.passwordConfirm;
-														}
+                                                        if (widget.password ==
+                                                            widget
+                                                                .passwordConfirm) {
+                                                          password = widget
+                                                              .passwordConfirm;
+                                                        }
                                                       });
                                                     },
                                                   ),
@@ -434,11 +445,12 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: widget.emailInput, password: password);
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MyApp()));
+            context, MaterialPageRoute(builder: (context) => Tut1()));
+        //Navigator.pushReplacement(
+        //   context, MaterialPageRoute(builder: (context) => MyApp()));
       } else {
         // You can handle the response here if needed
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 }

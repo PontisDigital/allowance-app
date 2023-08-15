@@ -142,12 +142,9 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
     } else {
       User user = FirebaseAuth.instance.currentUser!;
       await user.reauthenticateWithCredential(cred);
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .delete();
       FirebaseAuth.instance.currentUser!.delete();
       FirebaseAuth.instance.signOut();
+	  Navigator.pop(context);
     }
   }
 }
