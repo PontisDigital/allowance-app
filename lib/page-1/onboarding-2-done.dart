@@ -32,6 +32,26 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        backgroundColor: Color(0xff041e42),
+        centerTitle: true,
+        title: Text(
+          'Sign Up',
+          style: SafeGoogleFont(
+            'Outfit',
+            fontSize: 25 * ffem,
+            fontWeight: FontWeight.w700,
+            height: 1.26 * ffem / fem,
+            color: Color(0xffffffff),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
@@ -406,10 +426,11 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
       if (response.statusCode == 200) {
         print('Request sent successfully');
         // You can handle the response here if needed
-		await FirebaseAuth.instance.signInWithEmailAndPassword(email: widget.emailInput, password: widget.password);
-		Navigator.pop(context);
-		Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
-
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: widget.emailInput, password: widget.password);
+        Navigator.pop(context);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MyApp()));
       } else {
         print('Request failed with status: ${response.statusCode}');
       }

@@ -1,5 +1,6 @@
 import 'package:allowance/page-1/onboarding-1-done.dart';
 import 'package:allowance/page-1/sign-in-with-password.dart';
+import 'package:allowance/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -19,11 +20,26 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
     double ffem = fem * 0.97;
 
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Color(0xff041e42),
+        title: Text(
+          'hoya allowance',
+          style: SafeGoogleFont(
+            'Outfit',
+            fontSize: 25 * ffem,
+            fontWeight: FontWeight.w700,
+            height: 1.26 * ffem / fem,
+            color: Color(0xffffffff),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
           child: Container(
-            padding: EdgeInsets.fromLTRB(45 * fem, 34 * fem, 45 * fem, 34 * fem),
+            padding:
+                EdgeInsets.fromLTRB(45 * fem, 34 * fem, 45 * fem, 34 * fem),
             width: double.infinity,
             height: 844 * fem,
             decoration: BoxDecoration(
@@ -36,25 +52,13 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 68 * fem),
-                    child: Text(
-                      'hoya allowance',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 25 * ffem,
-                        fontWeight: FontWeight.w700,
-                        height: 1.26 * ffem / fem,
-                        color: Color(0xffffffff),
-                      ),
-                    ),
-                  ),
-                  Container(
                     width: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          margin: EdgeInsets.fromLTRB(34.5 * fem, 0 * fem, 34.5 * fem, 52 * fem),
+                          margin: EdgeInsets.fromLTRB(
+                              34.5 * fem, 0 * fem, 34.5 * fem, 52 * fem),
                           width: double.infinity,
                           height: 137 * fem,
                           child: Center(
@@ -78,7 +82,8 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 31 * fem),
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 0 * fem, 31 * fem),
                           width: double.infinity,
                           height: 60 * fem,
                           child: Stack(
@@ -96,7 +101,8 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                                         fontSize: 20 * ffem,
                                         fontWeight: FontWeight.w500,
                                         height: 1.26 * ffem / fem,
-                                        color: Color(0xffffffff), // Text color changed to white
+                                        color: Color(
+                                            0xffffffff), // Text color changed to white
                                       ),
                                     ),
                                   ),
@@ -111,7 +117,8 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                                     height: 35 * fem,
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10 * fem),
+                                        borderRadius:
+                                            BorderRadius.circular(10 * fem),
                                         color: Color(0xff63666a),
                                       ),
                                       child: Row(
@@ -123,12 +130,14 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                                                 focusedBorder: InputBorder.none,
                                                 enabledBorder: InputBorder.none,
                                                 errorBorder: InputBorder.none,
-                                                disabledBorder: InputBorder.none,
-                                                contentPadding: EdgeInsets.fromLTRB(
-                                                    11 * fem,
-                                                    5 * fem,
-                                                    11 * fem,
-                                                    4 * fem),
+                                                disabledBorder:
+                                                    InputBorder.none,
+                                                contentPadding:
+                                                    EdgeInsets.fromLTRB(
+                                                        11 * fem,
+                                                        5 * fem,
+                                                        11 * fem,
+                                                        4 * fem),
                                                 hintText: 'netid',
                                                 hintStyle: TextStyle(
                                                     color: Color(0x99ffffff)),
@@ -137,14 +146,23 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                                                 fontSize: 20 * ffem,
                                                 fontWeight: FontWeight.w500,
                                                 height: 1.26 * ffem / fem,
-                                                color: Color(0xffffffff), // Text color changed to white
+                                                color: Color(
+                                                    0xffffffff), // Text color changed to white
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  if (value.toLowerCase().endsWith("@georgetown.edu")) {
-                                                    emailPartInput = value.toLowerCase().replaceAll("@georgetown.edu", "");
+                                                  if (value
+                                                      .toLowerCase()
+                                                      .endsWith(
+                                                          "@georgetown.edu")) {
+                                                    emailPartInput = value
+                                                        .toLowerCase()
+                                                        .replaceAll(
+                                                            "@georgetown.edu",
+                                                            "");
                                                   } else {
-                                                    emailPartInput = value.toLowerCase();
+                                                    emailPartInput =
+                                                        value.toLowerCase();
                                                   }
                                                 });
                                               },
@@ -156,7 +174,8 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                                               fontSize: 20 * ffem,
                                               fontWeight: FontWeight.w500,
                                               height: 1.26 * ffem / fem,
-                                              color: Color(0xffffffff), // Text color changed to white
+                                              color: Color(
+                                                  0xffffffff), // Text color changed to white
                                             ),
                                           ),
                                         ],
@@ -169,7 +188,8 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.fromLTRB(55 * fem, 0 * fem, 55 * fem, 0 * fem),
+                          margin: EdgeInsets.fromLTRB(
+                              55 * fem, 0 * fem, 55 * fem, 0 * fem),
                           child: TextButton(
                             onPressed: () => handleGivenEmail(context),
                             style: TextButton.styleFrom(
@@ -211,7 +231,7 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
 
   handleGivenEmail(BuildContext context) async {
     String fullEmail = emailPartInput + "@georgetown.edu";
-	emailFullInput = fullEmail;
+    emailFullInput = fullEmail;
 
     List<String> signInMethods =
         await FirebaseAuth.instance.fetchSignInMethodsForEmail(fullEmail);
@@ -243,4 +263,3 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
 void main() {
   runApp(MaterialApp(home: OnboardingStartPage()));
 }
-

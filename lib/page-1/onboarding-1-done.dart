@@ -23,6 +23,26 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
     double ffem = fem * 0.97;
 
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+		backgroundColor: Color(0xff041e42),
+		centerTitle: true,
+		title: Text(
+		  'Sign Up',
+		  style: SafeGoogleFont(
+			'Outfit',
+			fontSize: 25 * ffem,
+			fontWeight: FontWeight.w700,
+			height: 1.26 * ffem / fem,
+			color: Color(0xffffffff),
+		  ),
+		),
+      ),
       body: SingleChildScrollView(
         child: Container(
           // onboarding2doneoCj (301:1077)
@@ -39,22 +59,6 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  // hoyaallowanceg1d (301:1078)
-                  margin:
-                      EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 68 * fem),
-                  child: Text(
-                    'hoya allowance',
-                    textAlign: TextAlign.center,
-                    style: SafeGoogleFont(
-                      'Outfit',
-                      fontSize: 25 * ffem,
-                      fontWeight: FontWeight.w700,
-                      height: 1.26 * ffem / fem,
-                      color: Color(0xffffffff),
-                    ),
-                  ),
-                ),
                 Container(
                   // frame37253PAw (7:127)
                   width: double.infinity,
