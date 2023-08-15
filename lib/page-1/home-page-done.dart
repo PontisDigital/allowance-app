@@ -251,7 +251,7 @@ Timer? _timer;
                                       width: 46.31 * fem,
                                       height: 46.3 * fem,
                                       child: Image.asset(
-                                        'page-1/images/helpcenter.png',
+                                        'assets/page-1/images/helpcenter.png',
                                         width: 46.31 * fem,
                                         height: 46.3 * fem,
                                       ),
@@ -427,8 +427,8 @@ Timer? _timer;
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(
                                                 22.7600765228 * fem),
-                                            child: Image.asset(
-                                              'page-1/images/tile1-1.png',
+                                            child: Image.network(
+                                              'https://play-lh.googleusercontent.com/tGzXJX-9xA60sCxgxXM66Jw_ogbqqBb7D3SWEhZLj-Lo0PrEswX06roMTTAMyl0VaQ=w240-h480-rw',
                                             ),
                                           ),
                                         ),
