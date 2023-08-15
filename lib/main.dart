@@ -83,9 +83,8 @@ class _MyAppState extends State<MyApp> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           } else if (snapshot.hasData) {
-            return ChangeNotifierProvider(
-              create: (context) => UserHomeDataProvider(),
-              child: Scaffold(
+            return 
+              Scaffold(
                 appBar: AppBar(
                   centerTitle: true,
                   title: Text(
@@ -119,7 +118,6 @@ class _MyAppState extends State<MyApp> {
                   onTap: _onItemTapped,
                 ),
                 body: _widgetOptions.elementAt(_selectedIndex),
-              ),
             );
           } else {
             return Scaffold(
