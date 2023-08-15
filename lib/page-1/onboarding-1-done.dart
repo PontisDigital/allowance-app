@@ -210,13 +210,9 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
                                         color: Color(0xff000000),
                                       ),
                                       onChanged: (value) {
-									  	print("AHIWHEPOFHWEPOFHWEOPIFHWOEPIFHWIOEHFPOWHEFWOP:EHF");
-									  	print(value);
                                         setState(() {
                                           widget.usernameInput = value;
-                                        }
-										);
-										print(widget.usernameInput);
+                                        });
                                       },
                                     ),
                                   ),
