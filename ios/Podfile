@@ -6,5 +6,6 @@ target 'Runner' do
      pod 'Firebase/Core', '~> 8.0'
      pod 'Firebase/Auth', '~> 8.0'
      pod 'Firebase/Firestore', '~> 8.0'
-     pod 'GoogleFonts'
+     pod 'GoogleFontsiOS/Outfit',
+     pod 'GoogleFontsiOS/Inter',
 end
