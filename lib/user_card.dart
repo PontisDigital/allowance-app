@@ -8,12 +8,14 @@ class UserCard extends StatelessWidget {
   final String username;
   final String? imageUrl;
   final bool isButton;
+  final String currentBalance;
 
   const UserCard({
     super.key,
     required this.username,
     required this.imageUrl,
 	required this.isButton,
+	required this.currentBalance,
   });
 
   void navigateToSendMoney(BuildContext context)
@@ -21,7 +23,7 @@ class UserCard extends StatelessWidget {
   	Navigator.push(
 	  context,
 	  MaterialPageRoute(
-		builder: (context) => SendEnterAmountPage(username: username, currentBalance: '\$10.00'),
+		builder: (context) => SendEnterAmountPage(username: username, currentBalance: currentBalance),
 	  ),
 	);
   }
