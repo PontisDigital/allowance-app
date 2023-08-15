@@ -35,22 +35,11 @@ class UserHomeData {
   UserHomeData({required this.totalAllowance, required this.allowances});
 }
 
-class UserHomeDataProvider extends ChangeNotifier {
-  UserHomeData _userHomeData =
-      UserHomeData(totalAllowance: "...", allowances: List<Allowance>.empty());
-
-  UserHomeData get userHomeData => _userHomeData;
-
-  void updateHomeData(String newBalance, List<Allowance> newAllowances) {
-    _userHomeData =
-        UserHomeData(totalAllowance: newBalance, allowances: newAllowances);
-    notifyListeners();
-  }
-}
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
+  UserHomeData _userHomeData =
+      UserHomeData(totalAllowance: "...", allowances: List<Allowance>.empty());
 }
 
 class _HomePageState extends State<HomePage> {
@@ -89,8 +78,10 @@ class _HomePageState extends State<HomePage> {
         List<Allowance> allowanceList =
             allowanceData.map((item) => Allowance.fromJson(item)).toList();
 
-        Provider.of<UserHomeDataProvider>(context, listen: false)
-            .updateHomeData(newBalance, allowanceList);
+        setState(() {
+          widget._userHomeData = UserHomeData(
+              totalAllowance: newBalance, allowances: allowanceList);
+        });
       } else {
         // Handle API error here
       }
@@ -101,9 +92,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final userHomeDataProvider = Provider.of<UserHomeDataProvider>(context);
-    final userHomeData = userHomeDataProvider.userHomeData;
-
     double baseWidth = 386.4799804688;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -150,15 +138,15 @@ class _HomePageState extends State<HomePage> {
                                   width: 311 * fem,
                                   height: 107 * fem,
                                   child: Center(
-                                    child:
-                                        Text('${userHomeData.totalAllowance}',
-                                            style: SafeGoogleFont(
-                                              'Inter',
-                                              fontSize: 87.7027130127 * ffem,
-                                              fontWeight: FontWeight.w700,
-                                              height: 1.2125 * ffem / fem,
-                                              color: Color(0xffffffff),
-                                            )),
+                                    child: Text(
+                                        widget._userHomeData.totalAllowance,
+                                        style: SafeGoogleFont(
+                                          'Inter',
+                                          fontSize: 87.7027130127 * ffem,
+                                          fontWeight: FontWeight.w700,
+                                          height: 1.2125 * ffem / fem,
+                                          color: Color(0xffffffff),
+                                        )),
                                   ),
                                 ),
                               ),
@@ -402,8 +390,8 @@ class _HomePageState extends State<HomePage> {
                                           width: 137 * fem,
                                           height: 105.55 * fem,
                                           child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                                25),
+                                            borderRadius:
+                                                BorderRadius.circular(25),
                                             child: Image.network(
                                               'https://cdn.discordapp.com/attachments/1140995261334835263/1141124481008537732/logo.png',
                                             ),
@@ -459,7 +447,8 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       TextButton(
                                         // sendbuttonWjq (324:441)
-                                        onPressed: () => navigateToSendPage(userHomeData.totalAllowance),
+                                        onPressed: () => navigateToSendPage(
+                                            widget._userHomeData.totalAllowance),
                                         style: TextButton.styleFrom(
                                           padding: EdgeInsets.zero,
                                         ),
@@ -507,13 +496,13 @@ class _HomePageState extends State<HomePage> {
                           ListView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
-                            itemCount: userHomeData.allowances.length,
+                            itemCount: widget._userHomeData.allowances.length,
                             itemBuilder: (context, index) {
                               return Column(
                                 children: [
                                   StoreCardWidget(
                                       allowance:
-                                          userHomeData.allowances[index]),
+                                          widget._userHomeData.allowances[index]),
                                   SizedBox(
                                     height: 14 * fem,
                                   ),
@@ -549,6 +538,9 @@ class _HomePageState extends State<HomePage> {
 
   navigateToSendPage(String currentBalance) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SendSelectUserPage(currentBalance: currentBalance)));
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                SendSelectUserPage(currentBalance: currentBalance)));
   }
 }
