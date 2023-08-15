@@ -124,24 +124,55 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                                       child: Row(
                                         children: [
                                           Flexible(
-                                            child: TextField(
-                                              decoration: InputDecoration(
-                                                border: InputBorder.none,
-                                                focusedBorder: InputBorder.none,
-                                                enabledBorder: InputBorder.none,
-                                                errorBorder: InputBorder.none,
-                                                disabledBorder:
-                                                    InputBorder.none,
-                                                contentPadding:
-                                                    EdgeInsets.fromLTRB(
-                                                        11 * fem,
-                                                        5 * fem,
-                                                        11 * fem,
-                                                        4 * fem),
-                                                hintText: 'netid',
-                                                hintStyle: TextStyle(
-                                                    color: Color(0x99ffffff)),
+                                            child: Align(
+											alignment: Alignment.center,
+                                              child: TextField(
+                                                decoration: InputDecoration(
+                                                  border: InputBorder.none,
+                                                  focusedBorder:
+                                                      InputBorder.none,
+                                                  enabledBorder:
+                                                      InputBorder.none,
+                                                  errorBorder: InputBorder.none,
+                                                  disabledBorder:
+                                                      InputBorder.none,
+                                                  hintText: 'netid',
+												  contentPadding: EdgeInsets.symmetric(vertical: 9 * fem, horizontal: 32 * fem),
+                                                  hintStyle: TextStyle(
+                                                      color: Color(0x99ffffff)),
+                                                ),
+                                                style: TextStyle(
+                                                  fontSize: 20 * ffem,
+                                                  fontWeight: FontWeight.w500,
+                                                  height: 1.26 * ffem / fem,
+                                                  color: Color(
+                                                      0xffffffff), // Text color changed to white
+                                                ),
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    if (value
+                                                        .toLowerCase()
+                                                        .endsWith(
+                                                            "@georgetown.edu")) {
+                                                      emailPartInput = value
+                                                          .toLowerCase()
+                                                          .replaceAll(
+                                                              "@georgetown.edu",
+                                                              "");
+                                                    } else {
+                                                      emailPartInput =
+                                                          value.toLowerCase();
+                                                    }
+                                                  });
+                                                },
                                               ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+												0, 0, 10, 5),
+                                            child: Text(
+                                              '@georgetown.edu',
                                               style: TextStyle(
                                                 fontSize: 20 * ffem,
                                                 fontWeight: FontWeight.w500,
@@ -149,33 +180,6 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                                                 color: Color(
                                                     0xffffffff), // Text color changed to white
                                               ),
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  if (value
-                                                      .toLowerCase()
-                                                      .endsWith(
-                                                          "@georgetown.edu")) {
-                                                    emailPartInput = value
-                                                        .toLowerCase()
-                                                        .replaceAll(
-                                                            "@georgetown.edu",
-                                                            "");
-                                                  } else {
-                                                    emailPartInput =
-                                                        value.toLowerCase();
-                                                  }
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                          Text(
-                                            '@georgetown.edu',
-                                            style: TextStyle(
-                                              fontSize: 20 * ffem,
-                                              fontWeight: FontWeight.w500,
-                                              height: 1.26 * ffem / fem,
-                                              color: Color(
-                                                  0xffffffff), // Text color changed to white
                                             ),
                                           ),
                                         ],
