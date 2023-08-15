@@ -403,9 +403,9 @@ class _HomePageState extends State<HomePage> {
                                           height: 105.55 * fem,
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(
-                                                22.7600765228 * fem),
+                                                25),
                                             child: Image.network(
-                                              'https://play-lh.googleusercontent.com/tGzXJX-9xA60sCxgxXM66Jw_ogbqqBb7D3SWEhZLj-Lo0PrEswX06roMTTAMyl0VaQ=w240-h480-rw',
+                                              'https://cdn.discordapp.com/attachments/1140995261334835263/1141124481008537732/logo.png',
                                             ),
                                           ),
                                         ),
