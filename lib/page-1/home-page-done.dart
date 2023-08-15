@@ -54,20 +54,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-Timer? _timer;
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-	_fetchUserBalance(null);
+    _fetchUserBalance(null);
     _timer = Timer.periodic(Duration(milliseconds: 10000), _fetchUserBalance);
   }
 
   @override
   void dispose() {
-	_timer?.cancel();
-	super.dispose();
+    _timer?.cancel();
+    super.dispose();
   }
 
   Future<void> _fetchUserBalance(Timer? timer) async {
@@ -134,31 +133,9 @@ Timer? _timer;
                 child: Stack(
                   children: [
                     Positioned(
-                      // hoyaallowancezAb (324:422)
-                      left: 66.2337646484 * fem,
-                      top: 0 * fem,
-                      child: Align(
-                        child: SizedBox(
-                          width: 178 * fem,
-                          height: 32 * fem,
-                          child: Text(
-                            'hoya allowance',
-                            textAlign: TextAlign.center,
-                            style: SafeGoogleFont(
-                              'Outfit',
-                              fontSize: 25 * ffem,
-                              fontWeight: FontWeight.w700,
-                              height: 1.26 * ffem / fem,
-                              color: Color(0xffffffff),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
                       // allowancebalanceKcB (324:423)
                       left: 0 * fem,
-                      top: 25 * fem,
+                      top: 0 * fem,
                       child: Container(
                         width: 311 * fem,
                         height: 126.7 * fem,
@@ -567,16 +544,11 @@ Timer? _timer;
 
   navigateToQRCodePage(BuildContext context) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => SingleChildScrollView(child: QRCodePage())));
+        context, MaterialPageRoute(builder: (context) => QRCodePage()));
   }
 
   navigateToSendPage() {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                SingleChildScrollView(child: SendSelectUserPage())));
+        context, MaterialPageRoute(builder: (context) => SendSelectUserPage()));
   }
 }

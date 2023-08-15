@@ -21,7 +21,7 @@ class UserCard extends StatelessWidget {
   	Navigator.push(
 	  context,
 	  MaterialPageRoute(
-		builder: (context) => SingleChildScrollView(child: SendEnterAmountPage(username: username, currentBalance: '\$10.00')),
+		builder: (context) => SendEnterAmountPage(username: username, currentBalance: '\$10.00'),
 	  ),
 	);
   }
