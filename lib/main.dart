@@ -1,6 +1,7 @@
 import 'package:allowance/page-1/pay-1-done.dart';
 import 'package:allowance/page-1/search-page-done.dart';
 import 'package:allowance/page-1/send-2-done.dart';
+import 'package:allowance/settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -33,23 +34,7 @@ class _MyAppState extends State<MyApp> {
 
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    Column(
-      children: [
-        Center(
-            child: Text(
-          'Settings',
-          style: TextStyle(color: Colors.white, fontSize: 30),
-        )),
-        Center(
-          child: TextButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-            },
-            child: Text('Sign Out'),
-          ),
-        ),
-      ],
-    ),
+	AllowanceSettings(username: "saa"),
   ];
 
   void _onItemTapped(int index) {
@@ -110,9 +95,7 @@ class _MyAppState extends State<MyApp> {
                   currentIndex: _selectedIndex,
                   onTap: _onItemTapped,
                 ),
-                body: SingleChildScrollView(
-                  child: _widgetOptions.elementAt(_selectedIndex),
-                ),
+                body: _widgetOptions.elementAt(_selectedIndex),
               ),
             );
           } else {

@@ -14,18 +14,25 @@ import 'dart:convert';
 
 class OnboardPasswordPage extends StatefulWidget {
   final String emailInput;
-  final String usernameInput;
+  String user;
 
   String password = "";
   String passwordConfirm = "";
 
-  OnboardPasswordPage({required this.emailInput, required this.usernameInput});
+  OnboardPasswordPage({required this.emailInput, required this.user});
 
   @override
   _OnboardPasswordPageState createState() => _OnboardPasswordPageState();
 }
 
 class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
+  late String username; // Declare a local variable to hold the username
+  @override
+  void initState() {
+    super.initState();
+    username = widget.user;
+  }
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 390;
@@ -361,7 +368,11 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                                       margin: EdgeInsets.fromLTRB(43.5 * fem,
                                           0 * fem, 43.5 * fem, 0 * fem),
                                       child: TextButton(
-                                        onPressed: () => createAccount(context),
+                                        onPressed: () => {
+                                          if (widget.password ==
+                                              widget.passwordConfirm)
+                                            {createAccount(context)}
+                                        },
                                         style: TextButton.styleFrom(
                                           padding: EdgeInsets.zero,
                                         ),
@@ -412,7 +423,7 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
 
     final Map<String, dynamic> requestData = {
       "email": widget.emailInput,
-      "username": widget.usernameInput,
+      "username": username,
       "password": widget.password,
     };
 
@@ -433,6 +444,9 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
             context, MaterialPageRoute(builder: (context) => MyApp()));
       } else {
         print('Request failed with status: ${response.statusCode}');
+        print(response.body);
+        print(requestData);
+        // You can handle the response here if needed
       }
     } catch (error) {
       print('Error sending request: $error');
