@@ -1,7 +1,11 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:allowance/page-1/pay-1-done.dart';
 import 'package:allowance/page-1/search-page-done.dart';
 import 'package:allowance/page-1/send-2-done.dart';
 import 'package:allowance/settings.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -13,6 +17,7 @@ import 'package:allowance/page-1/home-page-done.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../firebase_options.dart';
+import 'package:http/http.dart' as http;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,15 +37,33 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int _selectedIndex = 0;
 
-  static List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-	AllowanceSettings(username: "saa"),
   ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  void addSettingsToList() async {
+    // get username from firestore
+    String username = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((value) {
+      return value['username'];
+    });
+
+    _widgetOptions.add(AllowanceSettings(username: username));
+  }
+
+  @override
+  void initState() {
+    addSettingsToList();
+    super.initState();
   }
 
   @override
