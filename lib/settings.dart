@@ -138,16 +138,10 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
 
   void _deleteAccount() async {
     AuthCredential cred = EmailAuthProvider.credential(email: _emailController.text, password: _passwordController.text);
-    print("============================");
-    print("Reauthenticating...");
-    print("============================");
     if (FirebaseAuth.instance.currentUser == null) {
-      print("Reauth Failed!!");
     } else {
       User user = FirebaseAuth.instance.currentUser!;
-      print((await user.reauthenticateWithCredential(cred))
-          .toString());
-      print("============================");
+      await user.reauthenticateWithCredential(cred);
       FirebaseFirestore.instance
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
