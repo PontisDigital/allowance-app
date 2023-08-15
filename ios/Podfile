@@ -2,6 +2,9 @@ platform :ios, '11.0'
 
 target 'Runner' do
   use_frameworks!
-  # Pods for Runner
-end
 
+     pod 'Firebase/Core', '~> 8.0'
+     pod 'Firebase/Auth', '~> 8.0'
+     pod 'Firebase/Firestore', '~> 8.0'
+     pod 'GoogleFonts'
+end
