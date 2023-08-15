@@ -78,7 +78,6 @@ class _SendSelectUserPageState extends State<SendSelectUserPage> {
       );
 
       if (response.statusCode == 200) {
-        print('Request sent successfully');
         // You can handle the response here if needed
         final jsonResponse = jsonDecode(response.body);
         final userList = List<UserData>.from(
@@ -87,10 +86,8 @@ class _SendSelectUserPageState extends State<SendSelectUserPage> {
           _userList = userList;
         });
       } else {
-        print('Request failed with status: ${response.statusCode}');
       }
     } catch (error) {
-      print('Error sending request: $error');
     }
   }
 

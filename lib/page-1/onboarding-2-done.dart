@@ -359,11 +359,6 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
 															password = widget.passwordConfirm;
 														}
                                                       });
-													  print('=====================');
-													  print(password);
-													  print(widget.password);
-													  print(widget.passwordConfirm);
-													  print('=====================');
                                                     },
                                                   ),
                                                 ),
@@ -445,7 +440,6 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
       );
 
       if (response.statusCode == 200) {
-        print('Request sent successfully');
         // You can handle the response here if needed
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: widget.emailInput, password: password);
@@ -453,13 +447,9 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => MyApp()));
       } else {
-        print('Request failed with status: ${response.statusCode}');
-        print(response.body);
-        print(requestData);
         // You can handle the response here if needed
       }
     } catch (error) {
-      print('Error sending request: $error');
     }
   }
 }
