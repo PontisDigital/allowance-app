@@ -444,10 +444,11 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
         // You can handle the response here if needed
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: widget.emailInput, password: password);
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Tut1()));
-        //Navigator.pushReplacement(
-        //   context, MaterialPageRoute(builder: (context) => MyApp()));
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => Tut1()),
+          (route) => false,
+        );
       } else {
         // You can handle the response here if needed
       }

@@ -244,7 +244,7 @@ class Tut1 extends StatelessWidget {
                   ],
                 ),
               ),
-			  TutButton(fem: fem, ffem: ffem, next: Tut2()),
+			  TutButton(fem: fem, ffem: ffem, next: Tut2(), replaceEntireQueue: false),
             ],
           ),
         ),
