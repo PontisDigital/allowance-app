@@ -35,18 +35,18 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
             Navigator.pop(context);
           },
         ),
-		backgroundColor: Color(0xff041e42),
-		centerTitle: true,
-		title: Text(
-		  'Sign In',
-		  style: SafeGoogleFont(
-			'Outfit',
-			fontSize: 25 * ffem,
-			fontWeight: FontWeight.w700,
-			height: 1.26 * ffem / fem,
-			color: Color(0xffffffff),
-		  ),
-		),
+        backgroundColor: Color(0xff041e42),
+        centerTitle: true,
+        title: Text(
+          'Sign In',
+          style: SafeGoogleFont(
+            'Outfit',
+            fontSize: 25 * ffem,
+            fontWeight: FontWeight.w700,
+            height: 1.26 * ffem / fem,
+            color: Color(0xffffffff),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -206,7 +206,10 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
                                                   errorBorder: InputBorder.none,
                                                   disabledBorder:
                                                       InputBorder.none,
-                                                  contentPadding: EdgeInsets.symmetric(vertical: 8 * fem, horizontal: 10 * fem),
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          vertical: 8 * fem,
+                                                          horizontal: 10 * fem),
                                                   hintText: '*************',
                                                   hintStyle: TextStyle(
                                                       color: Color(0x99ffffff)),
@@ -287,7 +290,10 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
   signIn(BuildContext context) async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: widget.emailInput, password: widget.passwordInput);
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => MyApp()));
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => MyApp()),
+      (route) => false,
+    );
   }
 }
