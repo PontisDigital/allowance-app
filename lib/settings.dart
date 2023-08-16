@@ -55,7 +55,7 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
                             return AlertDialog(
                               title: Text("Delete Account"),
                               content: Text(
-                                  "Are you sure you want to delete your account?"),
+                                  "Are you sure you want to delete your account? This action cannot be undone."),
                               actions: [
                                 ElevatedButton(
                                   child: Text("Yes"),
