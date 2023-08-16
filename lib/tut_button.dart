@@ -8,21 +8,31 @@ class TutButton extends StatelessWidget {
     required this.fem,
     required this.ffem,
     required this.next,
+    required this.replaceEntireQueue,
   });
 
   final double fem;
   final double ffem;
   final Widget next;
+  final bool replaceEntireQueue;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       // sendbuttonWjq (324:441)
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => next),
-        );
+        if (replaceEntireQueue) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => next),
+            (route) => false,
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => next),
+          );
+        }
       },
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,

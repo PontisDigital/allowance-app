@@ -1,5 +1,6 @@
 import 'package:allowance/main.dart';
 import 'package:allowance/page-1/home-page-done.dart';
+import 'package:allowance/page-1/tutorial-1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
@@ -292,7 +293,7 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
         email: widget.emailInput, password: widget.passwordInput);
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => MyApp()),
+      MaterialPageRoute(builder: (context) => Tut1()),
       (route) => false,
     );
   }
