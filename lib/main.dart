@@ -111,7 +111,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ],
                 selectedItemColor: Colors.white,
-                backgroundColor: Color.fromRGBO(14, 15, 160, 1),
+                backgroundColor: Color.fromRGBO(22, 37, 109, 1),
                 unselectedItemColor: Colors.grey.shade400,
                 currentIndex: _selectedIndex,
                 onTap: _onItemTapped,

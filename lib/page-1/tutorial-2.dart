@@ -139,7 +139,7 @@ class Tut2 extends StatelessWidget {
                         ),
                         TextSpan(
                           text:
-                              'To use your allowance, click the allowance button when you are at our partners stores.',
+                              'To use your allowance, click the "allowance" button when you are at checkout.',
                           style: SafeGoogleFont(
                             'Outfit',
                             fontSize: 36 * ffem,

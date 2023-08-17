@@ -117,8 +117,8 @@ class _SendSelectUserPageState extends State<SendSelectUserPage> {
 		  ),
 		),
       ),
-      body: SingleChildScrollView(
-        child: Container(
+      body: 
+        Container(
           width: double.infinity,
           child: Container(
             padding: EdgeInsets.fromLTRB(33 * fem, 34 * fem, 33 * fem, 95 * fem),
@@ -206,7 +206,6 @@ class _SendSelectUserPageState extends State<SendSelectUserPage> {
             ),
           ),
         ),
-      ),
     );
   }
 }

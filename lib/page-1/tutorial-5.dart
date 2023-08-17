@@ -131,7 +131,7 @@ class Tut3 extends StatelessWidget {
                           text: 'Step Three:\n',
                         ),
                         TextSpan(
-                          text: 'Show QR code to Cashier.',
+                          text: 'A QR code will appear. Show it to the cashier.',
                           style: SafeGoogleFont(
                             'Outfit',
                             fontSize: 36 * ffem,

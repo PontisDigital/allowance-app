@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:allowance/coming_soon.dart';
 import 'package:allowance/home_allowance_entry.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
 import 'package:allowance/page-1/pay-1-done.dart';
@@ -32,14 +33,22 @@ class Allowance {
 class UserHomeData {
   final String totalAllowance;
   final List<Allowance> allowances;
-  UserHomeData({required this.totalAllowance, required this.allowances});
+  final bool isEmailVerified;
+  UserHomeData(
+      {required this.totalAllowance,
+      required this.allowances,
+      required this.isEmailVerified});
 }
 
 class HomePage extends StatefulWidget {
+  bool showVerifyDialog = false;
+
   @override
   _HomePageState createState() => _HomePageState();
-  UserHomeData _userHomeData =
-      UserHomeData(totalAllowance: "...", allowances: List<Allowance>.empty());
+  UserHomeData _userHomeData = UserHomeData(
+      totalAllowance: "...",
+      allowances: List<Allowance>.empty(),
+      isEmailVerified: false);
 }
 
 class _HomePageState extends State<HomePage> {
@@ -75,12 +84,16 @@ class _HomePageState extends State<HomePage> {
         final data = json.decode(response.body);
         final String newBalance = data['total_allowance'].toString();
         final List<dynamic> allowanceData = data['allowance'];
+        final bool isEmailVerified = data['email_verified'];
         List<Allowance> allowanceList =
             allowanceData.map((item) => Allowance.fromJson(item)).toList();
 
         setState(() {
+          widget.showVerifyDialog = !isEmailVerified;
           widget._userHomeData = UserHomeData(
-              totalAllowance: newBalance, allowances: allowanceList);
+              totalAllowance: newBalance,
+              allowances: allowanceList,
+              isEmailVerified: isEmailVerified);
         });
       } else {
         // Handle API error here
@@ -95,6 +108,7 @@ class _HomePageState extends State<HomePage> {
     double baseWidth = 386.4799804688;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
+
     return SingleChildScrollView(
       child: Container(
         width: double.infinity,
@@ -254,164 +268,6 @@ class _HomePageState extends State<HomePage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    // frame37189Skf (324:427)
-                                    margin: EdgeInsets.fromLTRB(
-                                        0 * fem, 0 * fem, 0.48 * fem, 17 * fem),
-                                    padding: EdgeInsets.fromLTRB(2.89 * fem,
-                                        10 * fem, 2.89 * fem, 10 * fem),
-                                    width: double.infinity,
-                                    height: 132.27 * fem,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          26.3999996185 * fem),
-                                      gradient: LinearGradient(
-                                        begin: Alignment(-1, -0.002),
-                                        end: Alignment(1.002, 0.053),
-                                        colors: <Color>[
-                                          Color(0xfff9b4b4),
-                                          Color(0xffeba4e8),
-                                          Color(0xffb4f2e1)
-                                        ],
-                                        stops: <double>[0, 0.526, 0.99],
-                                      ),
-                                    ),
-                                    child: Container(
-                                      // group56s5H (19:171)
-                                      width: double.infinity,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                            22.7600765228 * fem),
-                                      ),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            // keepshoppinghopcaskbarreltorec (324:431)
-                                            margin: EdgeInsets.fromLTRB(
-                                                0 * fem,
-                                                0 * fem,
-                                                5.23 * fem,
-                                                9.73 * fem),
-                                            constraints: BoxConstraints(
-                                              maxWidth: 208 * fem,
-                                            ),
-                                            child: RichText(
-                                              text: TextSpan(
-                                                style: SafeGoogleFont(
-                                                  'Inter',
-                                                  fontSize: 21 * ffem,
-                                                  fontWeight: FontWeight.w700,
-                                                  height:
-                                                      0.9523809524 * ffem / fem,
-                                                  letterSpacing: -1.5 * fem,
-                                                  color: Color(0xff525354),
-                                                ),
-                                                children: [
-                                                  TextSpan(
-                                                    text: 'Keep shopping \n',
-                                                    style: SafeGoogleFont(
-                                                      'Inter',
-                                                      fontSize: 21 * ffem,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      height: 1.8 * ffem / fem,
-                                                      letterSpacing: -1.5 * fem,
-                                                      color: Color(0xff525354),
-                                                    ),
-                                                  ),
-                                                  TextSpan(
-                                                    text: '@ ',
-                                                    style: SafeGoogleFont(
-                                                      'Inter',
-                                                      fontSize: 21 * ffem,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      height: 1.0 * ffem / fem,
-                                                      letterSpacing: -1.5 * fem,
-                                                      color: Color(0xff525354),
-                                                    ),
-                                                  ),
-                                                  TextSpan(
-                                                    text:
-                                                        'Hop, Cask & Barrel\n',
-                                                    style: SafeGoogleFont(
-                                                      'Inter',
-                                                      fontSize: 21 * ffem,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      height: 1.0 * ffem / fem,
-                                                      letterSpacing: -1.5 * fem,
-                                                      color: Color(0xff525354),
-                                                    ),
-                                                  ),
-                                                  TextSpan(
-                                                    text: 'to receive ',
-                                                    style: SafeGoogleFont(
-                                                      'Inter',
-                                                      fontSize: 21 * ffem,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      height: 0.9523809524 *
-                                                          ffem /
-                                                          fem,
-                                                      letterSpacing: -1.5 * fem,
-                                                      color: Color(0xff525354),
-                                                    ),
-                                                  ),
-                                                  TextSpan(
-                                                    text: '\$150',
-                                                    style: SafeGoogleFont(
-                                                      'Inter',
-                                                      fontSize: 21 * ffem,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      height: 0.9523809524 *
-                                                          ffem /
-                                                          fem,
-                                                      letterSpacing: -1.5 * fem,
-                                                      color: Color(0xff525354),
-                                                    ),
-                                                  ),
-                                                  TextSpan(
-                                                    text:
-                                                        ' of allowance this semester.',
-                                                    style: SafeGoogleFont(
-                                                      'Inter',
-                                                      fontSize: 21 * ffem,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      height: 0.9523809524 *
-                                                          ffem /
-                                                          fem,
-                                                      letterSpacing: -1.5 * fem,
-                                                      color: Color(0xff525354),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            // tile11eJK (19:170)
-                                            margin: EdgeInsets.fromLTRB(0 * fem,
-                                                0 * fem, 0 * fem, 6.72 * fem),
-                                            width: 137 * fem,
-                                            height: 105.55 * fem,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(25),
-                                              child: Image.network(
-                                                'https://cdn.discordapp.com/attachments/1140995261334835263/1141124481008537732/logo.png',
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
                                   Container(
                                     // frame37190x47 (324:435)
                                     width: double.infinity,
