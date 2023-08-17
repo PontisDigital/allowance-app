@@ -1,4 +1,4 @@
-package com.example.test
+package fund.allowance
 
 import io.flutter.embedding.android.FlutterActivity
 
