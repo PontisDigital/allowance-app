@@ -1,3 +1,4 @@
+import 'package:allowance/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:allowance/page-1/onboarding-start.dart';
 
@@ -36,12 +37,13 @@ class LandingPage extends StatelessWidget {
             Text(
               'allowance.',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 50 * ffem,
-                fontWeight: FontWeight.w700,
-                height: 1.26,
-                color: Colors.white,
-              ),
+              style: SafeGoogleFont(
+				'Outfit',
+				fontSize: 50 * ffem,
+				fontWeight: FontWeight.w700,
+				height: 1.26 * ffem / fem,
+				color: Color(0xffffffff),
+			  ),
             ),
             SizedBox(height: 9 * fem),
             Text(
