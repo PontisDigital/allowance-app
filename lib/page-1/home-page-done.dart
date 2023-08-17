@@ -1,21 +1,17 @@
 import 'dart:async';
 
-import 'package:allowance/coming_soon.dart';
 import 'package:allowance/custom_search.dart';
 import 'package:allowance/home_allowance_entry.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
 import 'package:allowance/page-1/pay-1-done.dart';
 import 'package:allowance/page-1/send-1-done.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
-import 'dart:ui';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:allowance/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Allowance {
   final String balance;
@@ -46,8 +42,13 @@ class UserHomeData {
 class HomePage extends StatefulWidget {
   bool showVerifyDialog = false;
 
+  final String? totalAllowance;
+
+  HomePage({this.totalAllowance});
+
   @override
   _HomePageState createState() => _HomePageState();
+
   UserHomeData _userHomeData = UserHomeData(
       totalAllowance: "...",
       allowances: List<Allowance>.empty(),
@@ -61,7 +62,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _fetchUserBalance(null);
+	_loadUserHomeData();
     _timer = Timer.periodic(Duration(milliseconds: 10000), _fetchUserBalance);
   }
 
@@ -69,6 +70,46 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     _timer?.cancel();
     super.dispose();
+  }
+
+  // Load UserHomeData from shared preferences
+  Future<void> _loadUserHomeData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final totalAllowance = prefs.getString('totalAllowance') ?? "...";
+    final allowancesJson = prefs.getString('allowances') ?? '[]';
+    final allowancesList = (json.decode(allowancesJson) as List)
+        .map((e) => Allowance.fromJson(e))
+        .toList();
+    final isEmailVerified = prefs.getBool('isEmailVerified') ?? false;
+    final otherUsersJson = prefs.getString('otherUsers') ?? '[]';
+    final otherUsersList =
+        (json.decode(otherUsersJson) as List).map((e) => e.toString()).toList();
+
+    setState(() {
+      widget._userHomeData = UserHomeData(
+        totalAllowance: totalAllowance,
+        allowances: allowancesList,
+        isEmailVerified: isEmailVerified,
+        otherUsers: otherUsersList,
+      );
+    });
+
+    _fetchUserBalance(null);
+  }
+
+  // Save UserHomeData to shared preferences
+  Future<void> _saveUserHomeData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString(
+        'totalAllowance', widget._userHomeData.totalAllowance);
+    await prefs.setString(
+        'allowances', json.encode(widget._userHomeData.allowances));
+    await prefs.setBool(
+        'isEmailVerified', widget._userHomeData.isEmailVerified);
+    await prefs.setString(
+        'otherUsers', json.encode(widget._userHomeData.otherUsers));
   }
 
   Future<void> _fetchUserBalance(Timer? timer) async {
@@ -102,6 +143,8 @@ class _HomePageState extends State<HomePage> {
             otherUsers: otherUsers,
           );
         });
+
+		_saveUserHomeData();
       } else {
         // Handle API error here
       }
