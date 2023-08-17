@@ -103,7 +103,8 @@ class _HomePageState extends State<HomePage> {
     List<Allowance> savedAllowances = [];
     if (savedAllowancesJson != null) {
       savedAllowances = savedAllowancesJson
-          .map((allowanceJson) => Allowance.fromJson(json.decode(allowanceJson)))
+          .map(
+              (allowanceJson) => Allowance.fromJson(json.decode(allowanceJson)))
           .toList();
     }
 
@@ -318,7 +319,7 @@ class _HomePageState extends State<HomePage> {
                                       child: SizedBox(
                                         width: 302 * fem,
                                         height: 45 * fem,
-                                        child: Text(
+                                        child: (widget._userHomeData.isEmailVerified) ? Text(
                                           'Scan your QR code every time you shop to recharge your allowance.',
                                           style: SafeGoogleFont(
                                             'Inter',
@@ -327,7 +328,18 @@ class _HomePageState extends State<HomePage> {
                                             height: 1.2125 * ffem / fem,
                                             color: Color(0xffffffff),
                                           ),
-                                        ),
+                                        )
+										:
+										Text(
+                                          'Verify your email to start using your allowance.',
+                                          style: SafeGoogleFont(
+                                            'Inter',
+                                            fontSize: 18.5219993591 * ffem,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.2125 * ffem / fem,
+                                            color: Color(0xffffffff),
+                                          ),
+										),
                                       ),
                                     ),
                                   ),
@@ -353,8 +365,30 @@ class _HomePageState extends State<HomePage> {
                                           margin: EdgeInsets.fromLTRB(0 * fem,
                                               0 * fem, 8 * fem, 0 * fem),
                                           child: TextButton(
-                                            onPressed: () =>
-                                                navigateToQRCodePage(context),
+                                            onPressed: () {
+                                              if (widget._userHomeData
+                                                  .isEmailVerified)
+                                                {
+                                                  navigateToQRCodePage(context);
+                                                }
+												else
+												{
+												showDialog(context: context, builder: (context) => 
+												AlertDialog(
+													title: Text("Email not verified"),
+													content: Text("Please verify your email before proceeding"),
+													actions: [
+														TextButton(
+															child: Text("OK"),
+															onPressed: () {
+																Navigator.of(context).pop();
+															},
+														)
+													],
+												)
+												);
+												}
+                                            },
                                             style: TextButton.styleFrom(
                                               padding: EdgeInsets.zero,
                                             ),
@@ -387,15 +421,36 @@ class _HomePageState extends State<HomePage> {
                                         TextButton(
                                           // sendbuttonWjq (324:441)
                                           onPressed: () {
-                                            showSearch(
-                                                context: context,
-                                                delegate: CustomSearchDelegate(
-                                                    searchTerms: widget
-                                                        ._userHomeData
-                                                        .otherUsers,
-                                                    currentBalance: widget
-                                                        ._userHomeData
-                                                        .totalAllowance));
+                                            if (widget._userHomeData
+                                                .isEmailVerified) {
+                                              showSearch(
+                                                  context: context,
+                                                  delegate:
+                                                      CustomSearchDelegate(
+                                                          searchTerms: widget
+                                                              ._userHomeData
+                                                              .otherUsers,
+                                                          currentBalance: widget
+                                                              ._userHomeData
+                                                              .totalAllowance));
+                                            } else {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      AlertDialog(
+                                                        title: Text(
+                                                            "Email not verified"),
+                                                        content: Text(
+                                                            "you need to verify your email to send allowance"),
+                                                        actions: [
+                                                          TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      context),
+                                                              child: Text("OK"))
+                                                        ],
+                                                      ));
+                                            }
                                           },
                                           style: TextButton.styleFrom(
                                             padding: EdgeInsets.zero,
