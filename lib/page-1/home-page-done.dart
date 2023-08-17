@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:allowance/coming_soon.dart';
+import 'package:allowance/custom_search.dart';
 import 'package:allowance/home_allowance_entry.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
 import 'package:allowance/page-1/pay-1-done.dart';
@@ -34,10 +35,12 @@ class UserHomeData {
   final String totalAllowance;
   final List<Allowance> allowances;
   final bool isEmailVerified;
+  final List<String> otherUsers;
   UserHomeData(
       {required this.totalAllowance,
       required this.allowances,
-      required this.isEmailVerified});
+      required this.isEmailVerified,
+      required this.otherUsers});
 }
 
 class HomePage extends StatefulWidget {
@@ -48,7 +51,8 @@ class HomePage extends StatefulWidget {
   UserHomeData _userHomeData = UserHomeData(
       totalAllowance: "...",
       allowances: List<Allowance>.empty(),
-      isEmailVerified: false);
+      isEmailVerified: false,
+      otherUsers: List<String>.empty());
 }
 
 class _HomePageState extends State<HomePage> {
@@ -85,15 +89,18 @@ class _HomePageState extends State<HomePage> {
         final String newBalance = data['total_allowance'].toString();
         final List<dynamic> allowanceData = data['allowance'];
         final bool isEmailVerified = data['email_verified'];
+        final List<String> otherUsers = data['other_users'].cast<String>();
         List<Allowance> allowanceList =
             allowanceData.map((item) => Allowance.fromJson(item)).toList();
 
         setState(() {
           widget.showVerifyDialog = !isEmailVerified;
           widget._userHomeData = UserHomeData(
-              totalAllowance: newBalance,
-              allowances: allowanceList,
-              isEmailVerified: isEmailVerified);
+            totalAllowance: newBalance,
+            allowances: allowanceList,
+            isEmailVerified: isEmailVerified,
+            otherUsers: otherUsers,
+          );
         });
       } else {
         // Handle API error here
@@ -314,9 +321,17 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                         TextButton(
                                           // sendbuttonWjq (324:441)
-                                          onPressed: () => navigateToSendPage(
-                                              widget._userHomeData
-                                                  .totalAllowance),
+                                          onPressed: () {
+                                            showSearch(
+                                                context: context,
+                                                delegate: CustomSearchDelegate(
+                                                    searchTerms: widget
+                                                        ._userHomeData
+                                                        .otherUsers,
+                                                    currentBalance: widget
+                                                        ._userHomeData
+                                                        .totalAllowance));
+                                          },
                                           style: TextButton.styleFrom(
                                             padding: EdgeInsets.zero,
                                           ),

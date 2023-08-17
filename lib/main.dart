@@ -1,15 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
-
-import 'package:allowance/page-1/onboarding-start.dart';
-import 'package:allowance/page-1/pay-1-done.dart';
-import 'package:allowance/page-1/search-page-done.dart';
-import 'package:allowance/page-1/send-2-done.dart';
 import 'package:allowance/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
 
 import 'package:allowance/utils.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
@@ -18,7 +11,6 @@ import 'package:allowance/page-1/home-page-done.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../firebase_options.dart';
-import 'package:http/http.dart' as http;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -80,9 +72,7 @@ class _MyAppState extends State<MyApp> {
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasData) {
+          if (snapshot.hasData) {
             return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
@@ -129,3 +119,4 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
