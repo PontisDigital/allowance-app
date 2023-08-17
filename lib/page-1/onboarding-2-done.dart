@@ -82,22 +82,6 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    // hoyaallowanced1H (301:1092)
-                    margin: EdgeInsets.fromLTRB(
-                        3 * fem, 0 * fem, 0 * fem, 68 * fem),
-                    child: Text(
-                      'hoya allowance',
-                      textAlign: TextAlign.center,
-                      style: SafeGoogleFont(
-                        'Outfit',
-                        fontSize: 25 * ffem,
-                        fontWeight: FontWeight.w700,
-                        height: 1.26 * ffem / fem,
-                        color: Color(0xffffffff),
-                      ),
-                    ),
-                  ),
-                  Container(
                     // frame37251vm5 (7:125)
                     width: double.infinity,
                     child: Column(
