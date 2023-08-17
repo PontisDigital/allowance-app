@@ -57,6 +57,7 @@ class StoreCardWidget extends StatelessWidget {
             height: 84.7 * fem,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
+			  mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   // frame37164iDd (324:465)
