@@ -42,7 +42,9 @@ class UserCard extends StatelessWidget {
         splashFactory: InkRipple.splashFactory,
         splashColor: Colors.white,
         onTap: () {
-          navigateToSendMoney(context);
+          if (isButton) {
+            navigateToSendMoney(context);
+          }
         },
         child: Container(
           // group18LF1 (301:1227)
