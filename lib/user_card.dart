@@ -1,5 +1,3 @@
-import 'package:allowance/page-1/home-page-done.dart';
-import 'package:allowance/page-1/search-page-done.dart';
 import 'package:allowance/page-1/send-2-done.dart';
 import 'package:allowance/utils.dart';
 import 'package:flutter/material.dart';
