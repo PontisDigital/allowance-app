@@ -12,18 +12,18 @@ class UserCard extends StatelessWidget {
     super.key,
     required this.username,
     required this.imageUrl,
-	required this.isButton,
-	required this.currentBalance,
+    required this.isButton,
+    required this.currentBalance,
   });
 
-  void navigateToSendMoney(BuildContext context)
-  {
-  	Navigator.push(
-	  context,
-	  MaterialPageRoute(
-		builder: (context) => SendEnterAmountPage(username: username, currentBalance: currentBalance),
-	  ),
-	);
+  void navigateToSendMoney(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SendEnterAmountPage(
+            username: username, currentBalance: currentBalance),
+      ),
+    );
   }
 
   @override
@@ -35,104 +35,95 @@ class UserCard extends StatelessWidget {
     final imageHeight = 74.8;
 
     return Padding(
-	padding: EdgeInsets.symmetric(horizontal: 10.0 * fem),
-	child: Container(
-        margin: EdgeInsets.only(bottom: 10.0 * fem),
-        child: Stack(children: [
-          Container(
-            // group18LF1 (301:1227)
+      padding:
+          EdgeInsets.symmetric(horizontal: 20.0 * fem, vertical: 7.0 * fem),
+      child: InkWell(
+        overlayColor: MaterialStateProperty.all<Color>(Colors.white),
+        splashFactory: InkRipple.splashFactory,
+        splashColor: Colors.white,
+        onTap: () {
+          navigateToSendMoney(context);
+        },
+        child: Container(
+          // group18LF1 (301:1227)
+          width: double.infinity,
+          height: 60.39 * fem,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18.8099956512 * fem),
+          ),
+          child: Container(
+            // sampleuser4Ru (301:1228)
+            padding: EdgeInsets.fromLTRB(
+                4.95 * fem, 2.97 * fem, 13.56 * fem, 2.97 * fem),
             width: double.infinity,
-            height: 60.39 * fem,
+            height: double.infinity,
             decoration: BoxDecoration(
+              color: Color(0xff446da4),
               borderRadius: BorderRadius.circular(18.8099956512 * fem),
             ),
-            child: Container(
-              // sampleuser4Ru (301:1228)
-              padding: EdgeInsets.fromLTRB(
-                  4.95 * fem, 2.97 * fem, 13.56 * fem, 2.97 * fem),
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                color: Color(0xff446da4),
-                borderRadius: BorderRadius.circular(18.8099956512 * fem),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  (imageUrl == null)
-                      ? (Container(
-                          // autogroupnsnjaQF (B1A1ZA3sjy7C9m2tAZnSnj)
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 3.96 * fem, 0 * fem),
-                          width: 54.45 * fem,
-                          height: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Color(0x999747ff),
-                            borderRadius:
-                                BorderRadius.circular(27.2250003815 * fem),
-                          ),
-                          child: Center(
-                            child: Text(
-                              username[0].toUpperCase(),
-                              textAlign: TextAlign.center,
-                              style: SafeGoogleFont(
-                                'Outfit',
-                                fontSize: 23.7599983215 * ffem,
-                                fontWeight: FontWeight.w400,
-                                height: 1.26 * ffem / fem,
-                                color: Color(0xffffffff),
-                              ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                (imageUrl == null)
+                    ? (Container(
+                        // autogroupnsnjaQF (B1A1ZA3sjy7C9m2tAZnSnj)
+                        margin: EdgeInsets.fromLTRB(
+                            0 * fem, 0 * fem, 3.96 * fem, 0 * fem),
+                        width: 54.45 * fem,
+                        height: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Color(0x999747ff),
+                          borderRadius:
+                              BorderRadius.circular(27.2250003815 * fem),
+                        ),
+                        child: Center(
+                          child: Text(
+                            username[0].toUpperCase(),
+                            textAlign: TextAlign.center,
+                            style: SafeGoogleFont(
+                              'Outfit',
+                              fontSize: 23.7599983215 * ffem,
+                              fontWeight: FontWeight.w400,
+                              height: 1.26 * ffem / fem,
+                              color: Color(0xffffffff),
                             ),
                           ),
-                        ))
-                      : (Container(
-                          // autogroupnsnjaQF (B1A1ZA3sjy7C9m2tAZnSnj)
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 3.96 * fem, 0 * fem),
-                          width: 54.45 * fem,
-                          height: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Color(0x999747ff),
-                            borderRadius:
-                                BorderRadius.circular(27.2250003815 * fem),
-                          ),
-                          child: Center(child: Image.network(imageUrl!)),
-                        )),
-                  Container(
-                    // evanbirnsthehippo3ddR (301:1231)
-                    margin: EdgeInsets.fromLTRB(
-                        0 * fem, 1.29 * fem, 0 * fem, 0 * fem),
-                    child: Text(
-                      '@' + username,
-                      textAlign: TextAlign.center,
-                      style: SafeGoogleFont(
-                        'Outfit',
-                        fontSize: 23.7599983215 * ffem,
-                        fontWeight: FontWeight.w400,
-                        height: 1.26 * ffem / fem,
-                        color: Color(0xffffffff),
-                      ),
+                        ),
+                      ))
+                    : (Container(
+                        // autogroupnsnjaQF (B1A1ZA3sjy7C9m2tAZnSnj)
+                        margin: EdgeInsets.fromLTRB(
+                            0 * fem, 0 * fem, 3.96 * fem, 0 * fem),
+                        width: 54.45 * fem,
+                        height: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Color(0x999747ff),
+                          borderRadius:
+                              BorderRadius.circular(27.2250003815 * fem),
+                        ),
+                        child: Center(child: Image.network(imageUrl!)),
+                      )),
+                Container(
+                  // evanbirnsthehippo3ddR (301:1231)
+                  margin: EdgeInsets.fromLTRB(
+                      0 * fem, 1.29 * fem, 0 * fem, 0 * fem),
+                  child: Text(
+                    '@' + username,
+                    textAlign: TextAlign.center,
+                    style: SafeGoogleFont(
+                      'Outfit',
+                      fontSize: 23.7599983215 * ffem,
+                      fontWeight: FontWeight.w400,
+                      height: 1.26 * ffem / fem,
+                      color: Color(0xffffffff),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-		  (!isButton) ? Container() :
-          Positioned.fill(
-            child: ElevatedButton(
-              onPressed: () => navigateToSendMoney(context),
-              child: Text(''),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-                padding: EdgeInsets.zero,
-				shape: RoundedRectangleBorder(
-				borderRadius: BorderRadius.circular(18.8099956512 * fem),
-				),
-              ),
-            ),
-          ),
-        ])));
+        ),
+      ),
+    );
   }
 }
