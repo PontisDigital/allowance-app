@@ -319,27 +319,30 @@ class _HomePageState extends State<HomePage> {
                                       child: SizedBox(
                                         width: 302 * fem,
                                         height: 45 * fem,
-                                        child: (widget._userHomeData.isEmailVerified) ? Text(
-                                          'Scan your QR code every time you shop to recharge your allowance.',
-                                          style: SafeGoogleFont(
-                                            'Inter',
-                                            fontSize: 18.5219993591 * ffem,
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.2125 * ffem / fem,
-                                            color: Color(0xffffffff),
-                                          ),
-                                        )
-										:
-										Text(
-                                          'Verify your email to start using your allowance.',
-                                          style: SafeGoogleFont(
-                                            'Inter',
-                                            fontSize: 18.5219993591 * ffem,
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.2125 * ffem / fem,
-                                            color: Color(0xffffffff),
-                                          ),
-										),
+                                        child: (widget
+                                                ._userHomeData.isEmailVerified)
+                                            ? Text(
+                                                'Scan your QR code every time you shop to recharge your allowance.',
+                                                style: SafeGoogleFont(
+                                                  'Inter',
+                                                  fontSize:
+                                                      18.5219993591 * ffem,
+                                                  fontWeight: FontWeight.w400,
+                                                  height: 1.2125 * ffem / fem,
+                                                  color: Color(0xffffffff),
+                                                ),
+                                              )
+                                            : Text(
+                                                'Verify your email to start using your allowance.',
+                                                style: SafeGoogleFont(
+                                                  'Inter',
+                                                  fontSize:
+                                                      18.5219993591 * ffem,
+                                                  fontWeight: FontWeight.w400,
+                                                  height: 1.2125 * ffem / fem,
+                                                  color: Color(0xffffffff),
+                                                ),
+                                              ),
                                       ),
                                     ),
                                   ),
@@ -367,27 +370,39 @@ class _HomePageState extends State<HomePage> {
                                           child: TextButton(
                                             onPressed: () {
                                               if (widget._userHomeData
-                                                  .isEmailVerified)
-                                                {
-                                                  navigateToQRCodePage(context);
-                                                }
-												else
-												{
-												showDialog(context: context, builder: (context) => 
-												AlertDialog(
-													title: Text("Email not verified"),
-													content: Text("Please verify your email before proceeding"),
-													actions: [
-														TextButton(
-															child: Text("OK"),
-															onPressed: () {
-																Navigator.of(context).pop();
-															},
-														)
-													],
-												)
-												);
-												}
+                                                  .isEmailVerified) {
+                                                navigateToQRCodePage(context);
+                                              } else {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        AlertDialog(
+                                                          title: Text(
+                                                              "Email not verified"),
+                                                          content: Text(
+                                                              "Please verify your email before proceeding"),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () {
+                                                                resendVerificationEmail();
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                              child: Text(
+                                                                  "Resend Verification Email"),
+                                                            ),
+                                                            TextButton(
+                                                              child: Text("OK"),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                            ),
+                                                          ],
+                                                        ));
+                                              }
                                             },
                                             style: TextButton.styleFrom(
                                               padding: EdgeInsets.zero,
@@ -443,6 +458,16 @@ class _HomePageState extends State<HomePage> {
                                                         content: Text(
                                                             "you need to verify your email to send allowance"),
                                                         actions: [
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              resendVerificationEmail();
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                            child: Text(
+                                                                "Resend Verification Email"),
+                                                          ),
                                                           TextButton(
                                                               onPressed: () =>
                                                                   Navigator.pop(
@@ -539,5 +564,69 @@ class _HomePageState extends State<HomePage> {
   navigateToQRCodePage(BuildContext context) {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => QRCodePage()));
+  }
+
+  resendVerificationEmail() async {
+    try {
+      final Uri uri = Uri.parse('https://api.allowance.fund/resend');
+
+      final String? auth_token =
+          await FirebaseAuth.instance.currentUser!.getIdToken();
+      final response = await http.post(
+        uri,
+        body: jsonEncode({
+          "auth_token": auth_token,
+        }),
+      );
+      if (response.statusCode == 200) {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text("Email sent"),
+                  content:
+                      Text("Please check your email for the verification link"),
+                  actions: [
+                    TextButton(
+                      child: Text("OK"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ],
+                ));
+      } else {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text("Email failed to send"),
+                  content: Text("Please try again later"),
+                  actions: [
+                    TextButton(
+                      child: Text("OK"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ],
+                ));
+        // Handle API error here
+      }
+    } catch (e) {
+      // Handle error here
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("Email failed to send"),
+                content: Text("Please try again later"),
+                actions: [
+                  TextButton(
+                    child: Text("OK"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              ));
+    }
   }
 }
