@@ -24,6 +24,13 @@ class Allowance {
       imageUrl: json['logo_url'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'amount': balance,
+      'logo_url': imageUrl,
+    };
+  }
 }
 
 class UserHomeData {
@@ -36,6 +43,26 @@ class UserHomeData {
       required this.allowances,
       required this.isEmailVerified,
       required this.otherUsers});
+
+  factory UserHomeData.fromJson(Map<String, dynamic> json) {
+    return UserHomeData(
+      totalAllowance: json['total_allowance'],
+      allowances: (json['allowance'] as List)
+          .map((allowanceJson) => Allowance.fromJson(allowanceJson))
+          .toList(),
+      isEmailVerified: json['email_verified'],
+      otherUsers: (json['other_users'] as List).cast<String>(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'total_allowance': totalAllowance,
+      'allowance': allowances.map((allowance) => allowance.toJson()).toList(),
+      'email_verified': isEmailVerified,
+      'other_users': otherUsers,
+    };
+  }
 }
 
 class HomePage extends StatefulWidget {
@@ -61,54 +88,39 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-	_loadUserHomeData();
+    _loadSavedData();
+    _fetchUserBalance(null);
     _timer = Timer.periodic(Duration(milliseconds: 10000), _fetchUserBalance);
+  }
+
+  Future<void> _loadSavedData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedTotalAllowance = prefs.getString('totalAllowance');
+    bool? savedIsEmailVerified = prefs.getBool('isEmailVerified');
+    List<String>? savedOtherUsers = prefs.getStringList('otherUsers');
+    List<String>? savedAllowancesJson = prefs.getStringList('allowances');
+
+    List<Allowance> savedAllowances = [];
+    if (savedAllowancesJson != null) {
+      savedAllowances = savedAllowancesJson
+          .map((allowanceJson) => Allowance.fromJson(json.decode(allowanceJson)))
+          .toList();
+    }
+
+    setState(() {
+      widget._userHomeData = UserHomeData(
+        totalAllowance: savedTotalAllowance ?? "...",
+        allowances: savedAllowances,
+        isEmailVerified: savedIsEmailVerified ?? false,
+        otherUsers: savedOtherUsers ?? [],
+      );
+    });
   }
 
   @override
   void dispose() {
     _timer?.cancel();
     super.dispose();
-  }
-
-  // Load UserHomeData from shared preferences
-  Future<void> _loadUserHomeData() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    final totalAllowance = prefs.getString('totalAllowance') ?? "...";
-    final allowancesJson = prefs.getString('allowances') ?? '[]';
-    final allowancesList = (json.decode(allowancesJson) as List)
-        .map((e) => Allowance.fromJson(e))
-        .toList();
-    final isEmailVerified = prefs.getBool('isEmailVerified') ?? false;
-    final otherUsersJson = prefs.getString('otherUsers') ?? '[]';
-    final otherUsersList =
-        (json.decode(otherUsersJson) as List).map((e) => e.toString()).toList();
-
-    setState(() {
-      widget._userHomeData = UserHomeData(
-        totalAllowance: totalAllowance,
-        allowances: allowancesList,
-        isEmailVerified: isEmailVerified,
-        otherUsers: otherUsersList,
-      );
-    });
-
-    _fetchUserBalance(null);
-  }
-
-  // Save UserHomeData to shared preferences
-  Future<void> _saveUserHomeData() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    await prefs.setString(
-        'totalAllowance', widget._userHomeData.totalAllowance);
-    await prefs.setString(
-        'allowances', json.encode(widget._userHomeData.allowances));
-    await prefs.setBool(
-        'isEmailVerified', widget._userHomeData.isEmailVerified);
-    await prefs.setString(
-        'otherUsers', json.encode(widget._userHomeData.otherUsers));
   }
 
   Future<void> _fetchUserBalance(Timer? timer) async {
@@ -127,9 +139,10 @@ class _HomePageState extends State<HomePage> {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final String newBalance = data['total_allowance'].toString();
-        final List<dynamic> allowanceData = data['allowance'];
         final bool isEmailVerified = data['email_verified'];
         final List<String> otherUsers = data['other_users'].cast<String>();
+
+        final List<dynamic> allowanceData = data['allowance'];
         List<Allowance> allowanceList =
             allowanceData.map((item) => Allowance.fromJson(item)).toList();
 
@@ -143,7 +156,17 @@ class _HomePageState extends State<HomePage> {
           );
         });
 
-		_saveUserHomeData();
+        // Save the fetched data to shared preferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('totalAllowance', newBalance);
+        await prefs.setBool('isEmailVerified', isEmailVerified);
+        await prefs.setStringList('otherUsers', otherUsers);
+        // You might want to handle allowances differently since it's a list of custom objects
+        // You could serialize it to JSON and save it as a string, then deserialize it when loading
+        List<String> allowancesJson = allowanceList
+            .map((allowance) => jsonEncode(allowance.toJson()))
+            .toList();
+        await prefs.setStringList('allowances', allowancesJson);
       } else {
         // Handle API error here
       }
@@ -462,5 +485,4 @@ class _HomePageState extends State<HomePage> {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => QRCodePage()));
   }
-
 }
