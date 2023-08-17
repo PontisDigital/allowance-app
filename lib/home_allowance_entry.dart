@@ -1,5 +1,4 @@
 import 'package:allowance/page-1/home-page-done.dart';
-import 'package:allowance/page-1/search-page-done.dart';
 import 'package:allowance/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -10,16 +9,6 @@ class StoreCardWidget extends StatelessWidget {
     super.key,
     required this.allowance,
   });
-
-  void navigateToPayPrompt(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => SingleChildScrollView(
-                child: SearchPage(
-                    amountPassedIn: allowance.balance,
-                    logo_url: allowance.imageUrl))));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +46,7 @@ class StoreCardWidget extends StatelessWidget {
             height: 84.7 * fem,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-			  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   // frame37164iDd (324:465)
@@ -84,7 +73,7 @@ class StoreCardWidget extends StatelessWidget {
                       ),
                       Text(
                         // MnP (324:467)
-						allowance.balance,
+                        allowance.balance,
                         style: SafeGoogleFont(
                           'Inter',
                           fontSize: 59.4000015259 * ffem,
@@ -112,7 +101,7 @@ class StoreCardWidget extends StatelessWidget {
                       width: 104.5 * fem,
                       height: 74.8 * fem,
                       child: Image.network(
-					  	allowance.imageUrl,
+                        allowance.imageUrl,
                         fit: BoxFit.cover,
                       ),
                     ),
