@@ -37,10 +37,7 @@ class UserCard extends StatelessWidget {
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: 20.0 * fem, vertical: 7.0 * fem),
-      child: InkWell(
-        overlayColor: MaterialStateProperty.all<Color>(Colors.white),
-        splashFactory: InkRipple.splashFactory,
-        splashColor: Colors.white,
+      child: GestureDetector(
         onTap: () {
           if (isButton) {
             navigateToSendMoney(context);
