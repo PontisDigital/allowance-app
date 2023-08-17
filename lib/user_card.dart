@@ -36,7 +36,9 @@ class UserCard extends StatelessWidget {
     final imageWidth = 104.5;
     final imageHeight = 74.8;
 
-    return Container(
+    return Padding(
+	padding: EdgeInsets.symmetric(horizontal: 10.0 * fem),
+	child: Container(
         margin: EdgeInsets.only(bottom: 10.0 * fem),
         child: Stack(children: [
           Container(
@@ -133,6 +135,6 @@ class UserCard extends StatelessWidget {
               ),
             ),
           ),
-        ]));
+        ])));
   }
 }
