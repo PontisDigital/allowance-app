@@ -1,7 +1,9 @@
 import 'package:allowance/user_card.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AllowanceSettings extends StatefulWidget {
   @override
@@ -99,8 +101,11 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
                                                 child: Text('Cancel'),
                                               ),
                                               ElevatedButton(
-                                                onPressed: () =>
-                                                    _deleteAccount(),
+                                                onPressed: ()
+                                                    {
+													_deleteAccount();
+													Navigator.of(context).pop();
+													},
                                                 child:
                                                     Text('Delete Account Now'),
                                                 style: ElevatedButton.styleFrom(
@@ -137,14 +142,68 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
   }
 
   void _deleteAccount() async {
-    AuthCredential cred = EmailAuthProvider.credential(email: _emailController.text, password: _passwordController.text);
-    if (FirebaseAuth.instance.currentUser == null) {
-    } else {
-      User user = FirebaseAuth.instance.currentUser!;
-      await user.reauthenticateWithCredential(cred);
-      FirebaseAuth.instance.currentUser!.delete();
-      FirebaseAuth.instance.signOut();
-	  Navigator.pop(context);
+    try {
+      final Uri uri = Uri.parse('https://api.allowance.fund/delete');
+
+      final String? auth_token =
+          await FirebaseAuth.instance.currentUser!.getIdToken();
+      final response = await http.post(
+        uri,
+        body: jsonEncode({
+          "email": _emailController.text,
+          "password": _passwordController.text,
+        }),
+      );
+      if (response.statusCode == 200) {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text("Account deleted"),
+                  content: Text(
+                      "Your account has been deleted. We're sorry to see you go."),
+                  actions: [
+                    TextButton(
+                      child: Text("OK"),
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ],
+                ));
+      } else {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text("Account failed to delete"),
+                  content: Text("Please try again later"),
+                  actions: [
+                    TextButton(
+                      child: Text("OK"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ],
+                ));
+        // Handle API error here
+      }
+    } catch (e) {
+      // Handle error here
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("Account failed to delete"),
+                content: Text("Please try again later"),
+                actions: [
+                  TextButton(
+                    child: Text("OK"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              ));
     }
   }
 }
