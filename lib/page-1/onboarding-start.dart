@@ -13,6 +13,8 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
   String emailPartInput = "";
   String emailFullInput = "";
 
+  bool buttonPressed = false;
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 390;
@@ -125,7 +127,7 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                                         children: [
                                           Flexible(
                                             child: Align(
-											alignment: Alignment.center,
+                                              alignment: Alignment.center,
                                               child: TextField(
                                                 decoration: InputDecoration(
                                                   border: InputBorder.none,
@@ -137,7 +139,10 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                                                   disabledBorder:
                                                       InputBorder.none,
                                                   hintText: 'netid',
-												  contentPadding: EdgeInsets.symmetric(vertical: 9 * fem, horizontal: 32 * fem),
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          vertical: 9 * fem,
+                                                          horizontal: 32 * fem),
                                                   hintStyle: TextStyle(
                                                       color: Color(0x99ffffff)),
                                                 ),
@@ -170,7 +175,7 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
-												0, 0, 10, 5),
+                                                0, 0, 10, 5),
                                             child: Text(
                                               '@georgetown.edu',
                                               style: TextStyle(
@@ -195,11 +200,16 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                           margin: EdgeInsets.fromLTRB(
                               55 * fem, 0 * fem, 55 * fem, 0 * fem),
                           child: TextButton(
-                            onPressed: () => handleGivenEmail(context),
+                            onPressed: () {
+                              if (!buttonPressed) {
+							  	buttonPressed = true;
+                                handleGivenEmail(context);
+                              }
+                            },
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.zero,
                             ),
-                            child: Container(
+                            child: (!buttonPressed) ? Container(
                               width: double.infinity,
                               height: 36 * fem,
                               decoration: BoxDecoration(
@@ -218,7 +228,11 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                                   ),
                                 ),
                               ),
-                            ),
+                            )
+							:
+							CircularProgressIndicator(
+							color: Colors.white,
+							),
                           ),
                         ),
                       ],
@@ -245,6 +259,8 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
     } else {
       moveToOnboardingPart2(context);
     }
+
+	buttonPressed = false;
   }
 
   moveToSignOnWithPassword(BuildContext context) {

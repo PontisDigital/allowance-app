@@ -30,6 +30,8 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
   late String username; // Declare a local variable to hold the username
   late String password; // Declare a local variable to hold the password
 
+  bool buttonPressed = false;
+
   @override
   void initState() {
     super.initState();
@@ -358,36 +360,48 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                                       margin: EdgeInsets.fromLTRB(43.5 * fem,
                                           0 * fem, 43.5 * fem, 0 * fem),
                                       child: TextButton(
-                                        onPressed: () => {
-                                          if (widget.password ==
-                                              widget.passwordConfirm)
-                                            {createAccount(context)}
+                                        onPressed: () {
+                                          if (!buttonPressed) {
+                                            setState(() {
+                                              buttonPressed = true;
+                                            });
+                                            if (widget.password ==
+                                                widget.passwordConfirm) {
+                                              createAccount(context);
+                                            }
+                                          }
                                         },
                                         style: TextButton.styleFrom(
                                           padding: EdgeInsets.zero,
                                         ),
-                                        child: Container(
-                                          width: double.infinity,
-                                          height: 36 * fem,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xff003da5),
-                                            borderRadius:
-                                                BorderRadius.circular(10 * fem),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              'continue',
-                                              textAlign: TextAlign.center,
-                                              style: SafeGoogleFont(
-                                                'Outfit',
-                                                fontSize: 25 * ffem,
-                                                fontWeight: FontWeight.w600,
-                                                height: 1.26 * ffem / fem,
-                                                color: Color(0xffffffff),
+                                        child: (!buttonPressed)
+                                            ? Container(
+                                                width: double.infinity,
+                                                height: 36 * fem,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xff003da5),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10 * fem),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    'continue',
+                                                    textAlign: TextAlign.center,
+                                                    style: SafeGoogleFont(
+                                                      'Outfit',
+                                                      fontSize: 25 * ffem,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      height: 1.26 * ffem / fem,
+                                                      color: Color(0xffffffff),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            : CircularProgressIndicator(
+                                                color: Colors.white,
                                               ),
-                                            ),
-                                          ),
-                                        ),
                                       ),
                                     ),
                                   ],
