@@ -22,6 +22,8 @@ class SignInWithPasswordPage extends StatefulWidget {
 }
 
 class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
+  bool buttonPressed = false;
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 390;
@@ -244,32 +246,44 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
                                   height: 91 * fem,
                                   child: TextButton(
                                     // continuebuttonrj9 (26:62)
-                                    onPressed: () => signIn(context),
+                                    onPressed: () {
+                                      if (!buttonPressed) {
+                                        setState(() {
+                                          buttonPressed = true;
+                                        });
+                                        signIn(context);
+                                      }
+                                    },
                                     style: TextButton.styleFrom(
                                       padding: EdgeInsets.zero,
                                     ),
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xff003da5),
-                                        borderRadius:
-                                            BorderRadius.circular(10 * fem),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'continue',
-                                          textAlign: TextAlign.center,
-                                          style: SafeGoogleFont(
-                                            'Outfit',
-                                            fontSize: 25 * ffem,
-                                            fontWeight: FontWeight.w600,
-                                            height: 1.26 * ffem / fem,
-                                            color: Color(0xffffffff),
+                                    child: (!buttonPressed)
+                                        ? Container(
+                                            width: double.infinity,
+                                            height: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xff003da5),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      10 * fem),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                'continue',
+                                                textAlign: TextAlign.center,
+                                                style: SafeGoogleFont(
+                                                  'Outfit',
+                                                  fontSize: 25 * ffem,
+                                                  fontWeight: FontWeight.w600,
+                                                  height: 1.26 * ffem / fem,
+                                                  color: Color(0xffffffff),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        : CircularProgressIndicator(
+                                            color: Colors.white,
                                           ),
-                                        ),
-                                      ),
-                                    ),
                                   ),
                                 ),
                               ],
@@ -289,12 +303,35 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
   }
 
   signIn(BuildContext context) async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: widget.emailInput, password: widget.passwordInput);
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => Tut1()),
-      (route) => false,
-    );
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: widget.emailInput, password: widget.passwordInput);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Tut1()),
+        (route) => false,
+      );
+    } catch (e) {
+      String error = e.toString();
+      error = error.substring(error.indexOf(']') + 1);
+      if (error.contains('password') || error.contains('channel')) {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text('Invalid Credentials'),
+                  content: Text('Please check your password and try again'),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          setState(() {
+                            buttonPressed = false;
+                          });
+                          Navigator.pop(context);
+                        },
+                        child: Text('OK'))
+                  ],
+                ));
+      }
+    }
   }
 }
