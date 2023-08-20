@@ -13,21 +13,6 @@ class Tut5 extends StatelessWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return Scaffold(
-      appBar: AppBar(
-        leading: Icon(Icons.title),
-        backgroundColor: Color(0xff041e42),
-        centerTitle: true,
-        title: Text(
-          'hoya allowance',
-          style: SafeGoogleFont(
-            'Outfit',
-            fontSize: 25 * ffem,
-            fontWeight: FontWeight.w700,
-            height: 1.26 * ffem / fem,
-            color: Color(0xffffffff),
-          ),
-        ),
-      ),
       body: Container(
         width: double.infinity,
         child: Container(
@@ -40,80 +25,6 @@ class Tut5 extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                // progresstutorialJGf (26:213)
-                margin: EdgeInsets.fromLTRB(
-                    117 * fem, 0 * fem, 117 * fem, 43 * fem),
-                width: double.infinity,
-                height: 18 * fem,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      // frame37136DPd (I26:213;26:138)
-                      width: 20 * fem,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xffffffff),
-                        borderRadius:
-                            BorderRadius.circular(90.2483901978 * fem),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 6 * fem,
-                    ),
-                    Container(
-                      // frame37139k8f (I26:213;26:139)
-                      width: 20 * fem,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xffffffff),
-                        borderRadius:
-                            BorderRadius.circular(90.2483901978 * fem),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 6 * fem,
-                    ),
-                    Container(
-                      // frame37137gY7 (I26:213;26:140)
-                      width: 20 * fem,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xffffffff),
-                        borderRadius:
-                            BorderRadius.circular(90.2483901978 * fem),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 6 * fem,
-                    ),
-                    Container(
-                      // frame37138Rkb (I26:213;26:141)
-                      width: 20 * fem,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xffffffff),
-                        borderRadius:
-                            BorderRadius.circular(90.2483901978 * fem),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 6 * fem,
-                    ),
-                    Container(
-                      // frame37134Ay5 (I26:213;26:142)
-                      width: 52 * fem,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xff4b39ef),
-                        borderRadius:
-                            BorderRadius.circular(90.2483901978 * fem),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               Container(
                 // stepfiveenjoyyourfreestuff6rj (7:291)
                 margin:
