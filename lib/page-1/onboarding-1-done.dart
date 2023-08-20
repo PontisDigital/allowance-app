@@ -1,3 +1,5 @@
+import 'package:allowance/button.dart';
+import 'package:allowance/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
@@ -5,22 +7,17 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:allowance/utils.dart';
 import 'package:allowance/page-1/onboarding-2-done.dart';
 
-class OnboardingSignUpPage extends StatefulWidget {
+class OnboardingSignUpPage extends StatelessWidget {
   final String emailInput;
-  String usernameInput = "";
-
   OnboardingSignUpPage({required this.emailInput});
 
-  @override
-  _OnboardingSignUpPageState createState() => _OnboardingSignUpPageState();
-}
-
-class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
   @override
   Widget build(BuildContext context) {
     double baseWidth = 390;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
+
+    TextEditingController usernameController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -43,29 +40,30 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: Container(
+        // onboarding2doneoCj (301:1077)
+        padding: EdgeInsets.fromLTRB(45 * fem, 34 * fem, 45 * fem, 34 * fem),
+        width: double.infinity,
+        height: 844 * fem,
+        decoration: BoxDecoration(
+          color: Color(0xff041e42),
+        ),
         child: Container(
-          // onboarding2doneoCj (301:1077)
-          padding: EdgeInsets.fromLTRB(45 * fem, 34 * fem, 45 * fem, 34 * fem),
+          // frame37254XeX (7:128)
           width: double.infinity,
-          height: 844 * fem,
-          decoration: BoxDecoration(
-            color: Color(0xff041e42),
-          ),
-          child: Container(
-            // frame37254XeX (7:128)
-            width: double.infinity,
-            height: 465 * fem,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  // frame37253PAw (7:127)
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
+          height: 465 * fem,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                // frame37253PAw (7:127)
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Visibility(
+                      visible: MediaQuery.of(context).viewInsets.bottom == 0,
+                      child: Container(
                         // autogroupibvhwTM (2CN8rdfPbhJDfwXmDUibVH)
                         padding: EdgeInsets.fromLTRB(
                             20 * fem, 0 * fem, 20 * fem, 52 * fem),
@@ -123,94 +121,23 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
                                 ],
                               ),
                             ),
-                            Container(
-                              // createyourusernamegetyourallow (301:1084)
-                              constraints: BoxConstraints(
-                                maxWidth: 260 * fem,
-                              ),
-                              child: Text(
-                                'Create your username, get your allowance.',
-                                textAlign: TextAlign.center,
-                                style: SafeGoogleFont(
-                                  'Outfit',
-                                  fontSize: 36 * ffem,
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.26 * ffem / fem,
-                                  color: Color(0xffffffff),
+                            Visibility(
+                              visible:
+                                  MediaQuery.of(context).viewInsets.bottom == 0,
+                              child: Container(
+                                // createyourusernamegetyourallow (301:1084)
+                                constraints: BoxConstraints(
+                                  maxWidth: 260 * fem,
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        // entryfield6sy (301:1085)
-                        margin: EdgeInsets.fromLTRB(
-                            0 * fem, 0 * fem, 0 * fem, 31 * fem),
-                        width: double.infinity,
-                        height: 60 * fem,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              // usernamedsu (301:1086)
-                              left: 0 * fem,
-                              top: 0 * fem,
-                              child: Align(
-                                child: SizedBox(
-                                  width: 92 * fem,
-                                  height: 26 * fem,
-                                  child: Text(
-                                    'Username',
-                                    style: SafeGoogleFont(
-                                      'Outfit',
-                                      fontSize: 20 * ffem,
-                                      fontWeight: FontWeight.w500,
-                                      height: 1.26 * ffem / fem,
-                                      color: Color(0x99ffffff),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              // frame37154LXR (301:1087)
-                              left: 0 * fem,
-                              top: 25 * fem,
-                              child: Align(
-                                child: SizedBox(
-                                  width: 300 * fem,
-                                  height: 35 * fem,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(10 * fem),
-                                      color: Color(0xff63666a),
-                                    ),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        errorBorder: InputBorder.none,
-                                        disabledBorder: InputBorder.none,
-                                        contentPadding: EdgeInsets.symmetric(vertical: 8 * fem, horizontal: 10 * fem),
-                                        hintText: 'jackthebulldog',
-                                        hintStyle:
-                                            TextStyle(color: Color(0x99ffffff)),
-                                      ),
-                                      style: SafeGoogleFont(
-                                        'Outfit',
-                                        fontSize: 20 * ffem,
-                                        fontWeight: FontWeight.w500,
-                                        height: 1.26 * ffem / fem,
-                                        color: Color(0xffffffff),
-                                      ),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          widget.usernameInput = value;
-                                        });
-                                      },
-                                    ),
+                                child: Text(
+                                  'Create your username, get your allowance.',
+                                  textAlign: TextAlign.center,
+                                  style: SafeGoogleFont(
+                                    'Outfit',
+                                    fontSize: 36 * ffem,
+                                    fontWeight: FontWeight.w700,
+                                    height: 1.26 * ffem / fem,
+                                    color: Color(0xffffffff),
                                   ),
                                 ),
                               ),
@@ -218,57 +145,40 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
                           ],
                         ),
                       ),
-                      Container(
-                        // continuebuttonMSX (301:1089)
-                        margin: EdgeInsets.fromLTRB(
-                            55 * fem, 0 * fem, 55 * fem, 0 * fem),
-                        child: TextButton(
-                          onPressed: () => moveToOnboardingPart2(context),
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                          ),
-                          child: Container(
-                            width: double.infinity,
-                            height: 36 * fem,
-                            decoration: BoxDecoration(
-                              color: Color(0xff003da5),
-                              borderRadius: BorderRadius.circular(10 * fem),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'continue',
-                                textAlign: TextAlign.center,
-                                style: SafeGoogleFont(
-                                  'Outfit',
-                                  fontSize: 25 * ffem,
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.26 * ffem / fem,
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              CustomInput(
+                  hintText: "Username",
+                  controller: usernameController,
+                  onSubmitted: (value) {
+                    moveToOnboardingPart2(context, usernameController.text);
+                  }),
+              SizedBox(
+                height: 20 * fem,
+              ),
+              CustomButton(
+                onPressed: () {
+                  moveToOnboardingPart2(context, usernameController.text);
+                },
+                text: 'continue',
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  moveToOnboardingPart2(BuildContext context) {
-    if (widget.usernameInput.isNotEmpty) {
+  moveToOnboardingPart2(BuildContext context, String usernameInput) {
+    if (usernameInput.isNotEmpty) {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => OnboardPasswordPage(
-                    emailInput: widget.emailInput,
-                    user: widget.usernameInput,
+                    emailInput: emailInput,
+                    usernameInput: usernameInput,
                   )));
     }
   }
