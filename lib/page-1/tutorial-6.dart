@@ -1,4 +1,6 @@
+import 'package:allowance/button.dart';
 import 'package:allowance/main.dart';
+import 'package:allowance/page-1/home-page-done.dart';
 import 'package:allowance/tut_button.dart';
 import 'package:allowance/utils.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +30,7 @@ class Tut5 extends StatelessWidget {
               Container(
                 // stepfiveenjoyyourfreestuff6rj (7:291)
                 margin:
-                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 158 * fem),
+                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 20 * fem),
                 constraints: BoxConstraints(
                   maxWidth: 329 * fem,
                 ),
@@ -60,7 +62,30 @@ class Tut5 extends StatelessWidget {
                   ),
                 ),
               ),
-              TutButton(fem: fem, ffem: ffem, next: MyApp(), replaceEntireQueue: true)
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Image.network(
+                      "https://media.tenor.com/c1rbgR_YFkkAAAAC/baby-throw.gif")),
+              SizedBox(height: 20 * fem),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: CustomButton(
+                    minHeight: 60 * fem,
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyApp()),
+                          (route) => false);
+                    },
+                    text: 'continue',
+                    textStyle: SafeGoogleFont(
+                      'Outfit',
+                      fontSize: 25 * ffem,
+                      fontWeight: FontWeight.w700,
+                      height: 1.26 * ffem / fem,
+                      color: Color(0xffffffff),
+                    )),
+              ),
             ],
           ),
         ),
