@@ -1,3 +1,5 @@
+import 'package:allowance/button.dart';
+import 'package:allowance/input.dart';
 import 'package:allowance/main.dart';
 import 'package:allowance/page-1/home-page-done.dart';
 import 'package:allowance/page-1/tutorial-1.dart';
@@ -13,30 +15,16 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class OnboardPasswordPage extends StatefulWidget {
+class OnboardPasswordPage extends StatelessWidget {
   final String emailInput;
-  String user;
+  final String usernameInput;
 
-  String password = "";
-  String passwordConfirm = "";
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
-  OnboardPasswordPage({required this.emailInput, required this.user});
-
-  @override
-  _OnboardPasswordPageState createState() => _OnboardPasswordPageState();
-}
-
-class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
-  late String username; // Declare a local variable to hold the username
-  late String password; // Declare a local variable to hold the password
+  OnboardPasswordPage({required this.emailInput, required this.usernameInput});
 
   bool buttonPressed = false;
-
-  @override
-  void initState() {
-    super.initState();
-    username = widget.user;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +57,13 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
           width: double.infinity,
           child: Container(
             // onboarding3doneMJf (301:1091)
-            padding:
-                EdgeInsets.fromLTRB(53.5 * fem, 34 * fem, 56.5 * fem, 34 * fem),
+            padding: EdgeInsets.fromLTRB(
+                53.5 * fem,
+                (MediaQuery.of(context).viewInsets.bottom == 0)
+                    ? 34 * fem
+                    : 20 * fem,
+                56.5 * fem,
+                34 * fem),
             width: double.infinity,
             height: 844 * fem,
             decoration: BoxDecoration(
@@ -83,336 +76,130 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    // frame37251vm5 (7:125)
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          // autogroupw5sptC7 (2CN9hMmCc9CZmTX8GnW5SP)
-                          padding: EdgeInsets.fromLTRB(
-                              43 * fem, 0 * fem, 40 * fem, 25 * fem),
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                // progressbarphaseoneRC3 (7:112)
-                                margin: EdgeInsets.fromLTRB(
-                                    46.5 * fem, 0 * fem, 20.5 * fem, 50 * fem),
-                                padding: EdgeInsets.fromLTRB(
-                                    0 * fem, 0 * fem, 26 * fem, 0 * fem),
-                                width: double.infinity,
-                                height: 18 * fem,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      // frame371367qZ (I7:112;7:35)
-                                      width: 20 * fem,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xffffffff),
-                                        borderRadius: BorderRadius.circular(
-                                            90.2483901978 * fem),
+                  Visibility(
+                    visible: MediaQuery.of(context).viewInsets.bottom == 0,
+                    child: Container(
+                      // frame37251vm5 (7:125)
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            // autogroupw5sptC7 (2CN9hMmCc9CZmTX8GnW5SP)
+                            padding: EdgeInsets.fromLTRB(
+                                43 * fem, 0 * fem, 40 * fem, 25 * fem),
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  // progressbarphaseoneRC3 (7:112)
+                                  margin: EdgeInsets.fromLTRB(46.5 * fem,
+                                      0 * fem, 20.5 * fem, 50 * fem),
+                                  padding: EdgeInsets.fromLTRB(
+                                      0 * fem, 0 * fem, 26 * fem, 0 * fem),
+                                  width: double.infinity,
+                                  height: 18 * fem,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        // frame371367qZ (I7:112;7:35)
+                                        width: 20 * fem,
+                                        height: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffffffff),
+                                          borderRadius: BorderRadius.circular(
+                                              90.2483901978 * fem),
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 6 * fem,
-                                    ),
-                                    Container(
-                                      // frame37137f6P (I7:112;7:36)
-                                      width: 20 * fem,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xffffffff),
-                                        borderRadius: BorderRadius.circular(
-                                            90.2483901978 * fem),
+                                      SizedBox(
+                                        width: 6 * fem,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 6 * fem,
-                                    ),
-                                    Container(
-                                      // frame37134zeT (I7:112;7:34)
-                                      width: 52 * fem,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xff4b39ef),
-                                        borderRadius: BorderRadius.circular(
-                                            90.2483901978 * fem),
+                                      Container(
+                                        // frame37137f6P (I7:112;7:36)
+                                        width: 20 * fem,
+                                        height: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffffffff),
+                                          borderRadius: BorderRadius.circular(
+                                              90.2483901978 * fem),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                // createyourpasswordwpb (301:1098)
-                                constraints: BoxConstraints(
-                                  maxWidth: 197 * fem,
-                                ),
-                                child: Text(
-                                  'Create your password',
-                                  textAlign: TextAlign.center,
-                                  style: SafeGoogleFont(
-                                    'Outfit',
-                                    fontSize: 36 * ffem,
-                                    fontWeight: FontWeight.w700,
-                                    height: 1.26 * ffem / fem,
-                                    color: Color(0xffffffff),
+                                      SizedBox(
+                                        width: 6 * fem,
+                                      ),
+                                      Container(
+                                        // frame37134zeT (I7:112;7:34)
+                                        width: 52 * fem,
+                                        height: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xff4b39ef),
+                                          borderRadius: BorderRadius.circular(
+                                              90.2483901978 * fem),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          // frame371564PR (301:1099)
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                // passwordentrytwo1pT (301:1101)
-                                width: double.infinity,
-                                height: 60 * fem,
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      // passwordNQ7 (301:1102)
-                                      left: 0 * fem,
-                                      top: 0 * fem,
-                                      child: Align(
-                                        child: SizedBox(
-                                          width: 86 * fem,
-                                          height: 26 * fem,
-                                          child: Text(
-                                            'Password',
-                                            style: SafeGoogleFont(
-                                              'Outfit',
-                                              fontSize: 20 * ffem,
-                                              fontWeight: FontWeight.w500,
-                                              height: 1.26 * ffem / fem,
-                                              color: Color(0x99ffffff),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                Container(
+                                  // createyourpasswordwpb (301:1098)
+                                  constraints: BoxConstraints(
+                                    maxWidth: 197 * fem,
+                                  ),
+                                  child: Text(
+                                    'Create your password',
+                                    textAlign: TextAlign.center,
+                                    style: SafeGoogleFont(
+                                      'Outfit',
+                                      fontSize: 36 * ffem,
+                                      fontWeight: FontWeight.w700,
+                                      height: 1.26 * ffem / fem,
+                                      color: Color(0xffffffff),
                                     ),
-                                    Positioned(
-                                      // frame371484nj (301:1103)
-                                      left: 3 * fem,
-                                      top: 25 * fem,
-                                      child: Align(
-                                        child: SizedBox(
-                                          width: 277 * fem,
-                                          height: 35 * fem,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      10 * fem),
-                                              color: Color(0xff63666a),
-                                            ),
-                                            child: TextField(
-                                                obscureText: true,
-                                                decoration: InputDecoration(
-                                                  border: InputBorder.none,
-                                                  focusedBorder:
-                                                      InputBorder.none,
-                                                  enabledBorder:
-                                                      InputBorder.none,
-                                                  errorBorder: InputBorder.none,
-                                                  disabledBorder:
-                                                      InputBorder.none,
-                                                  contentPadding:
-                                                      EdgeInsets.symmetric(
-                                                          vertical: 8 * fem,
-                                                          horizontal: 10 * fem),
-                                                  hintText: '*************',
-                                                  hintStyle: TextStyle(
-                                                      color: Color(0x99ffffff)),
-                                                ),
-                                                style: SafeGoogleFont(
-                                                  'Outfit',
-                                                  fontSize: 20 * ffem,
-                                                  fontWeight: FontWeight.w500,
-                                                  height: 1.26 * ffem / fem,
-                                                  color: Color(0xffffffff),
-                                                ),
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    widget.password = value;
-                                                  });
-                                                }),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                // autogroup34jkUrT (2CNA41qSywmruqx3Dj34JK)
-                                padding: EdgeInsets.fromLTRB(
-                                    3 * fem, 15 * fem, 0 * fem, 0 * fem),
-                                width: double.infinity,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      // passwordentryone1bV (301:1105)
-                                      margin: EdgeInsets.fromLTRB(
-                                          0 * fem, 0 * fem, 0 * fem, 15 * fem),
-                                      width: double.infinity,
-                                      height: 60 * fem,
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                            // confirmpasswordYLX (301:1106)
-                                            left: 0 * fem,
-                                            top: 0 * fem,
-                                            child: Align(
-                                              child: SizedBox(
-                                                width: 163 * fem,
-                                                height: 26 * fem,
-                                                child: Text(
-                                                  'Confirm Password',
-                                                  style: SafeGoogleFont(
-                                                    'Outfit',
-                                                    fontSize: 20 * ffem,
-                                                    fontWeight: FontWeight.w500,
-                                                    height: 1.26 * ffem / fem,
-                                                    color: Color(0x99ffffff),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            // frame371493YB (301:1107)
-                                            left: 0 * fem,
-                                            top: 25 * fem,
-                                            child: Align(
-                                              child: SizedBox(
-                                                width: 277 * fem,
-                                                height: 35 * fem,
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10 * fem),
-                                                    color: Color(0xff63666a),
-                                                  ),
-                                                  child: TextField(
-                                                    obscureText: true,
-                                                    decoration: InputDecoration(
-                                                      border: InputBorder.none,
-                                                      focusedBorder:
-                                                          InputBorder.none,
-                                                      enabledBorder:
-                                                          InputBorder.none,
-                                                      errorBorder:
-                                                          InputBorder.none,
-                                                      disabledBorder:
-                                                          InputBorder.none,
-                                                      contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 8 * fem,
-                                                              horizontal:
-                                                                  10 * fem),
-                                                      hintText: '*************',
-                                                      hintStyle: TextStyle(
-                                                          color: Color(
-                                                              0x99ffffff)),
-                                                    ),
-                                                    style: SafeGoogleFont(
-                                                      'Outfit',
-                                                      fontSize: 20 * ffem,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      height: 1.26 * ffem / fem,
-                                                      color: Color(0xffffffff),
-                                                    ),
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        widget.passwordConfirm =
-                                                            value;
-                                                        if (widget.password ==
-                                                            widget
-                                                                .passwordConfirm) {
-                                                          password = widget
-                                                              .passwordConfirm;
-                                                        }
-                                                      });
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      // continuebutton6mM (301:1109)
-                                      margin: EdgeInsets.fromLTRB(43.5 * fem,
-                                          0 * fem, 43.5 * fem, 0 * fem),
-                                      child: TextButton(
-                                        onPressed: () {
-                                          if (!buttonPressed) {
-                                            setState(() {
-                                              buttonPressed = true;
-                                            });
-                                            if (widget.password ==
-                                                widget.passwordConfirm) {
-                                              createAccount(context);
-                                            }
-                                          }
-                                        },
-                                        style: TextButton.styleFrom(
-                                          padding: EdgeInsets.zero,
-                                        ),
-                                        child: (!buttonPressed)
-                                            ? Container(
-                                                width: double.infinity,
-                                                height: 36 * fem,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xff003da5),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10 * fem),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    'continue',
-                                                    textAlign: TextAlign.center,
-                                                    style: SafeGoogleFont(
-                                                      'Outfit',
-                                                      fontSize: 25 * ffem,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      height: 1.26 * ffem / fem,
-                                                      color: Color(0xffffffff),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            : CircularProgressIndicator(
-                                                color: Colors.white,
-                                              ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
+                  CustomInput(
+                    hintText: "Password",
+                    controller: passwordController,
+                    isPassword: true,
+                  ),
+                  SizedBox(
+                    height: 20 * fem,
+                  ),
+                  CustomInput(
+                    hintText: "Confirm Password",
+                    controller: confirmPasswordController,
+                    isPassword: true,
+                    onSubmitted: (value) {
+                      if (value == passwordController.text) {
+                        createAccount(context, value);
+                      } else {
+                        passwordMissmatchDialogue(context);
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 10 * fem,
+                  ),
+                  CustomButton(
+                      onPressed: () {
+                        if (passwordController.text ==
+                            confirmPasswordController.text) {
+                          createAccount(context, passwordController.text);
+                        } else {
+                          passwordMissmatchDialogue(context);
+                        }
+                      },
+                      text: "continue"),
                 ],
               ),
             ),
@@ -422,12 +209,12 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
     );
   }
 
-  createAccount(BuildContext context) async {
+  createAccount(BuildContext context, String password) async {
     final String apiUrl = 'https://api.allowance.fund/register';
 
     final Map<String, dynamic> requestData = {
-      "email": widget.emailInput,
-      "username": username,
+      "email": emailInput,
+      "username": usernameInput,
       "password": password,
     };
 
@@ -440,8 +227,8 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
 
       if (response.statusCode == 200) {
         // You can handle the response here if needed
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: widget.emailInput, password: password);
+        await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: emailInput, password: password);
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => Tut1()),
@@ -451,5 +238,19 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
         // You can handle the response here if needed
       }
     } catch (error) {}
+  }
+
+  void passwordMissmatchDialogue(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text("Password Missmatch"),
+              content: Text(
+                  "The passwords you entered do not match. Please try again."),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(context), child: Text("OK"))
+              ],
+            ));
   }
 }
