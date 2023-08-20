@@ -159,6 +159,7 @@ class OnboardingSignUpPage extends StatelessWidget {
                 height: 20 * fem,
               ),
               CustomButton(
+			  minHeight: 60 * fem,
                 onPressed: () {
                   moveToOnboardingPart2(context, usernameController.text);
                 },

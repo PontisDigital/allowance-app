@@ -61,8 +61,8 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
           width: double.infinity,
           child: Container(
             // enterpassworddoneK7d (26:47)
-            padding: EdgeInsets.fromLTRB(
-                53.5 * fem, 34 * fem, 56.5 * fem, 34 * fem),
+            padding:
+                EdgeInsets.fromLTRB(53.5 * fem, 34 * fem, 56.5 * fem, 34 * fem),
             width: double.infinity,
             height: 844 * fem,
             decoration: BoxDecoration(
@@ -106,8 +106,8 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
                                     children: [
                                       Container(
                                         // frame37136fDR (I26:51;7:35)
-                                        margin: EdgeInsets.fromLTRB(0 * fem,
-                                            0 * fem, 6 * fem, 0 * fem),
+                                        margin: EdgeInsets.fromLTRB(
+                                            0 * fem, 0 * fem, 6 * fem, 0 * fem),
                                         width: 20 * fem,
                                         height: double.infinity,
                                         decoration: BoxDecoration(
@@ -126,9 +126,8 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
                                           height: double.infinity,
                                           decoration: BoxDecoration(
                                             color: Color(0xff4b39ef),
-                                            borderRadius:
-                                                BorderRadius.circular(
-                                                    90.2483901978 * fem),
+                                            borderRadius: BorderRadius.circular(
+                                                90.2483901978 * fem),
                                           ),
                                         ),
                                       ),
@@ -173,8 +172,9 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
                           hintText: 'Password',
                           keyboardType: TextInputType.text,
                         ),
-						  SizedBox(height: 20),
+                        SizedBox(height: 20),
                         CustomButton(
+                            minHeight: 60 * fem,
                             text: 'Sign In',
                             onPressed: () {
                               signIn(context, passwordController.text);

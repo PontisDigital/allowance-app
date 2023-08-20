@@ -110,6 +110,7 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                 ),
                 CustomButton(
                     text: 'continue',
+					minHeight: 60 * fem,
                     onPressed: () {
                       if (!buttonPressed) {
                         buttonPressed = true;
