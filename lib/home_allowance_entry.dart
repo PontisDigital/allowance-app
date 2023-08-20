@@ -21,7 +21,7 @@ class StoreCardWidget extends StatelessWidget {
     return Container(
       // storecardmQs (27:44)
       margin: EdgeInsets.fromLTRB(0.79 * fem, 0 * fem, 0.79 * fem, 0 * fem),
-      padding: EdgeInsets.fromLTRB(11 * fem, 15 * fem, 11 * fem, 36 * fem),
+      padding: EdgeInsets.fromLTRB(11 * fem, 15 * fem, 11 * fem, 11 * fem),
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(26.3999996185 * fem),
@@ -50,8 +50,6 @@ class StoreCardWidget extends StatelessWidget {
               children: [
                 Container(
                   // frame37164iDd (324:465)
-                  margin: EdgeInsets.fromLTRB(
-                      0 * fem, 4.35 * fem, 18 * fem, 4.35 * fem),
                   height: double.infinity,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +57,7 @@ class StoreCardWidget extends StatelessWidget {
                       Container(
                         // availableallowanceSQX (324:466)
                         margin: EdgeInsets.fromLTRB(
-                            0 * fem, 0 * fem, 0 * fem, 16 * fem),
+                            8 * fem, 0 * fem, 0 * fem, 16 * fem),
                         child: Text(
                           'available allowance',
                           style: SafeGoogleFont(
@@ -71,17 +69,19 @@ class StoreCardWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
-                        // MnP (324:467)
-                        allowance.balance,
-                        style: SafeGoogleFont(
-                          'Inter',
-                          fontSize: 59.4000015259 * ffem,
-                          fontWeight: FontWeight.w700,
-                          height: 0.7618519237 * ffem / fem,
-                          letterSpacing: -0.5940000153 * fem,
-                          color: Color(0xff08090a),
-                        ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(
+                            0 * fem, 0 * fem, 0 * fem, 16 * fem),
+                        child: Text(
+                            // MnP (324:467)
+                            allowance.balance,
+                            style: SafeGoogleFont(
+                              'Inter',
+                              fontSize: 60 * ffem,
+                              fontWeight: FontWeight.w600,
+                              height: 0.75 * ffem / fem,
+                              color: Color(0xff08090a),
+                            )),
                       ),
                     ],
                   ),
@@ -110,14 +110,13 @@ class StoreCardWidget extends StatelessWidget {
               ],
             ),
           ),
-          Container(
+          Center(
             // keepshoppingtorefillyourallowa (324:472)
-            margin: EdgeInsets.fromLTRB(5.31 * fem, 0 * fem, 0 * fem, 0 * fem),
             child: Text(
               'keep shopping to refill your allowance',
               style: SafeGoogleFont(
                 'Inter',
-                fontSize: 12.1000003815 * ffem,
+                fontSize: 12 * ffem,
                 fontWeight: FontWeight.w400,
                 height: 1.8181817609 * ffem / fem,
                 color: Color(0xff525354),

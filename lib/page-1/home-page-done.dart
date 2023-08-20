@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:allowance/coming_soon.dart';
 import 'package:allowance/custom_search.dart';
 import 'package:allowance/home_allowance_entry.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
@@ -189,7 +190,7 @@ class _HomePageState extends State<HomePage> {
           // homepagedoneCkX (324:418)
           padding: EdgeInsets.fromLTRB(14 * fem, 34 * fem, 14 * fem, 34 * fem),
           width: double.infinity,
-          height: 744.46 * fem,
+          height: 944 * fem,
           decoration: BoxDecoration(
             color: Color(0xff041e42),
           ),
@@ -539,6 +540,15 @@ class _HomePageState extends State<HomePage> {
                                 );
                               },
                             ),
+                            ComingSoonWidget(
+                                imageUrl:
+                                    "https://thumbs.dreamstime.com/b/lets-shopping-logo-design-template-cart-icon-designs-134743663.jpg"),
+                            SizedBox(
+                              height: 14 * fem,
+                            ),
+                            ComingSoonWidget(
+                                imageUrl:
+                                    "https://www.pngitem.com/pimgs/m/301-3018403_logo-royalty-free-vector-coffee-shop-logos-free.png"),
                           ],
                         ),
                       ),
