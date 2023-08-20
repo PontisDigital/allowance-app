@@ -191,6 +191,7 @@ class OnboardPasswordPage extends StatelessWidget {
                     height: 10 * fem,
                   ),
                   CustomButton(
+                      minHeight: 50 * fem,
                       onPressed: () {
                         if (passwordController.text ==
                             confirmPasswordController.text) {
