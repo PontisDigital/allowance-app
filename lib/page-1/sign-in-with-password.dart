@@ -1,3 +1,5 @@
+import 'package:allowance/button.dart';
+import 'package:allowance/input.dart';
 import 'package:allowance/main.dart';
 import 'package:allowance/page-1/home-page-done.dart';
 import 'package:allowance/page-1/tutorial-1.dart';
@@ -13,7 +15,6 @@ import 'package:provider/provider.dart';
 
 class SignInWithPasswordPage extends StatefulWidget {
   final String emailInput;
-  String passwordInput = "";
 
   SignInWithPasswordPage({required this.emailInput});
 
@@ -23,6 +24,8 @@ class SignInWithPasswordPage extends StatefulWidget {
 
 class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
   bool buttonPressed = false;
+
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,34 +54,36 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: Container(
+        width: double.infinity,
         child: Container(
           width: double.infinity,
           child: Container(
+            // enterpassworddoneK7d (26:47)
+            padding: EdgeInsets.fromLTRB(
+                53.5 * fem, 34 * fem, 56.5 * fem, 34 * fem),
             width: double.infinity,
+            height: 844 * fem,
+            decoration: BoxDecoration(
+              color: Color(0xff041e42),
+            ),
             child: Container(
-              // enterpassworddoneK7d (26:47)
-              padding: EdgeInsets.fromLTRB(
-                  53.5 * fem, 34 * fem, 56.5 * fem, 34 * fem),
+              // frame37252qLs (26:48)
               width: double.infinity,
-              height: 844 * fem,
-              decoration: BoxDecoration(
-                color: Color(0xff041e42),
-              ),
-              child: Container(
-                // frame37252qLs (26:48)
-                width: double.infinity,
-                height: 435 * fem,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      // frame37251tK9 (26:50)
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
+              height: 435 * fem,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    // frame37251tK9 (26:50)
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Visibility(
+                          visible:
+                              MediaQuery.of(context).viewInsets.bottom == 0,
+                          child: Container(
                             // autogroupddqrRZy (2CNASAsCU1RSjfPpnTdDqR)
                             padding: EdgeInsets.fromLTRB(
                                 54.5 * fem, 0 * fem, 47.5 * fem, 25 * fem),
@@ -100,8 +105,8 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
                                     children: [
                                       Container(
                                         // frame37136fDR (I26:51;7:35)
-                                        margin: EdgeInsets.fromLTRB(
-                                            0 * fem, 0 * fem, 6 * fem, 0 * fem),
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            0 * fem, 6 * fem, 0 * fem),
                                         width: 20 * fem,
                                         height: double.infinity,
                                         decoration: BoxDecoration(
@@ -120,180 +125,63 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
                                           height: double.infinity,
                                           decoration: BoxDecoration(
                                             color: Color(0xff4b39ef),
-                                            borderRadius: BorderRadius.circular(
-                                                90.2483901978 * fem),
+                                            borderRadius:
+                                                BorderRadius.circular(
+                                                    90.2483901978 * fem),
                                           ),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                Container(
-                                  // enteryourpasswordbWP (26:52)
-                                  margin: EdgeInsets.fromLTRB(
-                                      0 * fem, 0 * fem, 4 * fem, 0 * fem),
-                                  constraints: BoxConstraints(
-                                    maxWidth: 174 * fem,
-                                  ),
-                                  child: Text(
-                                    'Enter your password',
-                                    textAlign: TextAlign.center,
-                                    style: SafeGoogleFont(
-                                      'Outfit',
-                                      fontSize: 36 * ffem,
-                                      fontWeight: FontWeight.w700,
-                                      height: 1.26 * ffem / fem,
-                                      color: Color(0xffffffff),
+                                Visibility(
+                                  visible: MediaQuery.of(context)
+                                          .viewInsets
+                                          .bottom ==
+                                      0,
+                                  child: Container(
+                                    // enteryourpasswordbWP (26:52)
+                                    margin: EdgeInsets.fromLTRB(
+                                        0 * fem, 0 * fem, 4 * fem, 0 * fem),
+                                    constraints: BoxConstraints(
+                                      maxWidth: 174 * fem,
+                                    ),
+                                    child: Text(
+                                      'Enter your password',
+                                      textAlign: TextAlign.center,
+                                      style: SafeGoogleFont(
+                                        'Outfit',
+                                        fontSize: 36 * ffem,
+                                        fontWeight: FontWeight.w700,
+                                        height: 1.26 * ffem / fem,
+                                        color: Color(0xffffffff),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          Container(
-                            // frame37156He7 (26:53)
-                            width: double.infinity,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  // passwordentrytwo37V (26:54)
-                                  width: double.infinity,
-                                  height: 60 * fem,
-                                  child: Stack(
-                                    children: [
-                                      Positioned(
-                                        // passwordzHd (26:55)
-                                        left: 0 * fem,
-                                        top: 0 * fem,
-                                        child: Align(
-                                          child: SizedBox(
-                                            width: 86 * fem,
-                                            height: 26 * fem,
-                                            child: Text(
-                                              'Password',
-                                              style: SafeGoogleFont(
-                                                'Outfit',
-                                                fontSize: 20 * ffem,
-                                                fontWeight: FontWeight.w500,
-                                                height: 1.26 * ffem / fem,
-                                                color: Color(0x99ffffff),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        // frame37148hC3 (26:56)
-                                        left: 3 * fem,
-                                        top: 25 * fem,
-                                        child: Align(
-                                          child: SizedBox(
-                                            width: 277 * fem,
-                                            height: 35 * fem,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        10 * fem),
-                                                color: Color(0xff63666a),
-                                              ),
-                                              child: TextField(
-                                                obscureText: true,
-                                                decoration: InputDecoration(
-                                                  border: InputBorder.none,
-                                                  focusedBorder:
-                                                      InputBorder.none,
-                                                  enabledBorder:
-                                                      InputBorder.none,
-                                                  errorBorder: InputBorder.none,
-                                                  disabledBorder:
-                                                      InputBorder.none,
-                                                  contentPadding:
-                                                      EdgeInsets.symmetric(
-                                                          vertical: 8 * fem,
-                                                          horizontal: 10 * fem),
-                                                  hintText: '*************',
-                                                  hintStyle: TextStyle(
-                                                      color: Color(0x99ffffff)),
-                                                ),
-                                                style: SafeGoogleFont(
-                                                  'Outfit',
-                                                  fontSize: 20 * ffem,
-                                                  fontWeight: FontWeight.w500,
-                                                  height: 1.26 * ffem / fem,
-                                                  color: Color(0xffffffff),
-                                                ),
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    widget.passwordInput =
-                                                        value;
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  // autogroupq6njXRy (2CNAxQVpUakF7XXktyQ6nj)
-                                  padding: EdgeInsets.fromLTRB(46.5 * fem,
-                                      55 * fem, 43.5 * fem, 0 * fem),
-                                  width: double.infinity,
-                                  height: 91 * fem,
-                                  child: TextButton(
-                                    // continuebuttonrj9 (26:62)
-                                    onPressed: () {
-                                      if (!buttonPressed) {
-                                        setState(() {
-                                          buttonPressed = true;
-                                        });
-                                        signIn(context);
-                                      }
-                                    },
-                                    style: TextButton.styleFrom(
-                                      padding: EdgeInsets.zero,
-                                    ),
-                                    child: (!buttonPressed)
-                                        ? Container(
-                                            width: double.infinity,
-                                            height: double.infinity,
-                                            decoration: BoxDecoration(
-                                              color: Color(0xff003da5),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      10 * fem),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                'continue',
-                                                textAlign: TextAlign.center,
-                                                style: SafeGoogleFont(
-                                                  'Outfit',
-                                                  fontSize: 25 * ffem,
-                                                  fontWeight: FontWeight.w600,
-                                                  height: 1.26 * ffem / fem,
-                                                  color: Color(0xffffffff),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        : CircularProgressIndicator(
-                                            color: Colors.white,
-                                          ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                        CustomInput(
+                          onSubmitted: (value) {
+                            signIn(context, value);
+                          },
+                          controller: passwordController,
+                          isPassword: true,
+                          hintText: 'Password',
+                          keyboardType: TextInputType.text,
+                        ),
+						  SizedBox(height: 20),
+                        CustomButton(
+                            text: 'Sign In',
+                            onPressed: () {
+                              signIn(context, passwordController.text);
+                            }),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -302,10 +190,10 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
     );
   }
 
-  signIn(BuildContext context) async {
+  signIn(BuildContext context, String password) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: widget.emailInput, password: widget.passwordInput);
+          email: widget.emailInput, password: password);
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => Tut1()),

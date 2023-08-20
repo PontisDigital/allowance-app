@@ -1,3 +1,5 @@
+import 'package:allowance/button.dart';
+import 'package:allowance/input.dart';
 import 'package:allowance/page-1/onboarding-1-done.dart';
 import 'package:allowance/page-1/sign-in-with-password.dart';
 import 'package:allowance/utils.dart';
@@ -14,6 +16,8 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
   String emailFullInput = "";
 
   bool buttonPressed = false;
+
+  TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,29 +40,31 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: Container(
+        width: double.infinity,
         child: Container(
+          padding:
+              EdgeInsets.fromLTRB(20 * fem, 34 * fem, 20 * fem, 34 * fem),
           width: double.infinity,
+          height: 844 * fem,
+          decoration: BoxDecoration(
+            color: Color(0xff041e42),
+          ),
           child: Container(
-            padding:
-                EdgeInsets.fromLTRB(45 * fem, 34 * fem, 45 * fem, 34 * fem),
             width: double.infinity,
-            height: 844 * fem,
-            decoration: BoxDecoration(
-              color: Color(0xff041e42),
-            ),
-            child: Container(
-              width: double.infinity,
-              height: 416 * fem,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
+            height: 416 * fem,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Visibility(
+                        visible:
+                            MediaQuery.of(context).viewInsets.bottom == 0,
+                        child: Container(
                           margin: EdgeInsets.fromLTRB(
                               34.5 * fem, 0 * fem, 34.5 * fem, 52 * fem),
                           width: double.infinity,
@@ -83,163 +89,34 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                             ),
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 0 * fem, 31 * fem),
-                          width: double.infinity,
-                          height: 60 * fem,
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                left: 0 * fem,
-                                top: 0 * fem,
-                                child: Align(
-                                  child: SizedBox(
-                                    width: 50 * fem,
-                                    height: 26 * fem,
-                                    child: Text(
-                                      'Email',
-                                      style: TextStyle(
-                                        fontSize: 20 * ffem,
-                                        fontWeight: FontWeight.w500,
-                                        height: 1.26 * ffem / fem,
-                                        color: Color(
-                                            0xffffffff), // Text color changed to white
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                left: 0 * fem,
-                                top: 25 * fem,
-                                child: Align(
-                                  child: SizedBox(
-                                    width: 300 * fem,
-                                    height: 35 * fem,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10 * fem),
-                                        color: Color(0xff63666a),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Flexible(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: TextField(
-                                                decoration: InputDecoration(
-                                                  border: InputBorder.none,
-                                                  focusedBorder:
-                                                      InputBorder.none,
-                                                  enabledBorder:
-                                                      InputBorder.none,
-                                                  errorBorder: InputBorder.none,
-                                                  disabledBorder:
-                                                      InputBorder.none,
-                                                  hintText: 'netid',
-                                                  contentPadding:
-                                                      EdgeInsets.symmetric(
-                                                          vertical: 9 * fem,
-                                                          horizontal: 32 * fem),
-                                                  hintStyle: TextStyle(
-                                                      color: Color(0x99ffffff)),
-                                                ),
-                                                style: TextStyle(
-                                                  fontSize: 20 * ffem,
-                                                  fontWeight: FontWeight.w500,
-                                                  height: 1.26 * ffem / fem,
-                                                  color: Color(
-                                                      0xffffffff), // Text color changed to white
-                                                ),
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    if (value
-                                                        .toLowerCase()
-                                                        .endsWith(
-                                                            "@georgetown.edu")) {
-                                                      emailPartInput = value
-                                                          .toLowerCase()
-                                                          .replaceAll(
-                                                              "@georgetown.edu",
-                                                              "");
-                                                    } else {
-                                                      emailPartInput =
-                                                          value.toLowerCase();
-                                                    }
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 0, 10, 5),
-                                            child: Text(
-                                              '@georgetown.edu',
-                                              style: TextStyle(
-                                                fontSize: 20 * ffem,
-                                                fontWeight: FontWeight.w500,
-                                                height: 1.26 * ffem / fem,
-                                                color: Color(
-                                                    0xffffffff), // Text color changed to white
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(
-                              55 * fem, 0 * fem, 55 * fem, 0 * fem),
-                          child: TextButton(
-                            onPressed: () {
-                              if (!buttonPressed) {
-							  	buttonPressed = true;
-                                handleGivenEmail(context);
-                              }
-                            },
-                            style: TextButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                            ),
-                            child: (!buttonPressed) ? Container(
-                              width: double.infinity,
-                              height: 36 * fem,
-                              decoration: BoxDecoration(
-                                color: Color(0xff003da5),
-                                borderRadius: BorderRadius.circular(10 * fem),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'continue',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 25 * ffem,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.26 * ffem / fem,
-                                    color: Color(0xffffffff),
-                                  ),
-                                ),
-                              ),
-                            )
-							:
-							CircularProgressIndicator(
-							color: Colors.white,
-							),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                CustomInput(
+                  isPassword: false,
+                  hintText: 'Email',
+                  onChanged: (String val) {
+                    handleEmailChange(val);
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  onSubmitted: (String val) {
+                    handleGivenEmail(context, val);
+                  },
+                  controller: emailController,
+                ),
+                SizedBox(
+                  height: 20 * fem,
+                ),
+                CustomButton(
+                    text: 'continue',
+                    onPressed: () {
+                      if (!buttonPressed) {
+                        buttonPressed = true;
+                        handleGivenEmail(context, emailController.value.text);
+                      }
+                    }),
+              ],
             ),
           ),
         ),
@@ -247,12 +124,27 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
     );
   }
 
-  handleGivenEmail(BuildContext context) async {
-    String fullEmail = emailPartInput + "@georgetown.edu";
-    emailFullInput = fullEmail;
-
+  handleGivenEmail(BuildContext context, String email) async {
+    if (!email.endsWith('@georgetown.edu')) {
+	buttonPressed = false;
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('Invalid Email'),
+                content: Text('Please enter a valid Georgetown email address.'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('OK'),
+                  )
+                ],
+              ));
+      return;
+    }
     List<String> signInMethods =
-        await FirebaseAuth.instance.fetchSignInMethodsForEmail(fullEmail);
+        await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
 
     if (signInMethods.isNotEmpty) {
       moveToSignOnWithPassword(context);
@@ -260,7 +152,7 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
       moveToOnboardingPart2(context);
     }
 
-	buttonPressed = false;
+    buttonPressed = false;
   }
 
   moveToSignOnWithPassword(BuildContext context) {
@@ -268,7 +160,7 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                SignInWithPasswordPage(emailInput: emailFullInput)));
+                SignInWithPasswordPage(emailInput: emailController.text)));
   }
 
   moveToOnboardingPart2(BuildContext context) {
@@ -276,10 +168,14 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                OnboardingSignUpPage(emailInput: emailFullInput)));
+                OnboardingSignUpPage(emailInput: emailController.text)));
   }
-}
 
-void main() {
-  runApp(MaterialApp(home: OnboardingStartPage()));
+  void handleEmailChange(String newValue) {
+    if (!emailController.text.contains('@')) {
+      emailController.value = emailController.value.copyWith(
+        text: newValue + "@georgetown.edu",
+      );
+    }
+  }
 }
