@@ -121,7 +121,7 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
                                         setState(() {
                                           widget.username = newUsername;
                                         });
-										_changeUsernameReq(newUsername);
+                                        _changeUsernameReq(newUsername);
                                         Navigator.pop(
                                             context); // Close the dialog
                                       },
@@ -494,14 +494,14 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
   }
 
   void _changeUsernameReq(String newUsername) async {
-    final url = 'https://api.allowance.fund/changeUsername';
+    final url = 'https://api.allowance.fund/updateUsername';
 
     final headers = {
       'Content-Type': 'application/json',
     };
 
     final body = {
-	  'new_username': newUsername,
+      'new_username': newUsername,
       'auth_token': await FirebaseAuth.instance.currentUser!.getIdToken(),
     };
 
