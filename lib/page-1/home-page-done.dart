@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _loadSavedData();
     _fetchUserBalance(null);
-    _timer = Timer.periodic(Duration(milliseconds: 10000), _fetchUserBalance);
+    _timer = Timer.periodic(Duration(milliseconds: 7500), _fetchUserBalance);
   }
 
   Future<void> _loadSavedData() async {
