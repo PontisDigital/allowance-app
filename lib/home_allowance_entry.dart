@@ -138,7 +138,7 @@ class StoreCardWidget extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CommunityPage(),
+        builder: (context) => CommunityPage(allowance: allowance),
       ),
     );
   }

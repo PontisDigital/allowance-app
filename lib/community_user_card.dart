@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class UserCardCommunity extends StatelessWidget {
-  final double amountSpent;
-  final DateTime spentDate;
+  final String amountSpent;
+  final String spentTime;
+  final String username;
 
   const UserCardCommunity({
     required this.amountSpent,
-    required this.spentDate,
+    required this.spentTime,
+	required this.username,
     Key? key,
   }) : super(key: key);
 
@@ -15,9 +17,9 @@ class UserCardCommunity extends StatelessWidget {
     return Card(
       elevation: 3,
       color: Colors.grey.shade700,
-	  shape: RoundedRectangleBorder(
-		borderRadius: BorderRadius.circular(15.0),
-	  ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
       child: ListTile(
         iconColor: Colors.white,
         textColor: Colors.white,
@@ -26,14 +28,10 @@ class UserCardCommunity extends StatelessWidget {
               vertical: 12), // Adjust the vertical padding as needed
           child: Icon(Icons.monetization_on),
         ),
-        title: Text('Anonymous'),
-        subtitle: Text(
-            'Spent \$${amountSpent.toStringAsFixed(2)} at ${_formatTime(spentDate)}'),
+        title: Text(username),
+        subtitle: Text('Spent ${amountSpent}'),
+        trailing: Text(spentTime),
       ),
     );
-  }
-
-  String _formatTime(DateTime date) {
-    return "${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
   }
 }
