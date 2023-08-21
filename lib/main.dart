@@ -11,6 +11,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../firebase_options.dart';
 
+class SettingsData {
+  final String username;
+  final bool isPublic;
+
+  SettingsData({
+    required this.username,
+    required this.isPublic,
+  });
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -46,15 +56,14 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> addSettingsToList() async {
-    // get username from firestore
-    String username = await FirebaseFirestore.instance
+    SettingsData settingsData = await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((value) {
-      return value['username'];
+      return SettingsData(username: value['username'], isPublic: value['is_public']);
     });
-    _widgetOptions.add(AllowanceSettings(username: username));
+    _widgetOptions.add(AllowanceSettings(username: settingsData.username, isPublic: settingsData.isPublic));
   }
 
   @override
@@ -118,4 +127,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
