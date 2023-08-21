@@ -3,7 +3,6 @@ import 'package:allowance/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:allowance/utils.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
 import 'package:allowance/page-1/home-page-done.dart';

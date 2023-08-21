@@ -6,8 +6,7 @@ import 'package:allowance/community_user_card.dart';
 class CommunityPage extends StatelessWidget {
   final Allowance allowance;
 
-  const CommunityPage({Key? key, required this.allowance})
-      : super(key: key);
+  const CommunityPage({Key? key, required this.allowance}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,68 +29,71 @@ class CommunityPage extends StatelessWidget {
         backgroundColor: Color.fromRGBO(4, 30, 66, 1),
       ),
       backgroundColor: Color.fromRGBO(4, 30, 66, 1),
-      body: Column(
-        children: [
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'You decide when the next round of allowance is!',
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                'You decide when the next round of allowance is!',
+                style: TextStyle(
+                  fontSize: 25 * ffem,
+                  fontWeight: FontWeight.w700,
+                  height: 1.26 * ffem / fem,
+                  color: Color(0xffffffff),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: LinearPercentIndicator(
+                percent:
+                    double.parse(allowance.totalContributions.substring(1)) /
+                        double.parse(allowance.threshold.substring(1)),
+                center: Text(allowance.totalContributions,
+                    style: TextStyle(color: Colors.white)),
+                progressColor: Colors.green,
+                backgroundColor: Colors.black,
+                lineHeight: 30.0,
+                barRadius: Radius.circular(20),
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Fill this bar up to unlock the next round!',
               style: TextStyle(
-                fontSize: 25 * ffem,
+                fontSize: 20 * ffem,
                 fontWeight: FontWeight.w700,
                 height: 1.26 * ffem / fem,
                 color: Color(0xffffffff),
               ),
               textAlign: TextAlign.center,
             ),
-          ),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: LinearPercentIndicator(
-              percent: double.parse(allowance.totalContributions.substring(1)) / double.parse(allowance.threshold.substring(1)),
-              center: Text(allowance.totalContributions, style: TextStyle(color: Colors.white)),
-              progressColor: Colors.green,
-              backgroundColor: Colors.black,
-              lineHeight: 30.0,
-              barRadius: Radius.circular(20),
+            SizedBox(height: 20),
+            Image.network(
+              'https://media.tenor.com/E7fROB_zqFAAAAAC/%EC%9B%90%EA%B8%B0%EC%98%A5.gif',
+              width: 300,
+              height: 300,
             ),
-          ),
-          SizedBox(height: 20),
-          Text(
-            'Fill this bar up to unlock the next round!',
-            style: TextStyle(
-              fontSize: 20 * ffem,
-              fontWeight: FontWeight.w700,
-              height: 1.26 * ffem / fem,
-              color: Color(0xffffffff),
+            SizedBox(height: 20),
+            Text(
+              'Today\'s Contributions',
+              style: TextStyle(
+                fontSize: 20 * ffem,
+                fontWeight: FontWeight.w700,
+                height: 1.26 * ffem / fem,
+                color: Color(0xffffffff),
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 20),
-          Image.network(
-            'https://media.tenor.com/E7fROB_zqFAAAAAC/%EC%9B%90%EA%B8%B0%EC%98%A5.gif',
-            width: 300,
-            height: 300,
-          ),
-          SizedBox(height: 20),
-          Text(
-            'Today\'s Contributions',
-            style: TextStyle(
-              fontSize: 20 * ffem,
-              fontWeight: FontWeight.w700,
-              height: 1.26 * ffem / fem,
-              color: Color(0xffffffff),
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 20),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.4, // Adjust the height as needed
-            child: ListView.builder(
+            SizedBox(height: 20),
+            ListView.builder(
               shrinkWrap: true,
               itemCount: allowance.contributions.length,
+			  physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 ContributionData contribution = allowance.contributions[index];
                 return Padding(
@@ -104,8 +106,8 @@ class CommunityPage extends StatelessWidget {
                 );
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
