@@ -29,6 +29,7 @@ class ComingSoonWidget extends StatelessWidget {
           contributions: [],
           threshold: "",
           totalContributions: "",
+		  merchantName: "",
         )),
       ),
       Positioned.fill(
