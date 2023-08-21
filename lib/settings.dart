@@ -17,8 +17,9 @@ class AllowanceSettings extends StatefulWidget {
 
   final String username;
   bool isPublic;
-  final String? photoUrl;
-  AllowanceSettings({required this.username, required this.isPublic, this.photoUrl});
+  String? photoUrl;
+  AllowanceSettings(
+      {required this.username, required this.isPublic, this.photoUrl});
 }
 
 class _AllowanceSettingsState extends State<AllowanceSettings> {
@@ -362,16 +363,20 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
       SettableMetadata(contentType: 'image/jpeg'),
     );
     if (taskSnapshot.state == TaskState.success) {
-
       final url = 'https://api.allowance.fund/setPhotoUrl';
 
       final headers = {
         'Content-Type': 'application/json',
       };
 
+      String photoUrl = await ref.getDownloadURL();
+      setState(() {
+        widget.photoUrl = photoUrl;
+      });
+
       final body = {
         'auth_token': await FirebaseAuth.instance.currentUser!.getIdToken(),
-		'photo_url': await ref.getDownloadURL(),
+        'photo_url': photoUrl,
       };
 
       final response = await http.post(Uri.parse(url),
@@ -379,7 +384,7 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
 
       if (response.statusCode == 200) {
         // Request successful, handle the response if needed
-		  print('Image uploaded successfully');
+        print('Image uploaded successfully');
       } else {
         // Request failed, handle the error
       }
