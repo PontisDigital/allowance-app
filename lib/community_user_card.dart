@@ -37,20 +37,21 @@ class UserCardCommunity extends StatelessWidget {
                 backgroundImage: NetworkImage(photoUrl!),
               ),
         title: Text(
-          '@$username',
+          (username == 'Someone') ? 'Someone' : '@${username}',
           style: SafeGoogleFont(
             'Outfit',
             fontSize: 20,
             color: Colors.white,
           ),
         ),
-        subtitle: Text('Spent ${amountSpent}',
-		style: SafeGoogleFont(
-			'Outfit',
-			fontSize: 12,
-			color: Colors.white,
-		  ),
-		),
+        subtitle: Text(
+          'Spent ${amountSpent}',
+          style: SafeGoogleFont(
+            'Outfit',
+            fontSize: 12,
+            color: Colors.white,
+          ),
+        ),
         trailing: Text(spentTime),
       ),
     );

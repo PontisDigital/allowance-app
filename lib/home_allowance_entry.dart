@@ -68,7 +68,7 @@ class StoreCardWidget extends StatelessWidget {
                             style: SafeGoogleFont(
                               'Inter',
                               fontSize: 16.5 * ffem,
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w600,
                               height: 1.3333333333 * ffem / fem,
                               color: Color(0xff525354),
                             ),
@@ -122,7 +122,7 @@ class StoreCardWidget extends StatelessWidget {
                 style: SafeGoogleFont(
                   'Inter',
                   fontSize: 12 * ffem,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w700,
                   height: 1.8181817609 * ffem / fem,
                   color: Color(0xff525354),
                 ),

@@ -7,6 +7,7 @@ class CustomButton extends StatelessWidget {
   final TextStyle? textStyle;
   final ButtonStyle? style;
   final double? minHeight;
+  final Color? color;
 
   const CustomButton({
     required this.onPressed,
@@ -14,6 +15,7 @@ class CustomButton extends StatelessWidget {
 	this.textStyle,
 	this.style,
 	this.minHeight,
+	this.color,
   });
 
   @override
@@ -32,7 +34,7 @@ class CustomButton extends StatelessWidget {
       ),
       style: style ?? ButtonStyle(
         backgroundColor:
-            MaterialStatePropertyAll(Color.fromRGBO(0, 61, 166, 1)),
+            MaterialStatePropertyAll(color ?? Color.fromRGBO(0, 61, 166, 1)),
         minimumSize: MaterialStateProperty.all(Size(double.infinity, minHeight ?? 35 * fem)),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
