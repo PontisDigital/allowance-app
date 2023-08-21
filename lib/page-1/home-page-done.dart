@@ -5,6 +5,7 @@ import 'package:allowance/custom_search.dart';
 import 'package:allowance/home_allowance_entry.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
 import 'package:allowance/page-1/pay-1-done.dart';
+import 'package:allowance/survey.dart';
 import 'package:flutter/material.dart';
 import 'package:allowance/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,6 +20,7 @@ class Allowance {
   final List<ContributionData> contributions;
   final String threshold;
   final String totalContributions;
+  final String merchantName;
 
   Allowance({
     required this.balance,
@@ -26,6 +28,7 @@ class Allowance {
     required this.contributions,
     required this.threshold,
     required this.totalContributions,
+    required this.merchantName,
   });
 
   factory Allowance.fromJson(Map<String, dynamic> json) {
@@ -40,6 +43,7 @@ class Allowance {
       contributions: contributionsList,
       threshold: json['threshold'],
       totalContributions: json['total_community_contributions'],
+      merchantName: json['merchant_name'],
     );
   }
 
@@ -49,6 +53,7 @@ class Allowance {
       'logo_url': imageUrl,
       'threshold': threshold,
       'total_community_contributions': totalContributions,
+      'merchant_name': merchantName,
       'contributions':
           contributions.map((contribution) => contribution.toJson()).toList(),
     };
@@ -111,11 +116,14 @@ class UserHomeData {
   final List<Allowance> allowances;
   final bool isEmailVerified;
   final List<OtherUser> otherUsers;
-  UserHomeData(
-      {required this.totalAllowance,
-      required this.allowances,
-      required this.isEmailVerified,
-      required this.otherUsers});
+  final bool tookSurvey;
+  UserHomeData({
+    required this.totalAllowance,
+    required this.allowances,
+    required this.isEmailVerified,
+    required this.otherUsers,
+    required this.tookSurvey,
+  });
 
   factory UserHomeData.fromJson(Map<String, dynamic> json) {
     return UserHomeData(
@@ -127,6 +135,7 @@ class UserHomeData {
       otherUsers: (json['other_users'] as List)
           .map((otherUserJson) => OtherUser.fromJson(otherUserJson))
           .toList(),
+      tookSurvey: json['taken_hop_survey'],
     );
   }
 
@@ -136,12 +145,14 @@ class UserHomeData {
       'allowance': allowances.map((allowance) => allowance.toJson()).toList(),
       'email_verified': isEmailVerified,
       'other_users': otherUsers,
+      'taken_hop_survey': tookSurvey,
     };
   }
 }
 
 class HomePage extends StatefulWidget {
   bool showVerifyDialog = false;
+  bool surveyIsOpen = false;
 
   final String? totalAllowance;
 
@@ -154,7 +165,8 @@ class HomePage extends StatefulWidget {
       totalAllowance: "...",
       allowances: List<Allowance>.empty(),
       isEmailVerified: false,
-      otherUsers: List<OtherUser>.empty());
+      otherUsers: List<OtherUser>.empty(),
+      tookSurvey: false);
 }
 
 class _HomePageState extends State<HomePage> {
@@ -174,6 +186,7 @@ class _HomePageState extends State<HomePage> {
     bool? savedIsEmailVerified = prefs.getBool('isEmailVerified');
     List<String>? savedOtherUsersJson = prefs.getStringList('otherUsers');
     List<String>? savedAllowancesJson = prefs.getStringList('allowances');
+    bool? tookSurvey = prefs.getBool('tookSurvey');
 
     List<Allowance> savedAllowances = [];
     if (savedAllowancesJson != null) {
@@ -197,6 +210,7 @@ class _HomePageState extends State<HomePage> {
         allowances: savedAllowances,
         isEmailVerified: savedIsEmailVerified ?? false,
         otherUsers: savedOtherUsers,
+        tookSurvey: tookSurvey ?? false,
       );
     });
   }
@@ -224,6 +238,7 @@ class _HomePageState extends State<HomePage> {
         final data = json.decode(response.body);
         final String newBalance = data['total_allowance'].toString();
         final bool isEmailVerified = data['email_verified'];
+        final bool tookSurvey = data['taken_hop_survey'];
 
         final List<dynamic> otherUsersData = data['other_users'];
         List<OtherUser> otherUsers =
@@ -240,6 +255,7 @@ class _HomePageState extends State<HomePage> {
             allowances: allowanceList,
             isEmailVerified: isEmailVerified,
             otherUsers: otherUsers,
+            tookSurvey: tookSurvey,
           );
         });
 
@@ -247,6 +263,7 @@ class _HomePageState extends State<HomePage> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('totalAllowance', newBalance);
         await prefs.setBool('isEmailVerified', isEmailVerified);
+        await prefs.setBool('tookSurvey', tookSurvey);
 
         List<String> otherUsersJson = otherUsers
             .map((otherUser) => jsonEncode(otherUser.toJson()))
@@ -257,6 +274,12 @@ class _HomePageState extends State<HomePage> {
             .map((allowance) => jsonEncode(allowance.toJson()))
             .toList();
         await prefs.setStringList('allowances', allowancesJson);
+
+        if (!tookSurvey && !widget.surveyIsOpen) {
+          widget.surveyIsOpen = true;
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => SurveyPrompt()));
+        }
       } else {
         // Handle API error here
       }
@@ -531,17 +554,18 @@ class _HomePageState extends State<HomePage> {
                                                   context: context,
                                                   delegate:
                                                       CustomSearchDelegate(
-                                                          searchTerms: widget
-                                                              ._userHomeData
-                                                              .otherUsers
-                                                              .map((u) =>
-                                                                  u.username)
-                                                              .toList(),
-                                                          currentBalance: widget
-                                                              ._userHomeData
-                                                              .totalAllowance,
-															  otherUsers: widget._userHomeData.otherUsers,
-															  ));
+                                                    searchTerms: widget
+                                                        ._userHomeData
+                                                        .otherUsers
+                                                        .map((u) => u.username)
+                                                        .toList(),
+                                                    currentBalance: widget
+                                                        ._userHomeData
+                                                        .totalAllowance,
+                                                    otherUsers: widget
+                                                        ._userHomeData
+                                                        .otherUsers,
+                                                  ));
                                             } else {
                                               showDialog(
                                                   context: context,

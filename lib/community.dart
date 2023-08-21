@@ -36,7 +36,7 @@ class CommunityPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
-                'You decide when the next round of allowance is!',
+                'To get more allowance, keep spending at ${allowance.merchantName}',
                 style: TextStyle(
                   fontSize: 25 * ffem,
                   fontWeight: FontWeight.w700,
@@ -80,7 +80,7 @@ class CommunityPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              'Today\'s Contributions',
+              'Recent Contributions',
               style: TextStyle(
                 fontSize: 20 * ffem,
                 fontWeight: FontWeight.w700,
