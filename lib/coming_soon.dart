@@ -24,10 +24,12 @@ class ComingSoonWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(26.3999996185 * fem),
         child: StoreCardWidget(
             allowance: Allowance(
-                balance: "\$0.00",
-                imageUrl: imageUrl,
-                    
-					)),
+          balance: "\$0.00",
+          imageUrl: imageUrl,
+          contributions: [],
+          threshold: "",
+          totalContributions: "",
+        )),
       ),
       Positioned.fill(
           child: Center(

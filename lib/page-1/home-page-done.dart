@@ -16,13 +16,30 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Allowance {
   final String balance;
   final String imageUrl;
+  final List<ContributionData> contributions;
+  final String threshold;
+  final String totalContributions;
 
-  Allowance({required this.balance, required this.imageUrl});
+  Allowance({
+    required this.balance,
+    required this.imageUrl,
+    required this.contributions,
+    required this.threshold,
+    required this.totalContributions,
+  });
 
   factory Allowance.fromJson(Map<String, dynamic> json) {
+    final List<dynamic> contributionsJson = json['contributions'];
+    List<ContributionData> contributionsList = contributionsJson
+        .map((item) => ContributionData.fromJson(item))
+        .toList();
+
     return Allowance(
       balance: json['amount'],
       imageUrl: json['logo_url'],
+      contributions: contributionsList,
+      threshold: json['threshold'],
+      totalContributions: json['total_community_contributions'],
     );
   }
 
@@ -30,6 +47,35 @@ class Allowance {
     return {
       'amount': balance,
       'logo_url': imageUrl,
+      'threshold': threshold,
+      'total_community_contributions': totalContributions,
+      'contributions':
+          contributions.map((contribution) => contribution.toJson()).toList(),
+    };
+  }
+}
+
+class ContributionData {
+  final String username;
+  final String amount;
+  final String timeSince;
+
+  ContributionData(
+      {required this.username, required this.amount, required this.timeSince});
+
+  factory ContributionData.fromJson(Map<String, dynamic> json) {
+    return ContributionData(
+      username: json['username'],
+      amount: json['amount'],
+      timeSince: json['time_since'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'username': username,
+      'amount': amount,
+      'time_since': timeSince,
     };
   }
 }
@@ -163,8 +209,6 @@ class _HomePageState extends State<HomePage> {
         await prefs.setString('totalAllowance', newBalance);
         await prefs.setBool('isEmailVerified', isEmailVerified);
         await prefs.setStringList('otherUsers', otherUsers);
-        // You might want to handle allowances differently since it's a list of custom objects
-        // You could serialize it to JSON and save it as a string, then deserialize it when loading
         List<String> allowancesJson = allowanceList
             .map((allowance) => jsonEncode(allowance.toJson()))
             .toList();
