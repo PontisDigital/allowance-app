@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:allowance/input.dart';
 import 'package:allowance/user_card.dart';
 import 'package:allowance/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +16,7 @@ class AllowanceSettings extends StatefulWidget {
   @override
   State<AllowanceSettings> createState() => _AllowanceSettingsState();
 
-  final String username;
+  String username;
   bool isPublic;
   String? photoUrl;
   AllowanceSettings(
@@ -61,7 +62,7 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Text(
-                        'Change Profile Picture',
+                        'Change Username',
                         style: SafeGoogleFont(
                           'Outfit',
                           fontSize: 18 * ffem,
@@ -75,6 +76,105 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
                       padding: const EdgeInsets.symmetric(horizontal: 32.0),
                       child: IconButton(
                         icon: Icon(Icons.edit),
+                        color: Colors.white,
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                TextEditingController _usernameController =
+                                    TextEditingController();
+                                return AlertDialog(
+                                  title: Text('Change Username',
+                                      style: SafeGoogleFont(
+                                        'Outfit',
+                                        fontSize: 18 * ffem,
+                                        fontWeight: FontWeight.w700,
+                                        height: 1.26 * ffem / fem,
+                                        color: Color(0xffffffff),
+                                      )),
+                                  backgroundColor:
+                                      Color.fromRGBO(20, 22, 110, 1),
+                                  content: TextField(
+                                    controller: _usernameController,
+                                    style: TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter new username',
+                                      hintStyle: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(
+                                            context); // Close the dialog
+                                      },
+                                      child: Text(
+                                        'Cancel',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        String newUsername =
+                                            _usernameController.text;
+                                        // You can handle the new username here, e.g., update it in your database
+                                        setState(() {
+                                          widget.username = newUsername;
+                                        });
+										_changeUsernameReq(newUsername);
+                                        Navigator.pop(
+                                            context); // Close the dialog
+                                      },
+                                      child: Text(
+                                        'Submit',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Divider(color: Colors.transparent, thickness: 2),
+              ],
+            ),
+          ),
+        ),
+        ConstrainedBox(
+          constraints: BoxConstraints(minHeight: 50),
+          child: Card(
+            elevation: 9,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+            color: Color.fromRGBO(20, 22, 110, 1),
+            child: Column(
+              children: [
+                Divider(color: Colors.transparent, thickness: 2),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        'Change Profile Picture',
+                        style: SafeGoogleFont(
+                          'Outfit',
+                          fontSize: 18 * ffem,
+                          fontWeight: FontWeight.w700,
+                          height: 1.26 * ffem / fem,
+                          color: Color(0xffffffff),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                      child: IconButton(
+                        icon: Icon(Icons.photo),
                         color: Colors.white,
                         onPressed: () {
                           _editProfilePicture();
@@ -390,6 +490,28 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
       }
     } else {
       print('Image upload failed');
+    }
+  }
+
+  void _changeUsernameReq(String newUsername) async {
+    final url = 'https://api.allowance.fund/changeUsername';
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final body = {
+	  'new_username': newUsername,
+      'auth_token': await FirebaseAuth.instance.currentUser!.getIdToken(),
+    };
+
+    final response = await http.post(Uri.parse(url),
+        headers: headers, body: jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      // Request successful, handle the response if needed
+    } else {
+      // Request failed, handle the error
     }
   }
 }
