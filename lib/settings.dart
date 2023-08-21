@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:allowance/user_card.dart';
 import 'package:allowance/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:image_picker/image_picker.dart';
 
 class AllowanceSettings extends StatefulWidget {
   @override
@@ -12,12 +17,14 @@ class AllowanceSettings extends StatefulWidget {
 
   final String username;
   bool isPublic;
-  AllowanceSettings({required this.username, required this.isPublic});
+  final String? photoUrl;
+  AllowanceSettings({required this.username, required this.isPublic, this.photoUrl});
 }
 
 class _AllowanceSettingsState extends State<AllowanceSettings> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final FirebaseStorage _storage = FirebaseStorage.instance;
   @override
   Widget build(BuildContext context) {
     double baseWidth = 386.4799804688;
@@ -31,10 +38,55 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
             padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
             child: UserCard(
                 username: widget.username,
-                imageUrl: null,
+                imageUrl: widget.photoUrl,
                 isButton: false,
                 currentBalance: '')),
         SizedBox(height: 20),
+        ConstrainedBox(
+          constraints: BoxConstraints(minHeight: 50),
+          child: Card(
+            elevation: 9,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+            color: Color.fromRGBO(20, 22, 110, 1),
+            child: Column(
+              children: [
+                Divider(color: Colors.transparent, thickness: 2),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        'Change Profile Picture',
+                        style: SafeGoogleFont(
+                          'Outfit',
+                          fontSize: 18 * ffem,
+                          fontWeight: FontWeight.w700,
+                          height: 1.26 * ffem / fem,
+                          color: Color(0xffffffff),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                      child: IconButton(
+                        icon: Icon(Icons.edit),
+                        color: Colors.white,
+                        onPressed: () {
+                          _editProfilePicture();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Divider(color: Colors.transparent, thickness: 2),
+              ],
+            ),
+          ),
+        ),
         ConstrainedBox(
           constraints: BoxConstraints(minHeight: 110),
           child: Card(
@@ -46,7 +98,6 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
             color: Color.fromRGBO(20, 22, 110, 1),
             child: Column(
               children: [
-                //Divider(color: Colors.white, thickness: 2),
                 Divider(color: Colors.transparent, thickness: 2),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -90,7 +141,6 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
                   ),
                 ),
                 Divider(color: Colors.transparent, thickness: 2),
-                //Divider(color: Colors.white, thickness: 2),
               ],
             ),
           ),
@@ -274,7 +324,46 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
   }
 
   _togglePublic() async {
-      final url = 'https://api.allowance.fund/togglePublicProfile';
+    final url = 'https://api.allowance.fund/togglePublicProfile';
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final body = {
+      'auth_token': await FirebaseAuth.instance.currentUser!.getIdToken(),
+    };
+
+    final response = await http.post(Uri.parse(url),
+        headers: headers, body: jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      // Request successful, handle the response if needed
+    } else {
+      // Request failed, handle the error
+    }
+  }
+
+  void _editProfilePicture() async {
+    final image = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 512,
+      maxHeight: 512,
+      imageQuality: 75,
+    );
+
+    if (image == null) return;
+
+    String pictureId = DateTime.now().millisecondsSinceEpoch.toString();
+    Reference ref = _storage.ref().child(
+        'users/${FirebaseAuth.instance.currentUser!.uid}/profilePictures/$pictureId');
+    TaskSnapshot taskSnapshot = await ref.putFile(
+      File(image.path),
+      SettableMetadata(contentType: 'image/jpeg'),
+    );
+    if (taskSnapshot.state == TaskState.success) {
+
+      final url = 'https://api.allowance.fund/setPhotoUrl';
 
       final headers = {
         'Content-Type': 'application/json',
@@ -282,6 +371,7 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
 
       final body = {
         'auth_token': await FirebaseAuth.instance.currentUser!.getIdToken(),
+		'photo_url': await ref.getDownloadURL(),
       };
 
       final response = await http.post(Uri.parse(url),
@@ -289,8 +379,12 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
 
       if (response.statusCode == 200) {
         // Request successful, handle the response if needed
+		  print('Image uploaded successfully');
       } else {
         // Request failed, handle the error
       }
+    } else {
+      print('Image upload failed');
     }
+  }
 }
