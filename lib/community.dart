@@ -93,7 +93,7 @@ class CommunityPage extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               itemCount: allowance.contributions.length,
-			  physics: NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 ContributionData contribution = allowance.contributions[index];
                 return Padding(
@@ -102,6 +102,7 @@ class CommunityPage extends StatelessWidget {
                     amountSpent: contribution.amount,
                     spentTime: contribution.timeSince,
                     username: contribution.username,
+					photoUrl: contribution.photoUrl,
                   ),
                 );
               },

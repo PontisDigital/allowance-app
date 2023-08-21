@@ -59,15 +59,20 @@ class ContributionData {
   final String username;
   final String amount;
   final String timeSince;
+  final String? photoUrl;
 
   ContributionData(
-      {required this.username, required this.amount, required this.timeSince});
+      {required this.username,
+      required this.amount,
+      required this.timeSince,
+      this.photoUrl});
 
   factory ContributionData.fromJson(Map<String, dynamic> json) {
     return ContributionData(
       username: json['username'],
       amount: json['amount'],
       timeSince: json['time_since'],
+      photoUrl: json['photo_url'],
     );
   }
 
@@ -76,6 +81,27 @@ class ContributionData {
       'username': username,
       'amount': amount,
       'time_since': timeSince,
+      'photo_url': photoUrl,
+    };
+  }
+}
+
+class OtherUser {
+  final String username;
+  final String? photoUrl;
+  OtherUser({required this.username, this.photoUrl});
+
+  factory OtherUser.fromJson(Map<String, dynamic> json) {
+    return OtherUser(
+      username: json['username'],
+      photoUrl: json['photo_url'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'username': username,
+      'photo_url': photoUrl,
     };
   }
 }
@@ -84,7 +110,7 @@ class UserHomeData {
   final String totalAllowance;
   final List<Allowance> allowances;
   final bool isEmailVerified;
-  final List<String> otherUsers;
+  final List<OtherUser> otherUsers;
   UserHomeData(
       {required this.totalAllowance,
       required this.allowances,
@@ -98,7 +124,9 @@ class UserHomeData {
           .map((allowanceJson) => Allowance.fromJson(allowanceJson))
           .toList(),
       isEmailVerified: json['email_verified'],
-      otherUsers: (json['other_users'] as List).cast<String>(),
+      otherUsers: (json['other_users'] as List)
+          .map((otherUserJson) => OtherUser.fromJson(otherUserJson))
+          .toList(),
     );
   }
 
@@ -126,7 +154,7 @@ class HomePage extends StatefulWidget {
       totalAllowance: "...",
       allowances: List<Allowance>.empty(),
       isEmailVerified: false,
-      otherUsers: List<String>.empty());
+      otherUsers: List<OtherUser>.empty());
 }
 
 class _HomePageState extends State<HomePage> {
@@ -144,7 +172,7 @@ class _HomePageState extends State<HomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? savedTotalAllowance = prefs.getString('totalAllowance');
     bool? savedIsEmailVerified = prefs.getBool('isEmailVerified');
-    List<String>? savedOtherUsers = prefs.getStringList('otherUsers');
+    List<String>? savedOtherUsersJson = prefs.getStringList('otherUsers');
     List<String>? savedAllowancesJson = prefs.getStringList('allowances');
 
     List<Allowance> savedAllowances = [];
@@ -155,12 +183,20 @@ class _HomePageState extends State<HomePage> {
           .toList();
     }
 
+    List<OtherUser> savedOtherUsers = [];
+    if (savedOtherUsersJson != null) {
+      savedOtherUsers = savedOtherUsersJson
+          .map(
+              (otherUserJson) => OtherUser.fromJson(json.decode(otherUserJson)))
+          .toList();
+    }
+
     setState(() {
       widget._userHomeData = UserHomeData(
         totalAllowance: savedTotalAllowance ?? "...",
         allowances: savedAllowances,
         isEmailVerified: savedIsEmailVerified ?? false,
-        otherUsers: savedOtherUsers ?? [],
+        otherUsers: savedOtherUsers,
       );
     });
   }
@@ -188,7 +224,10 @@ class _HomePageState extends State<HomePage> {
         final data = json.decode(response.body);
         final String newBalance = data['total_allowance'].toString();
         final bool isEmailVerified = data['email_verified'];
-        final List<String> otherUsers = data['other_users'].cast<String>();
+
+        final List<dynamic> otherUsersData = data['other_users'];
+        List<OtherUser> otherUsers =
+            otherUsersData.map((item) => OtherUser.fromJson(item)).toList();
 
         final List<dynamic> allowanceData = data['allowance'];
         List<Allowance> allowanceList =
@@ -208,7 +247,12 @@ class _HomePageState extends State<HomePage> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('totalAllowance', newBalance);
         await prefs.setBool('isEmailVerified', isEmailVerified);
-        await prefs.setStringList('otherUsers', otherUsers);
+
+        List<String> otherUsersJson = otherUsers
+            .map((otherUser) => jsonEncode(otherUser.toJson()))
+            .toList();
+        await prefs.setStringList('otherUsers', otherUsersJson);
+
         List<String> allowancesJson = allowanceList
             .map((allowance) => jsonEncode(allowance.toJson()))
             .toList();
@@ -489,10 +533,15 @@ class _HomePageState extends State<HomePage> {
                                                       CustomSearchDelegate(
                                                           searchTerms: widget
                                                               ._userHomeData
-                                                              .otherUsers,
+                                                              .otherUsers
+                                                              .map((u) =>
+                                                                  u.username)
+                                                              .toList(),
                                                           currentBalance: widget
                                                               ._userHomeData
-                                                              .totalAllowance));
+                                                              .totalAllowance,
+															  otherUsers: widget._userHomeData.otherUsers,
+															  ));
                                             } else {
                                               showDialog(
                                                   context: context,

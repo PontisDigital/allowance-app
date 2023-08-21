@@ -21,7 +21,7 @@ class UserCard extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => SendEnterAmountPage(
-            username: username, currentBalance: currentBalance),
+            username: username, currentBalance: currentBalance, imageUrl: imageUrl),
       ),
     );
   }
@@ -89,8 +89,7 @@ class UserCard extends StatelessWidget {
                           ),
                         ),
                       ))
-                    : (Container(
-                        // autogroupnsnjaQF (B1A1ZA3sjy7C9m2tAZnSnj)
+                    : Container(
                         margin: EdgeInsets.fromLTRB(
                             0 * fem, 0 * fem, 3.96 * fem, 0 * fem),
                         width: 54.45 * fem,
@@ -100,8 +99,16 @@ class UserCard extends StatelessWidget {
                           borderRadius:
                               BorderRadius.circular(27.2250003815 * fem),
                         ),
-                        child: Center(child: Image.network(imageUrl!)),
-                      )),
+                        child: ClipOval(
+                          child: Image.network(
+                            imageUrl!,
+                            width: 54.45 * fem,
+                            height: double.infinity,
+                            fit: BoxFit
+                                .cover, // This will crop the image to fit the circle
+                          ),
+                        ),
+                      ),
                 Container(
                   // evanbirnsthehippo3ddR (301:1231)
                   margin: EdgeInsets.fromLTRB(

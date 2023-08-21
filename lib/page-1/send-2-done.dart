@@ -15,7 +15,8 @@ class SendEnterAmountPage extends StatefulWidget {
 
   final String username;
   final String currentBalance;
-  SendEnterAmountPage({required this.username, required this.currentBalance});
+  final String? imageUrl;
+  SendEnterAmountPage({required this.username, required this.currentBalance, this.imageUrl});
 }
 
 class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
@@ -73,7 +74,7 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
           SizedBox(height: 20),
           UserCard(
               username: widget.username,
-              imageUrl: null,
+              imageUrl: widget.imageUrl,
               isButton: false,
               currentBalance: ''),
           SizedBox(height: 20),

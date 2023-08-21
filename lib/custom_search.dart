@@ -1,11 +1,16 @@
+import 'package:allowance/page-1/home-page-done.dart';
 import 'package:allowance/user_card.dart';
 import 'package:flutter/material.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   final List<String> searchTerms;
   final String currentBalance;
+  final List<OtherUser> otherUsers;
 
-  CustomSearchDelegate({required this.searchTerms, required this.currentBalance});
+  CustomSearchDelegate(
+      {required this.searchTerms,
+      required this.currentBalance,
+      required this.otherUsers});
 
   @override
   TextStyle? get searchFieldStyle => TextStyle(color: Colors.white);
@@ -62,7 +67,7 @@ class CustomSearchDelegate extends SearchDelegate {
           itemBuilder: (context, index) {
             return UserCard(
                 username: matchQuery[index],
-                imageUrl: null,
+                imageUrl: otherUsers.where((element) => element.username == matchQuery[index]).first.photoUrl,
                 isButton: true,
                 currentBalance: currentBalance);
           },

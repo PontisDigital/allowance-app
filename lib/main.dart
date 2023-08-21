@@ -14,10 +14,12 @@ import '../firebase_options.dart';
 class SettingsData {
   final String username;
   final bool isPublic;
+  final String? photoUrl;
 
   SettingsData({
     required this.username,
     required this.isPublic,
+    this.photoUrl,
   });
 }
 
@@ -61,9 +63,20 @@ class _MyAppState extends State<MyApp> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((value) {
-      return SettingsData(username: value['username'], isPublic: value['is_public']);
+      try {
+        return SettingsData(
+            username: value['username'],
+            isPublic: value['is_public'],
+            photoUrl: value['photo_url']);
+      } catch (e) {
+        return SettingsData(
+            username: value['username'], isPublic: value['is_public']);
+      }
     });
-    _widgetOptions.add(AllowanceSettings(username: settingsData.username, isPublic: settingsData.isPublic));
+    _widgetOptions.add(AllowanceSettings(
+        username: settingsData.username,
+        isPublic: settingsData.isPublic,
+        photoUrl: settingsData.photoUrl));
   }
 
   @override
