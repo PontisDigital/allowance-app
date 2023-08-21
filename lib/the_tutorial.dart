@@ -62,7 +62,7 @@ class _TheTutorialState extends State<TheTutorial> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(5, (index) {
               return Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.fromLTRB(8, 8, 8, 32),
                 child: Container(
                   width: 10,
                   height: 10,
