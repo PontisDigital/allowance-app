@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:allowance/input.dart';
 import 'package:allowance/user_card.dart';
 import 'package:allowance/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
