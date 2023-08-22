@@ -144,32 +144,35 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
               ));
       return;
     }
+
+	showDialog(context: context, builder: (context) => AlertDialog(content: Text('Email input: $email')));
+
     List<String> signInMethods =
         await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
 
     if (signInMethods.isNotEmpty) {
-      moveToSignOnWithPassword(context);
+      moveToSignOnWithPassword(context, email);
     } else {
-      moveToOnboardingPart2(context);
+      moveToOnboardingPart2(context, email);
     }
 
     buttonPressed = false;
   }
 
-  moveToSignOnWithPassword(BuildContext context) {
+  moveToSignOnWithPassword(BuildContext context, String email) {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) =>
-                SignInWithPasswordPage(emailInput: emailController.text)));
+                SignInWithPasswordPage(emailInput: email)));
   }
 
-  moveToOnboardingPart2(BuildContext context) {
+  moveToOnboardingPart2(BuildContext context, String email) {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) =>
-                OnboardingSignUpPage(emailInput: emailController.text)));
+                OnboardingSignUpPage(emailInput: email)));
   }
 
   void handleEmailChange(String newValue) {
