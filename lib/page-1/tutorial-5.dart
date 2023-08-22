@@ -1,6 +1,3 @@
-import 'package:allowance/button.dart';
-import 'package:allowance/main.dart';
-import 'package:allowance/page-1/home-page-done.dart';
 import 'package:allowance/tut_button.dart';
 import 'package:allowance/utils.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +15,9 @@ class Tut5 extends StatelessWidget {
       body: Container(
         width: double.infinity,
         child: Container(
-          // tutorial66Ab (7:288)
-          padding: EdgeInsets.fromLTRB(0 * fem, 34 * fem, 0 * fem, 0 * fem),
+          // tutorial4eJj (7:241)
+          padding:
+              EdgeInsets.fromLTRB(19 * fem, 34 * fem, 19.08 * fem, 146.2 * fem),
           width: double.infinity,
           decoration: BoxDecoration(
             color: Color(0xff041e42),
@@ -28,11 +26,11 @@ class Tut5 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                // stepfiveenjoyyourfreestuff6rj (7:291)
+                // stepfourtorechargeyourallowanc (7:261)
                 margin:
-                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 20 * fem),
+                    EdgeInsets.fromLTRB(0.08 * fem, 0 * fem, 0 * fem, 19 * fem),
                 constraints: BoxConstraints(
-                  maxWidth: 329 * fem,
+                  maxWidth: 321 * fem,
                 ),
                 child: RichText(
                   textAlign: TextAlign.center,
@@ -48,43 +46,64 @@ class Tut5 extends StatelessWidget {
                       TextSpan(
                         text: 'Step Five:\n',
                       ),
-                      TextSpan(
-                        text: 'Enjoy your free stuff.',
-                        style: SafeGoogleFont(
-                          'Outfit',
-                          fontSize: 36 * ffem,
-                          fontWeight: FontWeight.w400,
-                          height: 1.26 * ffem / fem,
-                          color: Color(0xffffffff),
-                        ),
-                      ),
+					  TextSpan(style: SafeGoogleFont('Outfit', fontWeight: FontWeight.w400,fontSize: 24 * ffem), text: 'Even when you can\'t spend your allowance, you '),
+					  TextSpan(style: SafeGoogleFont('Outfit', fontWeight: FontWeight.w700,fontSize: 24 * ffem), text: 'must scan your QR code '),
+					  TextSpan(style: SafeGoogleFont('Outfit', fontWeight: FontWeight.w400,fontSize: 24 * ffem), text: 'in order to qualify for the next round.'),
                     ],
                   ),
                 ),
               ),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Image.network(
-                      "https://media.tenor.com/c1rbgR_YFkkAAAAC/baby-throw.gif")),
-              SizedBox(height: 20 * fem),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: CustomButton(
-                    minHeight: 60 * fem,
-                    onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => MyApp()),
-                          (route) => false);
-                    },
-                    text: 'continue',
-                    textStyle: SafeGoogleFont(
-                      'Outfit',
-                      fontSize: 25 * ffem,
-                      fontWeight: FontWeight.w700,
-                      height: 1.26 * ffem / fem,
-                      color: Color(0xffffffff),
-                    )),
+              Container(
+                // frame37245Vvw (19:193)
+                margin:
+                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 21.43 * fem),
+                width: double.infinity,
+                height: 55.57 * fem,
+                decoration: BoxDecoration(
+                  color: Color(0xff09367b),
+                  borderRadius: BorderRadius.circular(9.2609996796 * fem),
+                ),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      // helpcenter1PV (19:194)
+                      left: 0 * fem,
+                      top: 4.6304931641 * fem,
+                      child: Align(
+                        child: SizedBox(
+                          width: 46.31 * fem,
+                          height: 46.31 * fem,
+                          child: Image.asset(
+                            'assets/page-1/images/helpcenter.png',
+                            width: 46.31 * fem,
+                            height: 46.31 * fem,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      // scanyourqrcodeeverytimeyoushop (19:195)
+                      left: 46.3049316406 * fem,
+                      top: 4.6304931641 * fem,
+                      child: Align(
+                        child: SizedBox(
+                          width: 302 * fem,
+                          height: 45 * fem,
+                          child: Text(
+                            'Scan your QR code every time you shop to recharge your allowance.',
+                            style: SafeGoogleFont(
+                              'Inter',
+                              fontSize: 18.5219993591 * ffem,
+                              fontWeight: FontWeight.w400,
+                              height: 1.2125 * ffem / fem,
+                              color: Color(0xffffffff),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
