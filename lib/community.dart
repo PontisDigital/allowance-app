@@ -54,7 +54,7 @@ class _CommunityPageState extends State<CommunityPage> {
                     ? 'To get more allowance, keep spending at ${widget.allowance.merchantName}'
                     : 'Allowance is first come, first serve'),
                 style: TextStyle(
-                  fontSize: 22 * ffem,
+                  fontSize: 20 * ffem,
                   fontWeight: FontWeight.w700,
                   height: 1.26 * ffem / fem,
                   color: Color(0xffffffff),
@@ -70,10 +70,11 @@ class _CommunityPageState extends State<CommunityPage> {
                     ? double.parse(
                             widget.allowance.totalContributions.substring(1)) /
                         double.parse(widget.allowance.threshold.substring(1))
-                    : (double.parse(
-                            widget.allowance.totalAllowanceSpent.substring(1))) /
+                    : (double.parse(widget.allowance.totalAllowanceSpent
+                            .substring(1))) /
                         double.parse(widget.allowance.threshold.substring(1)),
-				trailing: Text(widget.allowance.threshold, style: TextStyle(color: Colors.white)),
+                trailing: Text(widget.allowance.threshold,
+                    style: TextStyle(color: Colors.white)),
                 center: Text(
                     !widget.spendingAllowance
                         ? widget.allowance.totalContributions
@@ -102,22 +103,19 @@ class _CommunityPageState extends State<CommunityPage> {
               ),
             ),
             SizedBox(height: 20),
-            Visibility(
-              visible: double.parse(
-                      widget.allowance.totalAllowanceSpent.substring(1)) >
-                  0,
-              child: Text(
-                (!widget.spendingAllowance)
-                    ? 'Recent Contributions'
-                    : 'Recent Spending',
-                style: TextStyle(
-                  fontSize: 24 * ffem,
-                  fontWeight: FontWeight.w700,
-                  height: 1.26 * ffem / fem,
-                  color: Color(0xffffffff),
-                ),
-                textAlign: TextAlign.center,
+            Text(
+              (!widget.spendingAllowance)
+                  ? 'Recent Contributions'
+                  : (widget.allowance.totalAllowanceSpent != '\$0.00')
+                      ? 'Recent Spending'
+                      : 'You’ll see Hoyas spending here',
+              style: TextStyle(
+                fontSize: 24 * ffem,
+                fontWeight: FontWeight.w700,
+                height: 1.26 * ffem / fem,
+                color: Color(0xffffffff),
               ),
+              textAlign: TextAlign.center,
             ),
             SizedBox(height: 20),
             ListView.builder(
