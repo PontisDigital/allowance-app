@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:allowance/settings.dart';
+import 'package:allowance/the_tutorial.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -97,6 +98,14 @@ class _MyAppState extends State<MyApp> {
             return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
+                leading: IconButton(
+                    icon: Icon(Icons.question_mark),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => TheTutorial()),
+                      );
+                    }),
                 title: Text(
                   'hoya allowance',
                   style: SafeGoogleFont(

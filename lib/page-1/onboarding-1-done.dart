@@ -6,11 +6,19 @@ import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:allowance/utils.dart';
 import 'package:allowance/page-1/onboarding-2-done.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class OnboardingSignUpPage extends StatelessWidget {
+class OnboardingSignUpPage extends StatefulWidget {
   final String emailInput;
   OnboardingSignUpPage({required this.emailInput});
 
+  @override
+  State<OnboardingSignUpPage> createState() => _OnboardingSignUpPageState();
+}
+
+class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
+  bool buttonPressed = false;
   @override
   Widget build(BuildContext context) {
     double baseWidth = 390;
@@ -158,13 +166,17 @@ class OnboardingSignUpPage extends StatelessWidget {
               SizedBox(
                 height: 20 * fem,
               ),
-              CustomButton(
-			  minHeight: 60 * fem,
-                onPressed: () {
-                  moveToOnboardingPart2(context, usernameController.text);
-                },
-                text: 'continue',
-              ),
+              !buttonPressed
+                  ? CustomButton(
+                      minHeight: 60 * fem,
+                      onPressed: () {
+                        handleUsername(context, usernameController.text);
+                        setState(() {
+                          buttonPressed = true;
+                        });
+                      },
+                      text: 'continue')
+                  : CircularProgressIndicator(),
             ],
           ),
         ),
@@ -178,9 +190,53 @@ class OnboardingSignUpPage extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => OnboardPasswordPage(
-                    emailInput: emailInput,
+                    emailInput: widget.emailInput,
                     usernameInput: usernameInput,
                   )));
+    }
+  }
+
+  Future<bool> _doesUsernameExist(String username) async {
+    final url = 'https://api.allowance.fund/checkUsername';
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final body = {'username': username};
+
+    final response = await http.post(Uri.parse(url),
+        headers: headers, body: jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      // Request successful, handle the response if needed
+      return jsonDecode(response.body)['username_exists'];
+    } else {
+      // Request failed, handle the error
+      throw Exception('Failed to check email');
+    }
+  }
+
+  handleUsername(BuildContext context, String username) async {
+    if (!await _doesUsernameExist(username)) {
+      moveToOnboardingPart2(context, username);
+    } else {
+      setState(() {
+        buttonPressed = false;
+      });
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                content: Text('Username already exists. Please try again.'),
+				actions: [
+				TextButton(
+					child: Text('OK'),
+					onPressed: () {
+						Navigator.pop(context);
+					},
+				)
+				],
+              ));
     }
   }
 }

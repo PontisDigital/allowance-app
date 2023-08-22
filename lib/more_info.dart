@@ -39,20 +39,26 @@ class MoreInfo extends StatelessWidget {
                 children: [
                   TextSpan(
                       text:
-                          'When you shop at featured stores, show your QR code to the cashier. The more you shop the sooner the next round of allowance drops. When you shop at featured stores, show your QR code to the cashier. '),
-                  TextSpan(
-                      text:
-                          'That means you need to use your QR code every time you shop, '),
-                  TextSpan(text: '\n\n'),
+                          'When you shop at featured stores, show your QR code to the cashier.\n\n\n\n'),
                   TextSpan(
                       text:
                           'That means you need to use your QR code every time you shop, '),
                   TextSpan(
-                      style:
-                          SafeGoogleFont('Outfit', fontWeight: FontWeight.w700),
+                      style: SafeGoogleFont(
+                        'Outfit',
+                        fontSize: 24 * ffem,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
                       text:
                           'both when you use your allowance dollars, and when you shop without allowance. '),
                   TextSpan(
+                      style: SafeGoogleFont(
+                        'Outfit',
+                        fontSize: 24 * ffem,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
+                      ),
                       text:
                           'The more you shop, the sooner the next round of allowance drops.'),
                 ],
