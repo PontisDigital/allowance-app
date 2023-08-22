@@ -5,12 +5,14 @@ class UserCardCommunity extends StatelessWidget {
   final String amountSpent;
   final String spentTime;
   final String username;
+  final bool spendingAllowance;
   final String? photoUrl;
 
   const UserCardCommunity({
     required this.amountSpent,
     required this.spentTime,
     required this.username,
+	required this.spendingAllowance,
     this.photoUrl,
     Key? key,
   }) : super(key: key);
@@ -45,7 +47,7 @@ class UserCardCommunity extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          'Spent ${amountSpent}',
+          'Spent ${amountSpent + (spendingAllowance ? " of Allowance" : "")}',
           style: SafeGoogleFont(
             'Outfit',
             fontSize: 12,
