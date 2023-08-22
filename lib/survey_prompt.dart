@@ -50,7 +50,7 @@ class SurveyPrompt extends StatelessWidget {
           SizedBox(height: 20),
           Center(
             child: Text(
-              'It will take no more than 20 seconds!',
+              'It will take no more than 10 seconds!',
               style: SafeGoogleFont(
                 'Outfit',
                 fontSize: 20 * ffem,
@@ -61,12 +61,7 @@ class SurveyPrompt extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Image.network(
-                "https://media.tenor.com/A1NWTd1hIFgAAAAC/hug.gif"),
-          ),
+		  Spacer(),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: CustomButton(
