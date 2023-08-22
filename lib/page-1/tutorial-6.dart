@@ -8,7 +8,7 @@ import 'package:flutter/gestures.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 
-class Tut4 extends StatelessWidget {
+class Tut6 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double baseWidth = 390;
@@ -46,10 +46,10 @@ class Tut4 extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: 'Step Four:\n',
+                        text: 'Step Six:\n',
                       ),
                       TextSpan(
-                        text: 'Allowance works on a ',
+                        text: 'Enjoy your free stuff.',
                         style: SafeGoogleFont(
                           'Outfit',
                           fontSize: 36 * ffem,
@@ -58,26 +58,33 @@ class Tut4 extends StatelessWidget {
                           color: Color(0xffffffff),
                         ),
                       ),
-                      TextSpan(
-                          text: 'first come, first serve ',
-                          style: SafeGoogleFont(
-                            'Outfit',
-                            fontSize: 36 * ffem,
-                            fontWeight: FontWeight.w700,
-                            height: 1.26 * ffem / fem,
-                            color: Color(0xffffffff),
-                          )),
-                      TextSpan(
-                          style: SafeGoogleFont('Outfit',
-                              fontSize: 36 * ffem,
-                              fontWeight: FontWeight.w400,
-                              height: 1.26 * ffem / fem,
-                              color: Color(0xffffffff)),
-                          text:
-                              'basis. Each store has a monthly maximum spending limit — spend your allowance fast before the spending limit is met.'),
                     ],
                   ),
                 ),
+              ),
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Image.network(
+                      "https://media.tenor.com/c1rbgR_YFkkAAAAC/baby-throw.gif")),
+              SizedBox(height: 20 * fem),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: CustomButton(
+                    minHeight: 60 * fem,
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyApp()),
+                          (route) => false);
+                    },
+                    text: 'continue',
+                    textStyle: SafeGoogleFont(
+                      'Outfit',
+                      fontSize: 25 * ffem,
+                      fontWeight: FontWeight.w700,
+                      height: 1.26 * ffem / fem,
+                      color: Color(0xffffffff),
+                    )),
               ),
             ],
           ),
