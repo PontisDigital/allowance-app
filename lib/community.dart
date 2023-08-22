@@ -103,15 +103,18 @@ class _CommunityPageState extends State<CommunityPage> {
               height: 300,
             ),
             SizedBox(height: 20),
-            Text(
-              'Recent Contributions',
-              style: TextStyle(
-                fontSize: 20 * ffem,
-                fontWeight: FontWeight.w700,
-                height: 1.26 * ffem / fem,
-                color: Color(0xffffffff),
+            Visibility(
+			visible: double.parse(widget.allowance.totalAllowanceSpent.substring(1)) > 0,
+              child: Text(
+                (!widget.spendingAllowance) ? 'Recent Contributions' : 'Recent Spending',
+                style: TextStyle(
+                  fontSize: 20 * ffem,
+                  fontWeight: FontWeight.w700,
+                  height: 1.26 * ffem / fem,
+                  color: Color(0xffffffff),
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
             SizedBox(height: 20),
             ListView.builder(
