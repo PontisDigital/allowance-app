@@ -1,6 +1,4 @@
-import 'package:allowance/button.dart';
-import 'package:allowance/main.dart';
-import 'package:allowance/page-1/home-page-done.dart';
+import 'package:allowance/page-1/tutorial-4.dart';
 import 'package:allowance/tut_button.dart';
 import 'package:allowance/utils.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 
-class Tut5 extends StatelessWidget {
+class Tut3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double baseWidth = 390;
@@ -18,8 +16,8 @@ class Tut5 extends StatelessWidget {
       body: Container(
         width: double.infinity,
         child: Container(
-          // tutorial66Ab (7:288)
-          padding: EdgeInsets.fromLTRB(0 * fem, 34 * fem, 0 * fem, 0 * fem),
+          // tutorial5eHM (7:270)
+          padding: EdgeInsets.fromLTRB(55 * fem, 34 * fem, 55 * fem, 146.2 * fem),
           width: double.infinity,
           decoration: BoxDecoration(
             color: Color(0xff041e42),
@@ -28,11 +26,10 @@ class Tut5 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                // stepfiveenjoyyourfreestuff6rj (7:291)
-                margin:
-                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 20 * fem),
+                // stepthreeshowqrcodetocashier48 (7:273)
+                margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 23 * fem),
                 constraints: BoxConstraints(
-                  maxWidth: 329 * fem,
+                  maxWidth: 273 * fem,
                 ),
                 child: RichText(
                   textAlign: TextAlign.center,
@@ -46,10 +43,10 @@ class Tut5 extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: 'Step Five:\n',
+                        text: 'Step Three:\n',
                       ),
                       TextSpan(
-                        text: 'Enjoy your free stuff.',
+                        text: 'A QR code will appear. Show it to the cashier.',
                         style: SafeGoogleFont(
                           'Outfit',
                           fontSize: 36 * ffem,
@@ -62,29 +59,27 @@ class Tut5 extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Image.network(
-                      "https://media.tenor.com/c1rbgR_YFkkAAAAC/baby-throw.gif")),
-              SizedBox(height: 20 * fem),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: CustomButton(
-                    minHeight: 60 * fem,
-                    onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => MyApp()),
-                          (route) => false);
-                    },
-                    text: 'continue',
-                    textStyle: SafeGoogleFont(
-                      'Outfit',
-                      fontSize: 25 * ffem,
-                      fontWeight: FontWeight.w700,
-                      height: 1.26 * ffem / fem,
-                      color: Color(0xffffffff),
-                    )),
+              Container(
+                // frame37209yuH (7:285)
+                margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 42 * fem),
+                padding: EdgeInsets.fromLTRB(
+                    10.4 * fem, 9.6 * fem, 9.6 * fem, 10.4 * fem),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Color(0xffff00b7),
+                  borderRadius: BorderRadius.circular(8 * fem),
+                ),
+                child: Center(
+                  // rectangle10HQB (7:287)
+                  child: SizedBox(
+                    width: 260 * fem,
+                    height: 260 * fem,
+                    child: Image.asset(
+                      'assets/page-1/images/rectangle-10.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

@@ -73,7 +73,10 @@ class _CommunityPageState extends State<CommunityPage> {
                     : double.parse(
                             widget.allowance.totalAllowanceSpent.substring(1)) /
                         double.parse(widget.allowance.threshold.substring(1)),
-                center: Text(!widget.spendingAllowance ? widget.allowance.totalContributions : widget.allowance.totalAllowanceSpent,
+                center: Text(
+                    !widget.spendingAllowance
+                        ? widget.allowance.totalContributions
+                        : widget.allowance.totalAllowanceSpent,
                     style: TextStyle(color: Colors.white)),
                 progressColor: Colors.green,
                 backgroundColor: Colors.black,
@@ -104,9 +107,13 @@ class _CommunityPageState extends State<CommunityPage> {
             ),
             SizedBox(height: 20),
             Visibility(
-			visible: double.parse(widget.allowance.totalAllowanceSpent.substring(1)) > 0,
+              visible: double.parse(
+                      widget.allowance.totalAllowanceSpent.substring(1)) >
+                  0,
               child: Text(
-                (!widget.spendingAllowance) ? 'Recent Contributions' : 'Recent Spending',
+                (!widget.spendingAllowance)
+                    ? 'Recent Contributions'
+                    : 'Recent Spending',
                 style: TextStyle(
                   fontSize: 20 * ffem,
                   fontWeight: FontWeight.w700,

@@ -1,8 +1,8 @@
 import 'package:allowance/page-1/tutorial-1.dart';
 import 'package:allowance/page-1/tutorial-2.dart';
+import 'package:allowance/page-1/tutorial-3.dart';
 import 'package:allowance/page-1/tutorial-4.dart';
 import 'package:allowance/page-1/tutorial-5.dart';
-import 'package:allowance/page-1/tutorial-6.dart';
 import 'package:flutter/material.dart';
 import 'package:allowance/utils.dart';
 
