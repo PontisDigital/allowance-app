@@ -4,7 +4,8 @@ import 'package:allowance/page-1/onboarding-1-done.dart';
 import 'package:allowance/page-1/sign-in-with-password.dart';
 import 'package:allowance/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class OnboardingStartPage extends StatefulWidget {
   @override
@@ -43,8 +44,7 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
       body: Container(
         width: double.infinity,
         child: Container(
-          padding:
-              EdgeInsets.fromLTRB(20 * fem, 34 * fem, 20 * fem, 34 * fem),
+          padding: EdgeInsets.fromLTRB(20 * fem, 34 * fem, 20 * fem, 34 * fem),
           width: double.infinity,
           height: 844 * fem,
           decoration: BoxDecoration(
@@ -62,8 +62,7 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Visibility(
-                        visible:
-                            MediaQuery.of(context).viewInsets.bottom == 0,
+                        visible: MediaQuery.of(context).viewInsets.bottom == 0,
                         child: Container(
                           margin: EdgeInsets.fromLTRB(
                               34.5 * fem, 0 * fem, 34.5 * fem, 52 * fem),
@@ -108,15 +107,20 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                 SizedBox(
                   height: 20 * fem,
                 ),
-                CustomButton(
-                    text: 'continue',
-					minHeight: 60 * fem,
-                    onPressed: () {
-                      if (!buttonPressed) {
-                        buttonPressed = true;
-                        handleGivenEmail(context, emailController.value.text);
-                      }
-                    }),
+                (buttonPressed)
+                    ? CircularProgressIndicator(color: Colors.white)
+                    : CustomButton(
+                        text: 'continue',
+                        minHeight: 60 * fem,
+                        onPressed: () {
+                          if (!buttonPressed) {
+                            setState(() {
+                              buttonPressed = true;
+                            });
+                            handleGivenEmail(
+                                context, emailController.value.text);
+                          }
+                        }),
               ],
             ),
           ),
@@ -127,7 +131,7 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
 
   handleGivenEmail(BuildContext context, String email) async {
     if (!email.endsWith('@georgetown.edu')) {
-	buttonPressed = false;
+      buttonPressed = false;
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -145,12 +149,9 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
       return;
     }
 
-	showDialog(context: context, builder: (context) => AlertDialog(content: Text('Email input: $email')));
+    bool emailExists = await _doesEmailExist(email);
 
-    List<String> signInMethods =
-        await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
-
-    if (signInMethods.isNotEmpty) {
+    if (emailExists) {
       moveToSignOnWithPassword(context, email);
     } else {
       moveToOnboardingPart2(context, email);
@@ -163,16 +164,14 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                SignInWithPasswordPage(emailInput: email)));
+            builder: (context) => SignInWithPasswordPage(emailInput: email)));
   }
 
   moveToOnboardingPart2(BuildContext context, String email) {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                OnboardingSignUpPage(emailInput: email)));
+            builder: (context) => OnboardingSignUpPage(emailInput: email)));
   }
 
   void handleEmailChange(String newValue) {
@@ -180,6 +179,29 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
       emailController.value = emailController.value.copyWith(
         text: newValue + "@georgetown.edu",
       );
+    }
+  }
+
+  Future<bool> _doesEmailExist(String email) async {
+    final url = 'https://api.allowance.fund/checkEmail';
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final body = {
+      'email': email,
+    };
+
+    final response = await http.post(Uri.parse(url),
+        headers: headers, body: jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      // Request successful, handle the response if needed
+      return jsonDecode(response.body)['email_exists'];
+    } else {
+      // Request failed, handle the error
+      throw Exception('Failed to check email');
     }
   }
 }
