@@ -5,7 +5,7 @@ import 'package:allowance/custom_search.dart';
 import 'package:allowance/home_allowance_entry.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
 import 'package:allowance/page-1/pay-1-done.dart';
-import 'package:allowance/survey.dart';
+import 'package:allowance/survey_prompt.dart';
 import 'package:flutter/material.dart';
 import 'package:allowance/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
