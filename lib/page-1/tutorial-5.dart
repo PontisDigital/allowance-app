@@ -47,17 +47,32 @@ class Tut5 extends StatelessWidget {
                         text: 'Step Five:\n',
                       ),
                       TextSpan(
-                          style: SafeGoogleFont('Outfit',
-                              fontWeight: FontWeight.w400, fontSize: 24 * ffem),
+                        style: SafeGoogleFont(
+                          'Outfit',
+                          fontSize: 36 * ffem,
+                          fontWeight: FontWeight.w400,
+                          height: 1.26 * ffem / fem,
+                          color: Color(0xffffffff),
+                        ),
                           text:
                               'Even when you can\'t spend your allowance, you '),
                       TextSpan(
-                          style: SafeGoogleFont('Outfit',
-                              fontWeight: FontWeight.w700, fontSize: 24 * ffem),
+                        style: SafeGoogleFont(
+                          'Outfit',
+                          fontSize: 36 * ffem,
+                          fontWeight: FontWeight.w700,
+                          height: 1.26 * ffem / fem,
+                          color: Color(0xffffffff),
+                        ),
                           text: 'must scan your QR code '),
                       TextSpan(
-                          style: SafeGoogleFont('Outfit',
-                              fontWeight: FontWeight.w400, fontSize: 24 * ffem),
+                        style: SafeGoogleFont(
+                          'Outfit',
+                          fontSize: 36 * ffem,
+                          fontWeight: FontWeight.w400,
+                          height: 1.26 * ffem / fem,
+                          color: Color(0xffffffff),
+                        ),
                           text: 'in order to qualify for the next round.'),
                     ],
                   ),
