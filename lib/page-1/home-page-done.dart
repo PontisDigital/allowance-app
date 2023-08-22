@@ -20,6 +20,7 @@ class Allowance {
   final List<ContributionData> contributions;
   final String threshold;
   final String totalContributions;
+  final String totalAllowanceSpent;
   final String merchantName;
 
   Allowance({
@@ -29,6 +30,7 @@ class Allowance {
     required this.threshold,
     required this.totalContributions,
     required this.merchantName,
+    required this.totalAllowanceSpent,
   });
 
   factory Allowance.fromJson(Map<String, dynamic> json) {
@@ -44,6 +46,7 @@ class Allowance {
       threshold: json['threshold'],
       totalContributions: json['total_community_contributions'],
       merchantName: json['merchant_name'],
+      totalAllowanceSpent: json['total_allowance_spent'],
     );
   }
 
@@ -54,6 +57,7 @@ class Allowance {
       'threshold': threshold,
       'total_community_contributions': totalContributions,
       'merchant_name': merchantName,
+      'total_allowance_spent': totalAllowanceSpent,
       'contributions':
           contributions.map((contribution) => contribution.toJson()).toList(),
     };

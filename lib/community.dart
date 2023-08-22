@@ -3,10 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:allowance/community_user_card.dart';
 
-class CommunityPage extends StatelessWidget {
+class CommunityPage extends StatefulWidget {
   final Allowance allowance;
+  bool spendingAllowance = true;
 
-  const CommunityPage({Key? key, required this.allowance}) : super(key: key);
+  CommunityPage({Key? key, required this.allowance}) : super(key: key);
+
+  @override
+  State<CommunityPage> createState() => _CommunityPageState();
+}
+
+class _CommunityPageState extends State<CommunityPage> {
+  @override
+  void initState() {
+    super.initState();
+    widget.spendingAllowance =
+        double.parse(widget.allowance.totalAllowanceSpent.substring(1)) <
+            double.parse(widget.allowance.threshold.substring(1));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +50,9 @@ class CommunityPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
-                'To get more allowance, keep spending at ${allowance.merchantName}',
+                (!widget.spendingAllowance
+                    ? 'To get more allowance, keep spending at ${widget.allowance.merchantName}'
+                    : 'Your Allowance is valid at\n${widget.allowance.merchantName}'),
                 style: TextStyle(
                   fontSize: 25 * ffem,
                   fontWeight: FontWeight.w700,
@@ -50,10 +66,14 @@ class CommunityPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: LinearPercentIndicator(
-                percent:
-                    double.parse(allowance.totalContributions.substring(1)) /
-                        double.parse(allowance.threshold.substring(1)),
-                center: Text(allowance.totalContributions,
+                percent: (!widget.spendingAllowance)
+                    ? double.parse(
+                            widget.allowance.totalContributions.substring(1)) /
+                        double.parse(widget.allowance.threshold.substring(1))
+                    : double.parse(
+                            widget.allowance.totalAllowanceSpent.substring(1)) /
+                        double.parse(widget.allowance.threshold.substring(1)),
+                center: Text(!widget.spendingAllowance ? widget.allowance.totalContributions : widget.allowance.totalAllowanceSpent,
                     style: TextStyle(color: Colors.white)),
                 progressColor: Colors.green,
                 backgroundColor: Colors.black,
@@ -63,7 +83,9 @@ class CommunityPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              'Fill this bar up to unlock the next round!',
+              (!widget.spendingAllowance)
+                  ? 'Fill this bar up to unlock the next round!'
+                  : 'Until this bar is full!',
               style: TextStyle(
                 fontSize: 20 * ffem,
                 fontWeight: FontWeight.w700,
@@ -74,7 +96,9 @@ class CommunityPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Image.network(
-              'https://media.tenor.com/E7fROB_zqFAAAAAC/%EC%9B%90%EA%B8%B0%EC%98%A5.gif',
+              (!widget.spendingAllowance)
+                  ? 'https://media.tenor.com/E7fROB_zqFAAAAAC/%EC%9B%90%EA%B8%B0%EC%98%A5.gif'
+                  : 'https://media.tenor.com/Yx4js0bvIiYAAAAC/tick-tock-debate-me.gif',
               width: 300,
               height: 300,
             ),
@@ -92,17 +116,19 @@ class CommunityPage extends StatelessWidget {
             SizedBox(height: 20),
             ListView.builder(
               shrinkWrap: true,
-              itemCount: allowance.contributions.length,
+              itemCount: widget.allowance.contributions.length,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                ContributionData contribution = allowance.contributions[index];
+                ContributionData contribution =
+                    widget.allowance.contributions[index];
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: UserCardCommunity(
                     amountSpent: contribution.amount,
                     spentTime: contribution.timeSince,
                     username: contribution.username,
-					photoUrl: contribution.photoUrl,
+                    photoUrl: contribution.photoUrl,
+                    spendingAllowance: widget.spendingAllowance,
                   ),
                 );
               },
