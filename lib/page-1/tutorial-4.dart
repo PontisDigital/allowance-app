@@ -1,4 +1,3 @@
-import 'package:allowance/page-1/tutorial-6.dart';
 import 'package:allowance/tut_button.dart';
 import 'package:allowance/utils.dart';
 import 'package:flutter/material.dart';
