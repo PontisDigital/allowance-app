@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class Tut4 extends StatelessWidget {
   @override
@@ -77,6 +78,20 @@ class Tut4 extends StatelessWidget {
                               'basis. Each store has a monthly maximum spending limit — spend your allowance fast before the spending limit is met.'),
                     ],
                   ),
+                ),
+              ),
+			  SizedBox(height: 50),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: LinearPercentIndicator(
+                  percent: 0.5,
+                  trailing:
+                      Text("\$7500", style: TextStyle(color: Colors.white)),
+                  center: Text('\$3750', style: TextStyle(color: Colors.white)),
+                  progressColor: Colors.green,
+                  backgroundColor: Color(0xff7c7c7c),
+                  lineHeight: 30.0,
+                  barRadius: Radius.circular(20),
                 ),
               ),
             ],

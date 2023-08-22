@@ -64,46 +64,42 @@ class _CommunityPageState extends State<CommunityPage> {
             ),
             SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: LinearPercentIndicator(
                 percent: (!widget.spendingAllowance)
                     ? double.parse(
                             widget.allowance.totalContributions.substring(1)) /
                         double.parse(widget.allowance.threshold.substring(1))
-                    : (double.parse(widget.allowance.threshold.substring(1)) - double.parse(
+                    : (double.parse(
                             widget.allowance.totalAllowanceSpent.substring(1))) /
                         double.parse(widget.allowance.threshold.substring(1)),
+				trailing: Text(widget.allowance.threshold, style: TextStyle(color: Colors.white)),
                 center: Text(
                     !widget.spendingAllowance
                         ? widget.allowance.totalContributions
-                        : '\$${double.parse(widget.allowance.threshold.substring(1)) - double.parse(widget.allowance.totalAllowanceSpent.substring(1))}',
+                        : '\$${double.parse(widget.allowance.totalAllowanceSpent.substring(1))}',
                     style: TextStyle(color: Colors.white)),
                 progressColor: Colors.green,
-                backgroundColor: Colors.black,
+                backgroundColor: Color(0xff7c7c7c),
                 lineHeight: 30.0,
                 barRadius: Radius.circular(20),
               ),
             ),
             SizedBox(height: 20),
-            Text(
-              (!widget.spendingAllowance)
-                  ? 'Fill this bar up to unlock the next round!'
-                  : 'There are \$${double.parse(widget.allowance.threshold.substring(1)) - double.parse(widget.allowance.totalAllowanceSpent.substring(1))} dollars left in this round!',
-              style: TextStyle(
-                fontSize: 18 * ffem,
-                fontWeight: FontWeight.w700,
-                height: 1.26 * ffem / fem,
-                color: Color(0xffffffff),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                (!widget.spendingAllowance)
+                    ? 'Fill this bar up to unlock the next round!'
+                    : '${widget.allowance.merchantName} is accepting \$${double.parse(widget.allowance.threshold.substring(1)) - double.parse(widget.allowance.totalAllowanceSpent.substring(1))} more allowance this round.',
+                style: TextStyle(
+                  fontSize: 18 * ffem,
+                  fontWeight: FontWeight.w700,
+                  height: 1.26 * ffem / fem,
+                  color: Color(0xffffffff),
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 20),
-            Image.network(
-              (!widget.spendingAllowance)
-                  ? 'https://media.tenor.com/E7fROB_zqFAAAAAC/%EC%9B%90%EA%B8%B0%EC%98%A5.gif'
-                  : 'https://media.tenor.com/Yx4js0bvIiYAAAAC/tick-tock-debate-me.gif',
-              width: 300,
-              height: 300,
             ),
             SizedBox(height: 20),
             Visibility(
@@ -115,7 +111,7 @@ class _CommunityPageState extends State<CommunityPage> {
                     ? 'Recent Contributions'
                     : 'Recent Spending',
                 style: TextStyle(
-                  fontSize: 20 * ffem,
+                  fontSize: 24 * ffem,
                   fontWeight: FontWeight.w700,
                   height: 1.26 * ffem / fem,
                   color: Color(0xffffffff),
