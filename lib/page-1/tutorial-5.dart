@@ -49,31 +49,31 @@ class Tut5 extends StatelessWidget {
                       TextSpan(
                         style: SafeGoogleFont(
                           'Outfit',
-                          fontSize: 36 * ffem,
+                          fontSize: 30 * ffem,
                           fontWeight: FontWeight.w400,
                           height: 1.26 * ffem / fem,
                           color: Color(0xffffffff),
                         ),
                           text:
-                              'Even when you can\'t spend your allowance, you '),
+                              'Even after you spend your allowance, '),
                       TextSpan(
                         style: SafeGoogleFont(
                           'Outfit',
-                          fontSize: 36 * ffem,
+                          fontSize: 30 * ffem,
                           fontWeight: FontWeight.w700,
                           height: 1.26 * ffem / fem,
                           color: Color(0xffffffff),
                         ),
-                          text: 'must scan your QR code '),
+                          text: 'you have to shop at a partner store and scan your QR code to be eligible for the next drop. '),
                       TextSpan(
                         style: SafeGoogleFont(
                           'Outfit',
-                          fontSize: 36 * ffem,
+                          fontSize: 30 * ffem,
                           fontWeight: FontWeight.w400,
                           height: 1.26 * ffem / fem,
                           color: Color(0xffffffff),
                         ),
-                          text: 'in order to qualify for the next round.'),
+                          text: 'Make sure to scan your QR code even when you\'re shopping without allowance.'),
                     ],
                   ),
                 ),

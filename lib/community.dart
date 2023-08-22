@@ -52,9 +52,9 @@ class _CommunityPageState extends State<CommunityPage> {
               child: Text(
                 (!widget.spendingAllowance
                     ? 'To get more allowance, keep spending at ${widget.allowance.merchantName}'
-                    : 'Your Allowance is valid at\n${widget.allowance.merchantName}'),
+                    : 'Allowance is first come, first serve'),
                 style: TextStyle(
-                  fontSize: 25 * ffem,
+                  fontSize: 22 * ffem,
                   fontWeight: FontWeight.w700,
                   height: 1.26 * ffem / fem,
                   color: Color(0xffffffff),
@@ -70,13 +70,13 @@ class _CommunityPageState extends State<CommunityPage> {
                     ? double.parse(
                             widget.allowance.totalContributions.substring(1)) /
                         double.parse(widget.allowance.threshold.substring(1))
-                    : double.parse(
-                            widget.allowance.totalAllowanceSpent.substring(1)) /
+                    : (double.parse(widget.allowance.threshold.substring(1)) - double.parse(
+                            widget.allowance.totalAllowanceSpent.substring(1))) /
                         double.parse(widget.allowance.threshold.substring(1)),
                 center: Text(
                     !widget.spendingAllowance
                         ? widget.allowance.totalContributions
-                        : widget.allowance.totalAllowanceSpent,
+                        : '\$${double.parse(widget.allowance.threshold.substring(1)) - double.parse(widget.allowance.totalAllowanceSpent.substring(1))}',
                     style: TextStyle(color: Colors.white)),
                 progressColor: Colors.green,
                 backgroundColor: Colors.black,
@@ -88,9 +88,9 @@ class _CommunityPageState extends State<CommunityPage> {
             Text(
               (!widget.spendingAllowance)
                   ? 'Fill this bar up to unlock the next round!'
-                  : 'Until this bar is full!',
+                  : 'There are \$${double.parse(widget.allowance.threshold.substring(1)) - double.parse(widget.allowance.totalAllowanceSpent.substring(1))} dollars left in this round!',
               style: TextStyle(
-                fontSize: 20 * ffem,
+                fontSize: 18 * ffem,
                 fontWeight: FontWeight.w700,
                 height: 1.26 * ffem / fem,
                 color: Color(0xffffffff),
