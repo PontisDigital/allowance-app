@@ -64,7 +64,7 @@ class Tut5 extends StatelessWidget {
                           height: 1.26 * ffem / fem,
                           color: Color(0xffffffff),
                         ),
-                          text: 'you have to shop at a partner store and scan your QR code to be eligible for the next drop. '),
+                          text: 'you have to shop at a featured store and scan your QR code to be eligible for the next drop. '),
                       TextSpan(
                         style: SafeGoogleFont(
                           'Outfit',
