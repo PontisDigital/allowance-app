@@ -50,7 +50,7 @@ class Tut4 extends StatelessWidget {
                         text: 'Step Four:\n',
                       ),
                       TextSpan(
-                        text: 'Allowance works on a ',
+                        text: 'Each store has a monthly maximum spending limit and Allowance runs on a ',
                         style: SafeGoogleFont(
                           'Outfit',
                           fontSize: 36 * ffem,
@@ -75,7 +75,7 @@ class Tut4 extends StatelessWidget {
                               height: 1.26 * ffem / fem,
                               color: Color(0xffffffff)),
                           text:
-                              'basis. Each store has a monthly maximum spending limit — spend your allowance fast before the spending limit is met.'),
+                              'basis. In other words, you should spend you allowance as soon as you can before the limit is met'),
                     ],
                   ),
                 ),
