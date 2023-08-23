@@ -176,7 +176,9 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
                         });
                       },
                       text: 'continue')
-                  : CircularProgressIndicator(),
+                  : CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
             ],
           ),
         ),
@@ -228,14 +230,14 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
           context: context,
           builder: (context) => AlertDialog(
                 content: Text('Username already exists. Please try again.'),
-				actions: [
-				TextButton(
-					child: Text('OK'),
-					onPressed: () {
-						Navigator.pop(context);
-					},
-				)
-				],
+                actions: [
+                  TextButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
               ));
     }
   }

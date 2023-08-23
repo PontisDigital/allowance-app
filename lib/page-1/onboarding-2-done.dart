@@ -16,14 +16,19 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class OnboardPasswordPage extends StatelessWidget {
+class OnboardPasswordPage extends StatefulWidget {
   final String emailInput;
   final String usernameInput;
 
+  OnboardPasswordPage({required this.emailInput, required this.usernameInput});
+
+  @override
+  State<OnboardPasswordPage> createState() => _OnboardPasswordPageState();
+}
+
+class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-
-  OnboardPasswordPage({required this.emailInput, required this.usernameInput});
 
   bool buttonPressed = false;
 
@@ -183,6 +188,9 @@ class OnboardPasswordPage extends StatelessWidget {
                     onSubmitted: (value) {
                       if (value == passwordController.text) {
                         createAccount(context, value);
+                        setState(() {
+                          buttonPressed = true;
+                        });
                       } else {
                         passwordMissmatchDialogue(context);
                       }
@@ -191,17 +199,24 @@ class OnboardPasswordPage extends StatelessWidget {
                   SizedBox(
                     height: 10 * fem,
                   ),
-                  CustomButton(
-                      minHeight: 50 * fem,
-                      onPressed: () {
-                        if (passwordController.text ==
-                            confirmPasswordController.text) {
-                          createAccount(context, passwordController.text);
-                        } else {
-                          passwordMissmatchDialogue(context);
-                        }
-                      },
-                      text: "continue"),
+                  !buttonPressed
+                      ? CustomButton(
+                          minHeight: 50 * fem,
+                          onPressed: () {
+                            if (passwordController.text ==
+                                confirmPasswordController.text) {
+                              setState(() {
+                                buttonPressed = true;
+                              });
+                              createAccount(context, passwordController.text);
+                            } else {
+                              passwordMissmatchDialogue(context);
+                            }
+                          },
+                          text: "continue")
+                      : CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
                 ],
               ),
             ),
@@ -215,8 +230,8 @@ class OnboardPasswordPage extends StatelessWidget {
     final String apiUrl = 'https://api.allowance.fund/register';
 
     final Map<String, dynamic> requestData = {
-      "email": emailInput,
-      "username": usernameInput,
+      "email": widget.emailInput,
+      "username": widget.usernameInput,
       "password": password,
     };
 
@@ -229,8 +244,8 @@ class OnboardPasswordPage extends StatelessWidget {
 
       if (response.statusCode == 200) {
         // You can handle the response here if needed
-        await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: emailInput, password: password);
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: widget.emailInput, password: password);
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => TheTutorial()),
@@ -238,8 +253,15 @@ class OnboardPasswordPage extends StatelessWidget {
         );
       } else {
         // You can handle the response here if needed
+        setState(() {
+          buttonPressed = false;
+        });
       }
-    } catch (error) {}
+    } catch (error) {
+      setState(() {
+        buttonPressed = false;
+      });
+    }
   }
 
   void passwordMissmatchDialogue(BuildContext context) {
