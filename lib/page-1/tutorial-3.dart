@@ -1,10 +1,12 @@
 import 'package:allowance/page-1/tutorial-4.dart';
 import 'package:allowance/tut_button.dart';
 import 'package:allowance/utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class Tut3 extends StatelessWidget {
   @override
@@ -17,7 +19,8 @@ class Tut3 extends StatelessWidget {
         width: double.infinity,
         child: Container(
           // tutorial5eHM (7:270)
-          padding: EdgeInsets.fromLTRB(55 * fem, 34 * fem, 55 * fem, 146.2 * fem),
+          padding:
+              EdgeInsets.fromLTRB(55 * fem, 34 * fem, 55 * fem, 146.2 * fem),
           width: double.infinity,
           decoration: BoxDecoration(
             color: Color(0xff041e42),
@@ -27,7 +30,8 @@ class Tut3 extends StatelessWidget {
             children: [
               Container(
                 // stepthreeshowqrcodetocashier48 (7:273)
-                margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 23 * fem),
+                margin:
+                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 23 * fem),
                 constraints: BoxConstraints(
                   maxWidth: 273 * fem,
                 ),
@@ -61,7 +65,8 @@ class Tut3 extends StatelessWidget {
               ),
               Container(
                 // frame37209yuH (7:285)
-                margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 42 * fem),
+                margin:
+                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 42 * fem),
                 padding: EdgeInsets.fromLTRB(
                     10.4 * fem, 9.6 * fem, 9.6 * fem, 10.4 * fem),
                 width: double.infinity,
@@ -72,13 +77,14 @@ class Tut3 extends StatelessWidget {
                 child: Center(
                   // rectangle10HQB (7:287)
                   child: SizedBox(
-                    width: 260 * fem,
-                    height: 260 * fem,
-                    child: Image.asset(
-                      'assets/page-1/images/rectangle-10.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                      width: 260 * fem,
+                      height: 260 * fem,
+                      child: QrImageView(
+                        data: FirebaseAuth.instance.currentUser!.uid,
+                        version: QrVersions.auto,
+                        backgroundColor: Colors.white,
+                        size: 260.0,
+                      )),
                 ),
               ),
             ],
