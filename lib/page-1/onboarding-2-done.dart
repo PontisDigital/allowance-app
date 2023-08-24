@@ -187,10 +187,14 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                     isPassword: true,
                     onSubmitted: (value) {
                       if (value == passwordController.text) {
-                        createAccount(context, value);
-                        setState(() {
-                          buttonPressed = true;
-                        });
+                        if (value.length < 6) {
+                          passwordShortDialogue(context);
+                        } else {
+                          createAccount(context, value);
+                          setState(() {
+                            buttonPressed = true;
+                          });
+                        }
                       } else {
                         passwordMissmatchDialogue(context);
                       }
@@ -271,6 +275,20 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
               title: Text("Password Missmatch"),
               content: Text(
                   "The passwords you entered do not match. Please try again."),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(context), child: Text("OK"))
+              ],
+            ));
+  }
+
+  void passwordShortDialogue(BuildContext context) async {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text("Password Too Short"),
+              content: Text(
+                  "Password must be at least 6 characters. Please try again."),
               actions: [
                 TextButton(
                     onPressed: () => Navigator.pop(context), child: Text("OK"))
