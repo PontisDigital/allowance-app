@@ -187,9 +187,12 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                     isPassword: true,
                     onSubmitted: (value) {
                       if (value == passwordController.text) {
-                        if (value.length < 6) {
+                        if (passwordController.text.length < 6) {
+                          print("password too short");
                           passwordShortDialogue(context);
                         } else {
+                          print("VALUE IS: $value");
+                          print("PASSWORD IS: ${passwordController.text}");
                           createAccount(context, value);
                           setState(() {
                             buttonPressed = true;
@@ -207,15 +210,21 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                       ? CustomButton(
                           minHeight: 50 * fem,
                           onPressed: () {
-                            if (passwordController.text ==
-                                confirmPasswordController.text) {
-                              setState(() {
-                                buttonPressed = true;
-                              });
-                              createAccount(context, passwordController.text);
-                            } else {
-                              passwordMissmatchDialogue(context);
-                            }
+                      if (confirmPasswordController.text == passwordController.text) {
+                        if (passwordController.text.length < 6) {
+                          print("password too short");
+                          passwordShortDialogue(context);
+                        } else {
+                          print("CONFIRM IS: ${confirmPasswordController.text}");
+                          print("PASSWORD IS: ${passwordController.text}");
+                          createAccount(context, passwordController.text);
+                          setState(() {
+                            buttonPressed = true;
+                          });
+                        }
+                      } else {
+                        passwordMissmatchDialogue(context);
+                      }
                           },
                           text: "continue")
                       : CircularProgressIndicator(
@@ -282,7 +291,7 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
             ));
   }
 
-  void passwordShortDialogue(BuildContext context) async {
+  void passwordShortDialogue(BuildContext context) {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
