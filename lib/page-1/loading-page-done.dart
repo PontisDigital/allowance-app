@@ -53,13 +53,6 @@ class LandingPage extends StatelessWidget {
                     color: Colors.white.withOpacity(0.7),
                   ),
                 ),
-                SizedBox(height: 20 * fem), // Adjust spacing as needed
-                Image.asset(
-                  'assets/page-1/images/jack-the-bulldog.png',
-                  width: 70 * fem,
-                  height: 70 * fem,
-                  fit: BoxFit.cover,
-                ),
               ],
             ),
           ),
