@@ -92,7 +92,7 @@ class _CommunityPageState extends State<CommunityPage> {
               child: Text(
                 (!widget.spendingAllowance)
                     ? 'Fill this bar up to unlock the next round!'
-                    : '${widget.allowance.merchantName} is accepting \$${double.parse(widget.allowance.threshold.substring(1)) - double.parse(widget.allowance.totalAllowanceSpent.substring(1))} more allowance this round.',
+                    : '${widget.allowance.merchantName} is accepting \$${(double.parse(widget.allowance.threshold.substring(1)) - double.parse(widget.allowance.totalAllowanceSpent.substring(1))).toStringAsFixed(2)} more allowance this round.',
                 style: TextStyle(
                   fontSize: 18 * ffem,
                   fontWeight: FontWeight.w700,
