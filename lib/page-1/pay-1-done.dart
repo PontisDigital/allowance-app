@@ -17,7 +17,7 @@ class QRCodePage extends StatelessWidget {
 	  	backgroundColor: Color(0xff041e42),
 		centerTitle: true,
 		title: Text(
-		  'hoya allowance',
+		  'allowance',
 		  style: SafeGoogleFont(
 			'Outfit',
 			fontSize: 25 * ffem,

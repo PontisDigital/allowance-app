@@ -32,7 +32,7 @@ class _CommunityPageState extends State<CommunityPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'hoya allowance',
+          'allowance',
           style: TextStyle(
             fontSize: 25 * ffem,
             fontWeight: FontWeight.w700,
