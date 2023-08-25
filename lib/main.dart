@@ -107,7 +107,7 @@ class _MyAppState extends State<MyApp> {
                       );
                     }),
                 title: Text(
-                  'hoya allowance',
+                  'allowance',
                   style: SafeGoogleFont(
                     'Outfit',
                     fontSize: 25 * ffem,
