@@ -187,64 +187,7 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
             ),
           ),
         ),
-        ConstrainedBox(
-          constraints: BoxConstraints(minHeight: 110),
-          child: Card(
-            elevation: 9,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-            color: Color.fromRGBO(20, 22, 110, 1),
-            child: Column(
-              children: [
-                Divider(color: Colors.transparent, thickness: 2),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(
-                        'Public Profile',
-                        style: SafeGoogleFont(
-                          'Outfit',
-                          fontSize: 18 * ffem,
-                          fontWeight: FontWeight.w700,
-                          height: 1.26 * ffem / fem,
-                          color: Color(0xffffffff),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                      child: Switch(
-                        value: widget.isPublic,
-                        activeColor: Colors.green.shade500,
-                        onChanged: (value) {
-                          _togglePublic();
-                          setState(() {
-                            widget.isPublic = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Text(
-                  'Makes your transactions public on the progress page',
-                  style: SafeGoogleFont(
-                    'Outfit',
-                    fontSize: 14 * ffem,
-                    fontWeight: FontWeight.w700,
-                    height: 1.26 * ffem / fem,
-                    color: Color(0xffffffff),
-                  ),
-                ),
-                Divider(color: Colors.transparent, thickness: 2),
-              ],
-            ),
-          ),
-        ),
+        SizedBox(height: 20),
         SizedBox(height: 20),
         Column(
             mainAxisAlignment: MainAxisAlignment.center,
