@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _loadSavedData();
     _fetchUserBalance(null);
-    _timer = Timer.periodic(Duration(milliseconds: 7500), _fetchUserBalance);
+    _timer = Timer.periodic(Duration(milliseconds: 35000), _fetchUserBalance);
   }
 
   Future<void> _loadSavedData() async {
@@ -290,9 +290,15 @@ class _HomePageState extends State<HomePage> {
         }
       } else {
         // Handle API error here
+        print("===========================================");
+        print(response.body);
+        print("===========================================");
       }
     } catch (e) {
       // Handle error here
+      print("===========================================");
+      print(e);
+      print("===========================================");
     }
   }
 
@@ -302,201 +308,303 @@ class _HomePageState extends State<HomePage> {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
 
-    return SingleChildScrollView(
-      child: Container(
-        width: double.infinity,
+    return RefreshIndicator(
+      onRefresh: () => _fetchUserBalance(null),
+      child: SingleChildScrollView(
         child: Container(
-          // homepagedoneCkX (324:418)
-          padding: EdgeInsets.fromLTRB(14 * fem, 34 * fem, 14 * fem, 34 * fem),
           width: double.infinity,
-          height: 944 * fem,
-          decoration: BoxDecoration(
-            color: Color(0xff041e42),
-          ),
           child: Container(
-            // frame37260iTy (19:176)
+            // homepagedoneCkX (324:418)
+            padding:
+                EdgeInsets.fromLTRB(14 * fem, 34 * fem, 14 * fem, 34 * fem),
             width: double.infinity,
-            height: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  // frame371924Xq (324:421)
-                  margin: EdgeInsets.fromLTRB(
-                      23.01 * fem, 0 * fem, 22.47 * fem, 17 * fem),
-                  width: double.infinity,
-                  height: 151.7 * fem,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        // allowancebalanceKcB (324:423)
-                        left: 0 * fem,
-                        top: 0 * fem,
-                        child: Container(
-                          width: 311 * fem,
-                          height: 126.7 * fem,
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                // RQK (324:424)
-                                left: 0 * fem,
-                                top: 0 * fem,
-                                child: Align(
-                                  child: SizedBox(
-                                    width: 311 * fem,
-                                    height: 107 * fem,
-                                    child: Center(
-                                      child: Text(
-                                          widget._userHomeData.totalAllowance,
-                                          style: SafeGoogleFont(
-                                            'Inter',
-                                            fontSize: 87.7027130127 * ffem,
-                                            fontWeight: FontWeight.w700,
-                                            height: 1.2125 * ffem / fem,
-                                            color: Color(0xffffffff),
-                                          )),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                // totalallowanceu4b (324:425)
-                                left: 62.2337646484 * fem,
-                                top: 95.7026977539 * fem,
-                                child: Align(
-                                  child: SizedBox(
-                                    width: 186 * fem,
-                                    height: 31 * fem,
-                                    child: Text(
-                                      'total allowance',
-                                      textAlign: TextAlign.center,
-                                      style: SafeGoogleFont(
-                                        'Inter',
-                                        fontSize: 25 * ffem,
-                                        fontWeight: FontWeight.w700,
-                                        height: 1.2125 * ffem / fem,
-                                        color: Color(0xffffffff),
+            height: 944 * fem,
+            decoration: BoxDecoration(
+              color: Color(0xff041e42),
+            ),
+            child: Container(
+              // frame37260iTy (19:176)
+              width: double.infinity,
+              height: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    // frame371924Xq (324:421)
+                    margin: EdgeInsets.fromLTRB(
+                        23.01 * fem, 0 * fem, 22.47 * fem, 17 * fem),
+                    width: double.infinity,
+                    height: 151.7 * fem,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          // allowancebalanceKcB (324:423)
+                          left: 0 * fem,
+                          top: 0 * fem,
+                          child: Container(
+                            width: 311 * fem,
+                            height: 126.7 * fem,
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  // RQK (324:424)
+                                  left: 0 * fem,
+                                  top: 0 * fem,
+                                  child: Align(
+                                    child: SizedBox(
+                                      width: 311 * fem,
+                                      height: 107 * fem,
+                                      child: Center(
+                                        child: Text(
+                                            widget._userHomeData.totalAllowance,
+                                            style: SafeGoogleFont(
+                                              'Inter',
+                                              fontSize: 87.7027130127 * ffem,
+                                              fontWeight: FontWeight.w700,
+                                              height: 1.2125 * ffem / fem,
+                                              color: Color(0xffffffff),
+                                            )),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                                Positioned(
+                                  // totalallowanceu4b (324:425)
+                                  left: 62.2337646484 * fem,
+                                  top: 95.7026977539 * fem,
+                                  child: Align(
+                                    child: SizedBox(
+                                      width: 186 * fem,
+                                      height: 31 * fem,
+                                      child: Text(
+                                        'total allowance',
+                                        textAlign: TextAlign.center,
+                                        style: SafeGoogleFont(
+                                          'Inter',
+                                          fontSize: 25 * ffem,
+                                          fontWeight: FontWeight.w700,
+                                          height: 1.2125 * ffem / fem,
+                                          color: Color(0xffffffff),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MoreInfo()));
-                  },
-                  child: Container(
-                    // frame37259xoZ (19:175)
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          // frame37258W4P (19:174)
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 0 * fem, 17 * fem),
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                // frame37245qcT (324:546)
-                                margin: EdgeInsets.fromLTRB(
-                                    2.28 * fem, 0 * fem, 2.28 * fem, 15 * fem),
-                                width: double.infinity,
-                                height: 55.57 * fem,
-                                decoration: BoxDecoration(
-                                  color: Color(0xff09367b),
-                                  borderRadius:
-                                      BorderRadius.circular(9.2609996796 * fem),
-                                ),
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      // helpcenterMKu (324:542)
-                                      left: 0 * fem,
-                                      top: 4.6304931641 * fem,
-                                      child: Align(
-                                        child: SizedBox(
-                                          width: 46.31 * fem,
-                                          height: 46.3 * fem,
-                                          child: Image.asset(
-                                            'assets/page-1/images/helpcenter.png',
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => MoreInfo()));
+                    },
+                    child: Container(
+                      // frame37259xoZ (19:175)
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            // frame37258W4P (19:174)
+                            margin: EdgeInsets.fromLTRB(
+                                0 * fem, 0 * fem, 0 * fem, 17 * fem),
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  // frame37245qcT (324:546)
+                                  margin: EdgeInsets.fromLTRB(2.28 * fem,
+                                      0 * fem, 2.28 * fem, 15 * fem),
+                                  width: double.infinity,
+                                  height: 55.57 * fem,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff09367b),
+                                    borderRadius: BorderRadius.circular(
+                                        9.2609996796 * fem),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        // helpcenterMKu (324:542)
+                                        left: 0 * fem,
+                                        top: 4.6304931641 * fem,
+                                        child: Align(
+                                          child: SizedBox(
                                             width: 46.31 * fem,
                                             height: 46.3 * fem,
+                                            child: Image.asset(
+                                              'assets/page-1/images/helpcenter.png',
+                                              width: 46.31 * fem,
+                                              height: 46.3 * fem,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Positioned(
-                                      // scanyourqrcodeeverytimeyoushop (324:540)
-                                      left: 46.3049316406 * fem,
-                                      top: 4.6304931641 * fem,
-                                      child: Align(
-                                        child: SizedBox(
-                                          width: 302 * fem,
-                                          height: 45 * fem,
-                                          child: (widget._userHomeData
-                                                  .isEmailVerified)
-                                              ? Text(
-                                                  'Scan your QR code every time you shop to recharge your allowance.',
-                                                  style: SafeGoogleFont(
-                                                    'Inter',
-                                                    fontSize:
-                                                        18.5219993591 * ffem,
-                                                    fontWeight: FontWeight.w400,
-                                                    height: 1.2125 * ffem / fem,
-                                                    color: Color(0xffffffff),
+                                      Positioned(
+                                        // scanyourqrcodeeverytimeyoushop (324:540)
+                                        left: 46.3049316406 * fem,
+                                        top: 4.6304931641 * fem,
+                                        child: Align(
+                                          child: SizedBox(
+                                            width: 302 * fem,
+                                            height: 45 * fem,
+                                            child: (widget._userHomeData
+                                                    .isEmailVerified)
+                                                ? Text(
+                                                    'Scan your QR code every time you shop to recharge your allowance.',
+                                                    style: SafeGoogleFont(
+                                                      'Inter',
+                                                      fontSize:
+                                                          18.5219993591 * ffem,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      height:
+                                                          1.2125 * ffem / fem,
+                                                      color: Color(0xffffffff),
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    'Verify your email to start using your allowance.',
+                                                    style: SafeGoogleFont(
+                                                      'Inter',
+                                                      fontSize:
+                                                          18.5219993591 * ffem,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      height:
+                                                          1.2125 * ffem / fem,
+                                                      color: Color(0xffffffff),
+                                                    ),
                                                   ),
-                                                )
-                                              : Text(
-                                                  'Verify your email to start using your allowance.',
-                                                  style: SafeGoogleFont(
-                                                    'Inter',
-                                                    fontSize:
-                                                        18.5219993591 * ffem,
-                                                    fontWeight: FontWeight.w400,
-                                                    height: 1.2125 * ffem / fem,
-                                                    color: Color(0xffffffff),
-                                                  ),
-                                                ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                // frame37257uVq (19:173)
-                                width: double.infinity,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      // frame37190x47 (324:435)
-                                      width: double.infinity,
-                                      height: 99.22 * fem,
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            // allowancebutton6RD (324:437)
-                                            margin: EdgeInsets.fromLTRB(0 * fem,
-                                                0 * fem, 8 * fem, 0 * fem),
-                                            child: TextButton(
+                                Container(
+                                  // frame37257uVq (19:173)
+                                  width: double.infinity,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        // frame37190x47 (324:435)
+                                        width: double.infinity,
+                                        height: 99.22 * fem,
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              // allowancebutton6RD (324:437)
+                                              margin: EdgeInsets.fromLTRB(
+                                                  0 * fem,
+                                                  0 * fem,
+                                                  8 * fem,
+                                                  0 * fem),
+                                              child: TextButton(
+                                                onPressed: () {
+                                                  if (widget._userHomeData
+                                                      .isEmailVerified) {
+                                                    navigateToQRCodePage(
+                                                        context);
+                                                  } else {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (context) =>
+                                                                AlertDialog(
+                                                                  title: Text(
+                                                                      "Email not verified"),
+                                                                  content: Text(
+                                                                      "Please verify your email before proceeding"),
+                                                                  actions: [
+                                                                    TextButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        resendVerificationEmail();
+                                                                        Navigator.of(context)
+                                                                            .pop();
+                                                                      },
+                                                                      child: Text(
+                                                                          "Resend Verification Email"),
+                                                                    ),
+                                                                    TextButton(
+                                                                      child: Text(
+                                                                          "OK"),
+                                                                      onPressed:
+                                                                          () {
+                                                                        Navigator.of(context)
+                                                                            .pop();
+                                                                      },
+                                                                    ),
+                                                                  ],
+                                                                ));
+                                                  }
+                                                },
+                                                style: TextButton.styleFrom(
+                                                  padding: EdgeInsets.zero,
+                                                ),
+                                                child: Container(
+                                                  width: 174.24 * fem,
+                                                  height: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0x7f1900ff),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            18.4576263428 *
+                                                                fem),
+                                                    border: Border(),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      'allowance',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: SafeGoogleFont(
+                                                        'Outfit',
+                                                        fontSize: 30 * ffem,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        height:
+                                                            1.26 * ffem / fem,
+                                                        color:
+                                                            Color(0xffffffff),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              // sendbuttonWjq (324:441)
                                               onPressed: () {
                                                 if (widget._userHomeData
                                                     .isEmailVerified) {
-                                                  navigateToQRCodePage(context);
+                                                  showSearch(
+                                                      context: context,
+                                                      delegate:
+                                                          CustomSearchDelegate(
+                                                        searchTerms: widget
+                                                            ._userHomeData
+                                                            .otherUsers
+                                                            .map((u) =>
+                                                                u.username)
+                                                            .toList(),
+                                                        currentBalance: widget
+                                                            ._userHomeData
+                                                            .totalAllowance,
+                                                        otherUsers: widget
+                                                            ._userHomeData
+                                                            .otherUsers,
+                                                      ));
                                                 } else {
                                                   showDialog(
                                                       context: context,
@@ -505,7 +613,7 @@ class _HomePageState extends State<HomePage> {
                                                             title: Text(
                                                                 "Email not verified"),
                                                             content: Text(
-                                                                "Please verify your email before proceeding"),
+                                                                "you need to verify your email to send allowance"),
                                                             actions: [
                                                               TextButton(
                                                                 onPressed: () {
@@ -518,14 +626,11 @@ class _HomePageState extends State<HomePage> {
                                                                     "Resend Verification Email"),
                                                               ),
                                                               TextButton(
-                                                                child:
-                                                                    Text("OK"),
-                                                                onPressed: () {
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop();
-                                                                },
-                                                              ),
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          context),
+                                                                  child: Text(
+                                                                      "OK"))
                                                             ],
                                                           ));
                                                 }
@@ -537,7 +642,7 @@ class _HomePageState extends State<HomePage> {
                                                 width: 174.24 * fem,
                                                 height: double.infinity,
                                                 decoration: BoxDecoration(
-                                                  color: Color(0x7f1900ff),
+                                                  color: Color(0x3f4b39ef),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           18.4576263428 * fem),
@@ -545,7 +650,7 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    'allowance',
+                                                    'send',
                                                     textAlign: TextAlign.center,
                                                     style: SafeGoogleFont(
                                                       'Outfit',
@@ -559,139 +664,59 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          TextButton(
-                                            // sendbuttonWjq (324:441)
-                                            onPressed: () {
-                                              if (widget._userHomeData
-                                                  .isEmailVerified) {
-                                                showSearch(
-                                                    context: context,
-                                                    delegate:
-                                                        CustomSearchDelegate(
-                                                      searchTerms: widget
-                                                          ._userHomeData
-                                                          .otherUsers
-                                                          .map(
-                                                              (u) => u.username)
-                                                          .toList(),
-                                                      currentBalance: widget
-                                                          ._userHomeData
-                                                          .totalAllowance,
-                                                      otherUsers: widget
-                                                          ._userHomeData
-                                                          .otherUsers,
-                                                    ));
-                                              } else {
-                                                showDialog(
-                                                    context: context,
-                                                    builder: (context) =>
-                                                        AlertDialog(
-                                                          title: Text(
-                                                              "Email not verified"),
-                                                          content: Text(
-                                                              "you need to verify your email to send allowance"),
-                                                          actions: [
-                                                            TextButton(
-                                                              onPressed: () {
-                                                                resendVerificationEmail();
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              },
-                                                              child: Text(
-                                                                  "Resend Verification Email"),
-                                                            ),
-                                                            TextButton(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        context),
-                                                                child:
-                                                                    Text("OK"))
-                                                          ],
-                                                        ));
-                                              }
-                                            },
-                                            style: TextButton.styleFrom(
-                                              padding: EdgeInsets.zero,
-                                            ),
-                                            child: Container(
-                                              width: 174.24 * fem,
-                                              height: double.infinity,
-                                              decoration: BoxDecoration(
-                                                color: Color(0x3f4b39ef),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        18.4576263428 * fem),
-                                                border: Border(),
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  'send',
-                                                  textAlign: TextAlign.center,
-                                                  style: SafeGoogleFont(
-                                                    'Outfit',
-                                                    fontSize: 30 * ffem,
-                                                    fontWeight: FontWeight.w700,
-                                                    height: 1.26 * ffem / fem,
-                                                    color: Color(0xffffffff),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          // stores4b9 (324:462)
-                          margin: EdgeInsets.fromLTRB(
-                              0.79 * fem, 0 * fem, 0.79 * fem, 0 * fem),
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ListView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount:
-                                    widget._userHomeData.allowances.length,
-                                itemBuilder: (context, index) {
-                                  return Column(
-                                    children: [
-                                      StoreCardWidget(
-                                          allowance: widget
-                                              ._userHomeData.allowances[index]),
-                                      SizedBox(
-                                        height: 14 * fem,
+                                          ],
+                                        ),
                                       ),
                                     ],
-                                  );
-                                },
-                              ),
-                              ComingSoonWidget(
-                                  imageUrl:
-                                      "https://thumbs.dreamstime.com/b/lets-shopping-logo-design-template-cart-icon-designs-134743663.jpg"),
-                              SizedBox(
-                                height: 14 * fem,
-                              ),
-                              ComingSoonWidget(
-                                  imageUrl:
-                                      "https://www.pngitem.com/pimgs/m/301-3018403_logo-royalty-free-vector-coffee-shop-logos-free.png"),
-                            ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                          Container(
+                            // stores4b9 (324:462)
+                            margin: EdgeInsets.fromLTRB(
+                                0.79 * fem, 0 * fem, 0.79 * fem, 0 * fem),
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount:
+                                      widget._userHomeData.allowances.length,
+                                  itemBuilder: (context, index) {
+                                    return Column(
+                                      children: [
+                                        StoreCardWidget(
+                                            allowance: widget._userHomeData
+                                                .allowances[index]),
+                                        SizedBox(
+                                          height: 14 * fem,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                                ComingSoonWidget(
+                                    imageUrl:
+                                        "https://thumbs.dreamstime.com/b/lets-shopping-logo-design-template-cart-icon-designs-134743663.jpg"),
+                                SizedBox(
+                                  height: 14 * fem,
+                                ),
+                                ComingSoonWidget(
+                                    imageUrl:
+                                        "https://www.pngitem.com/pimgs/m/301-3018403_logo-royalty-free-vector-coffee-shop-logos-free.png"),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
