@@ -36,7 +36,7 @@ class _HopSurveyState extends State<HopSurvey> {
         centerTitle: true,
         backgroundColor: Color(0xff041e42),
         title: Text(
-          'hoya allowance',
+          'allowance',
           style: SafeGoogleFont(
             'Outfit',
             fontSize: 25 * ffem,
@@ -66,7 +66,7 @@ class _HopSurveyState extends State<HopSurvey> {
           Padding(
             padding: const EdgeInsets.all(32.0),
             child: Image.network(
-                "https://scontent.fgla3-2.fna.fbcdn.net/v/t39.30808-6/294844151_561686978964408_1737830783202643118_n.jpg?stp=dst-jpg_p720x720&_nc_cat=104&ccb=1-7&_nc_sid=e3f864&_nc_ohc=PhByb6Pp7lUAX8HoGsN&_nc_ht=scontent.fgla3-2.fna&oh=00_AfB9vZDLK0TJ-dvE37Q8O-Q6l8WOeOj-7HSgzRIqHupg1Q&oe=64E8E46E"),
+                "https://d2sochvv0rudri.cloudfront.net/place_photos/7466/hop-cask-barrel.JPG"),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
