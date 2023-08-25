@@ -31,7 +31,7 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
         centerTitle: true,
         backgroundColor: Color(0xff041e42),
         title: Text(
-          'hoya allowance',
+          'allowance',
           style: SafeGoogleFont(
             'Outfit',
             fontSize: 25 * ffem,
@@ -75,7 +75,7 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                                   maxWidth: 231 * fem,
                                 ),
                                 child: Text(
-                                  'Enter your Georgetown email address',
+                                  'Enter your school email address',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 36 * ffem,
