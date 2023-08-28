@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _loadSavedData();
     _fetchUserBalance(null);
-    _timer = Timer.periodic(Duration(milliseconds: 35000), _fetchUserBalance);
+    _timer = Timer.periodic(Duration(milliseconds: 10000), _fetchUserBalance);
   }
 
   Future<void> _loadSavedData() async {
@@ -359,7 +359,7 @@ class _HomePageState extends State<HomePage> {
                                             widget._userHomeData.totalAllowance,
                                             style: SafeGoogleFont(
                                               'Inter',
-                                              fontSize: 87.7027130127 * ffem,
+                                              fontSize: widget._userHomeData.totalAllowance.length > 6 ? 67 * ffem : 87 * ffem,
                                               fontWeight: FontWeight.w700,
                                               height: 1.2125 * ffem / fem,
                                               color: Color(0xffffffff),

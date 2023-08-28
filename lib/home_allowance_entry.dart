@@ -82,7 +82,7 @@ class StoreCardWidget extends StatelessWidget {
                               allowance.balance,
                               style: SafeGoogleFont(
                                 'Inter',
-                                fontSize: 60 * ffem,
+								fontSize: allowance.balance.length <= 6 ? 60 * ffem : 50 * ffem,
                                 fontWeight: FontWeight.w600,
                                 height: 0.75 * ffem / fem,
                                 color: Color(0xff08090a),
