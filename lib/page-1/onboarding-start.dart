@@ -186,7 +186,7 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
   }
 
   void handleEmailChange(String newValue) {
-    if (!emailController.text.contains('@')) {
+    if (!emailController.text.contains('@') && emailLimit) {
       emailController.value = emailController.value.copyWith(
         text: newValue + "@georgetown.edu",
       );
