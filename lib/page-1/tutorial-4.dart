@@ -53,7 +53,7 @@ class Tut4 extends StatelessWidget {
                         text: 'Each store has a monthly maximum spending limit and Allowance runs on a ',
                         style: SafeGoogleFont(
                           'Outfit',
-                          fontSize: 36 * ffem,
+                          fontSize: 30 * ffem,
                           fontWeight: FontWeight.w400,
                           height: 1.26 * ffem / fem,
                           color: Color(0xffffffff),
@@ -63,24 +63,24 @@ class Tut4 extends StatelessWidget {
                           text: 'first come, first serve ',
                           style: SafeGoogleFont(
                             'Outfit',
-                            fontSize: 36 * ffem,
+                            fontSize: 30 * ffem,
                             fontWeight: FontWeight.w700,
                             height: 1.26 * ffem / fem,
                             color: Color(0xffffffff),
                           )),
                       TextSpan(
                           style: SafeGoogleFont('Outfit',
-                              fontSize: 36 * ffem,
+                              fontSize: 30 * ffem,
                               fontWeight: FontWeight.w400,
                               height: 1.26 * ffem / fem,
                               color: Color(0xffffffff)),
                           text:
-                              'basis. In other words, you should spend you allowance as soon as you can before the limit is met'),
+                              'basis. In other words, you should spend your allowance as soon as you can before the limit is met'),
                     ],
                   ),
                 ),
               ),
-			  SizedBox(height: 50),
+			  SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32.0),
                 child: LinearPercentIndicator(
