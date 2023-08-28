@@ -14,6 +14,9 @@ import 'package:allowance/page-1/onboarding-2-done.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 class SignInWithPasswordPage extends StatefulWidget {
   final String emailInput;
 
@@ -179,6 +182,12 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
                             onPressed: () {
                               signIn(context, passwordController.text);
                             }),
+                        SizedBox(height: 20),
+                        TextButton(
+                          child: Text('Forgot Password?',
+                              style: TextStyle(color: Colors.white)),
+                          onPressed: () => _forgotPassword(context),
+                        ),
                       ],
                     ),
                   ),
@@ -221,6 +230,60 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
                   ],
                 ));
       }
+    }
+  }
+
+  _forgotPassword(BuildContext context) async {
+    final url = 'https://api.allowance.fund/forgotPassword';
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final body = {
+      'email': widget.emailInput,
+    };
+
+    final response = await http.post(Uri.parse(url),
+        headers: headers, body: jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      // Request successful, handle the response if needed
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('Password Reset Sent'),
+                content:
+                    Text('Please check your email for a password reset link'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        setState(() {
+                          buttonPressed = false;
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: Text('OK'))
+                ],
+              ));
+    } else {
+      // Request failed, handle the error
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('Error'),
+                content: Text('Something went wrong. Please try again later.'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        setState(() {
+                          buttonPressed = false;
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: Text('OK'))
+                ],
+              ));
     }
   }
 }
