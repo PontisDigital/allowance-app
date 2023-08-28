@@ -18,6 +18,9 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
 
   bool buttonPressed = false;
 
+  bool emailLimit = true;
+  int devTaps = 0;
+
   TextEditingController emailController = TextEditingController();
 
   @override
@@ -74,14 +77,22 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
                                 constraints: BoxConstraints(
                                   maxWidth: 231 * fem,
                                 ),
-                                child: Text(
-                                  'Enter your school email address',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 36 * ffem,
-                                    fontWeight: FontWeight.w700,
-                                    height: 1.26 * ffem / fem,
-                                    color: Color(0xffffffff),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    devTaps += 1;
+                                    if (devTaps >= 10) {
+                                      emailLimit = false;
+                                    }
+                                  },
+                                  child: Text(
+                                    'Enter your school email address',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 36 * ffem,
+                                      fontWeight: FontWeight.w700,
+                                      height: 1.26 * ffem / fem,
+                                      color: Color(0xffffffff),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -130,7 +141,7 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
   }
 
   handleGivenEmail(BuildContext context, String email) async {
-    if (!email.endsWith('@georgetown.edu')) {
+    if (!email.endsWith('@georgetown.edu') && emailLimit) {
       buttonPressed = false;
       showDialog(
           context: context,
