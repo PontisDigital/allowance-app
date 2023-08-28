@@ -13,7 +13,7 @@ class MoreInfo extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'hoya allowance',
+          'allowance',
           style: TextStyle(
             fontSize: 25 * ffem,
             fontWeight: FontWeight.w700,
