@@ -30,6 +30,7 @@ class _OnboardingStartPageState extends State<OnboardingStartPage> {
     double ffem = fem * 0.97;
 
     return Scaffold(
+        backgroundColor: Color(0xff041e42),
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Color(0xff041e42),
