@@ -64,8 +64,8 @@ class Tut6 extends StatelessWidget {
               ),
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Image.network(
-                      "https://media.tenor.com/c1rbgR_YFkkAAAAC/baby-throw.gif")),
+                  child: Image.asset(
+                      "assets/baby-throw.gif")),
               SizedBox(height: 20 * fem),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),

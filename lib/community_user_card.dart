@@ -50,7 +50,7 @@ class UserCardCommunity extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          'Spent ${amountSpent + (spendingAllowance ? " of Allowance" : "")}',
+          'Spent \$${amountSpent + (spendingAllowance ? " of Allowance" : "")}',
           style: SafeGoogleFont(
             'Outfit',
             fontSize: 12,
