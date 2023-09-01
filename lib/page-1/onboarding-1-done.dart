@@ -28,6 +28,7 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
     TextEditingController usernameController = TextEditingController();
 
     return Scaffold(
+      backgroundColor: Color(0xff041e42),
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -161,7 +162,10 @@ class _OnboardingSignUpPageState extends State<OnboardingSignUpPage> {
                   hintText: "Username",
                   controller: usernameController,
                   onSubmitted: (value) {
-                    moveToOnboardingPart2(context, usernameController.text);
+                    handleUsername(context, usernameController.text);
+                    setState(() {
+                      buttonPressed = true;
+                    });
                   }),
               SizedBox(
                 height: 20 * fem,

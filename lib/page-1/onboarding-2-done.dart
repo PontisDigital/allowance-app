@@ -38,6 +38,7 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return Scaffold(
+      backgroundColor: Color(0xff041e42),
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -210,21 +211,24 @@ class _OnboardPasswordPageState extends State<OnboardPasswordPage> {
                       ? CustomButton(
                           minHeight: 50 * fem,
                           onPressed: () {
-                      if (confirmPasswordController.text == passwordController.text) {
-                        if (passwordController.text.length < 6) {
-                          print("password too short");
-                          passwordShortDialogue(context);
-                        } else {
-                          print("CONFIRM IS: ${confirmPasswordController.text}");
-                          print("PASSWORD IS: ${passwordController.text}");
-                          createAccount(context, passwordController.text);
-                          setState(() {
-                            buttonPressed = true;
-                          });
-                        }
-                      } else {
-                        passwordMissmatchDialogue(context);
-                      }
+                            if (confirmPasswordController.text ==
+                                passwordController.text) {
+                              if (passwordController.text.length < 6) {
+                                print("password too short");
+                                passwordShortDialogue(context);
+                              } else {
+                                print(
+                                    "CONFIRM IS: ${confirmPasswordController.text}");
+                                print(
+                                    "PASSWORD IS: ${passwordController.text}");
+                                createAccount(context, passwordController.text);
+                                setState(() {
+                                  buttonPressed = true;
+                                });
+                              }
+                            } else {
+                              passwordMissmatchDialogue(context);
+                            }
                           },
                           text: "continue")
                       : CircularProgressIndicator(

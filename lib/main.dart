@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:allowance/input_referral_code.dart';
 import 'package:allowance/rewards.dart';
 import 'package:allowance/settings.dart';
 import 'package:allowance/the_tutorial.dart';
@@ -97,7 +98,7 @@ class _MyAppState extends State<MyApp> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Scaffold(
+			return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
                 leading: IconButton(
