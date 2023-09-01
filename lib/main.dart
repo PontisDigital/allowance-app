@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:allowance/rewards.dart';
 import 'package:allowance/settings.dart';
 import 'package:allowance/the_tutorial.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -40,9 +41,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   List<Widget> _widgetOptions = <Widget>[
+    RewardsPage(),
     HomePage(),
   ];
 
@@ -121,6 +123,10 @@ class _MyAppState extends State<MyApp> {
               backgroundColor: Color.fromRGBO(4, 30, 66, 1),
               bottomNavigationBar: BottomNavigationBar(
                 items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.attach_money),
+                    label: 'Rewards',
+                  ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),
                     label: 'Home',
