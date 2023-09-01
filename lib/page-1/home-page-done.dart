@@ -18,36 +18,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Allowance {
   final String balance;
   final String imageUrl;
-  final List<ContributionData> contributions;
-  final String threshold;
-  final String totalContributions;
-  final String totalAllowanceSpent;
   final String merchantName;
 
   Allowance({
     required this.balance,
     required this.imageUrl,
-    required this.contributions,
-    required this.threshold,
-    required this.totalContributions,
     required this.merchantName,
-    required this.totalAllowanceSpent,
   });
 
   factory Allowance.fromJson(Map<String, dynamic> json) {
-    final List<dynamic> contributionsJson = json['contributions'];
-    List<ContributionData> contributionsList = contributionsJson
-        .map((item) => ContributionData.fromJson(item))
-        .toList();
-
     return Allowance(
       balance: json['amount'],
       imageUrl: json['logo_url'],
-      contributions: contributionsList,
-      threshold: json['threshold'],
-      totalContributions: json['total_community_contributions'],
       merchantName: json['merchant_name'],
-      totalAllowanceSpent: json['total_allowance_spent'],
     );
   }
 
@@ -55,43 +38,7 @@ class Allowance {
     return {
       'amount': balance,
       'logo_url': imageUrl,
-      'threshold': threshold,
-      'total_community_contributions': totalContributions,
       'merchant_name': merchantName,
-      'total_allowance_spent': totalAllowanceSpent,
-      'contributions':
-          contributions.map((contribution) => contribution.toJson()).toList(),
-    };
-  }
-}
-
-class ContributionData {
-  final String username;
-  final String amount;
-  final String timeSince;
-  final String? photoUrl;
-
-  ContributionData(
-      {required this.username,
-      required this.amount,
-      required this.timeSince,
-      this.photoUrl});
-
-  factory ContributionData.fromJson(Map<String, dynamic> json) {
-    return ContributionData(
-      username: json['username'],
-      amount: json['amount'],
-      timeSince: json['time_since'],
-      photoUrl: json['photo_url'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'username': username,
-      'amount': amount,
-      'time_since': timeSince,
-      'photo_url': photoUrl,
     };
   }
 }
@@ -182,7 +129,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _loadSavedData();
     _fetchUserBalance(null);
-    _timer = Timer.periodic(Duration(milliseconds: 10000), _fetchUserBalance);
+    _timer = Timer.periodic(Duration(milliseconds: 5000), _fetchUserBalance);
   }
 
   Future<void> _loadSavedData() async {
@@ -228,7 +175,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _fetchUserBalance(Timer? timer) async {
     try {
-      final Uri uri = Uri.parse('https://api.allowance.fund/home');
+      final Uri uri = Uri.parse('https://api.allowance.fund/fastHome');
 
       final String? auth_token =
           await FirebaseAuth.instance.currentUser!.getIdToken();
@@ -290,15 +237,9 @@ class _HomePageState extends State<HomePage> {
         }
       } else {
         // Handle API error here
-        print("===========================================");
-        print(response.body);
-        print("===========================================");
       }
     } catch (e) {
       // Handle error here
-      print("===========================================");
-      print(e);
-      print("===========================================");
     }
   }
 
@@ -309,6 +250,8 @@ class _HomePageState extends State<HomePage> {
     double ffem = fem * 0.97;
 
     return RefreshIndicator(
+	backgroundColor: Color(0xff083675),
+	color: Color(0xffffff),
       onRefresh: () => _fetchUserBalance(null),
       child: SingleChildScrollView(
         child: Container(

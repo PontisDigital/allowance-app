@@ -1,4 +1,6 @@
 import 'package:allowance/button.dart';
+import 'package:allowance/home_allowance_entry.dart';
+import 'package:allowance/page-1/home-page-done.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:allowance/utils.dart';
@@ -89,6 +91,30 @@ class _RewardsPageState extends State<RewardsPage> {
               minHeight: 50),
         ),
       ),
+      SizedBox(height: 40 * ffem),
+      Text(
+        "You are going to be receiving more allowance from the following stores!",
+        style: SafeGoogleFont(
+          'Inter',
+          fontSize: 20 * ffem,
+          fontWeight: FontWeight.w700,
+          height: 1.2125 * ffem / fem,
+          color: Color(0xffffffff),
+        ),
+		textAlign: TextAlign.center,
+      ),
+      SizedBox(height: 20 * ffem),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40.0),
+        child: StoreCardWidget(
+            allowance: Allowance(
+                balance: "\$12.00",
+                imageUrl: "https://specialistsubjectrecords.co.uk/cdn/shop/products/gorilla-biscuits-gorilla-logo-embroidered-patch-merch-661430_large.webp?v=1650193819",
+                merchantName: "Hop",
+                ),
+			isRewardPage: true,
+			),
+      ),
     ]);
   }
 
@@ -126,10 +152,10 @@ class _RewardsPageState extends State<RewardsPage> {
   Future<void> _loadSavedData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? savedReferralCode = prefs.getString('referral_code');
-	setState(() {
-        referralCode = savedReferralCode;
-        referralCode =
-            referralCode!.substring(0, 3) + "-" + referralCode!.substring(3);
-	});
+    setState(() {
+      referralCode = savedReferralCode;
+      referralCode =
+          referralCode!.substring(0, 3) + "-" + referralCode!.substring(3);
+    });
   }
 }

@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 
 class StoreCardWidget extends StatelessWidget {
   final Allowance allowance;
+  final bool? isRewardPage;
 
   const StoreCardWidget({
     super.key,
     required this.allowance,
+    this.isRewardPage,
   });
 
   @override
@@ -21,6 +23,9 @@ class StoreCardWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
+        if (isRewardPage ?? false) {
+          return;
+        }
         navigateToCommunityPage(context);
       },
       child: Container(
@@ -64,10 +69,14 @@ class StoreCardWidget extends StatelessWidget {
                           margin: EdgeInsets.fromLTRB(
                               8 * fem, 0 * fem, 0 * fem, 16 * fem),
                           child: Text(
-                            'available allowance',
+                            (isRewardPage ?? false)
+                                ? 'upcoming allowance'
+                                : 'available allowance',
                             style: SafeGoogleFont(
                               'Inter',
-                              fontSize: 16.5 * ffem,
+                              fontSize: !(isRewardPage ?? false)
+                                  ? 16.5 * ffem
+                                  : 14 * ffem,
                               fontWeight: FontWeight.w600,
                               height: 1.3333333333 * ffem / fem,
                               color: Color(0xff525354),
@@ -82,7 +91,11 @@ class StoreCardWidget extends StatelessWidget {
                               allowance.balance,
                               style: SafeGoogleFont(
                                 'Inter',
-								fontSize: allowance.balance.length <= 6 ? 60 * ffem : 50 * ffem,
+                                fontSize: !(isRewardPage ?? false)
+                                    ? (allowance.balance.length <= 6
+                                        ? 60 * ffem
+                                        : 50 * ffem)
+                                    : 45 * ffem,
                                 fontWeight: FontWeight.w600,
                                 height: 0.75 * ffem / fem,
                                 color: Color(0xff08090a),
@@ -115,16 +128,19 @@ class StoreCardWidget extends StatelessWidget {
                 ],
               ),
             ),
-            Center(
-              // keepshoppingtorefillyourallowa (324:472)
-              child: Text(
-                'Tap for more details',
-                style: SafeGoogleFont(
-                  'Inter',
-                  fontSize: 12 * ffem,
-                  fontWeight: FontWeight.w700,
-                  height: 1.8181817609 * ffem / fem,
-                  color: Color(0xff525354),
+            Visibility(
+              visible: !(isRewardPage ?? false),
+              child: Center(
+                // keepshoppingtorefillyourallowa (324:472)
+                child: Text(
+                  'Tap for more details',
+                  style: SafeGoogleFont(
+                    'Inter',
+                    fontSize: 12 * ffem,
+                    fontWeight: FontWeight.w700,
+                    height: 1.8181817609 * ffem / fem,
+                    color: Color(0xff525354),
+                  ),
                 ),
               ),
             ),
@@ -138,7 +154,7 @@ class StoreCardWidget extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CommunityPage(allowance: allowance),
+        builder: (context) => CommunityPage(merchantName: allowance.merchantName),
       ),
     );
   }

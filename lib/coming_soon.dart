@@ -26,10 +26,6 @@ class ComingSoonWidget extends StatelessWidget {
             allowance: Allowance(
           balance: "\$0.00",
           imageUrl: imageUrl,
-          totalAllowanceSpent: "",
-          contributions: [],
-          threshold: "",
-          totalContributions: "",
           merchantName: "",
         )),
       ),
