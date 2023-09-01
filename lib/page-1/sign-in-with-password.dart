@@ -38,6 +38,7 @@ class _SignInWithPasswordPageState extends State<SignInWithPasswordPage> {
     double ffem = fem * 0.97;
 
     return Scaffold(
+      backgroundColor: Color(0xff041e42),
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
