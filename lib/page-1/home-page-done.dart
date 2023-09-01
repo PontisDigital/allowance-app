@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:allowance/coming_soon.dart';
 import 'package:allowance/custom_search.dart';
 import 'package:allowance/home_allowance_entry.dart';
+import 'package:allowance/input_referral_code.dart';
 import 'package:allowance/more_info.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
 import 'package:allowance/page-1/pay-1-done.dart';
@@ -69,17 +70,20 @@ class UserHomeData {
   final bool isEmailVerified;
   final List<OtherUser> otherUsers;
   final bool tookSurvey;
+  final bool showReferralPage;
   UserHomeData({
     required this.totalAllowance,
     required this.allowances,
     required this.isEmailVerified,
     required this.otherUsers,
     required this.tookSurvey,
+    required this.showReferralPage,
   });
 
   factory UserHomeData.fromJson(Map<String, dynamic> json) {
     return UserHomeData(
       totalAllowance: json['total_allowance'],
+      showReferralPage: json['should_input_referral'],
       allowances: (json['allowance'] as List)
           .map((allowanceJson) => Allowance.fromJson(allowanceJson))
           .toList(),
@@ -98,6 +102,7 @@ class UserHomeData {
       'email_verified': isEmailVerified,
       'other_users': otherUsers,
       'taken_hop_survey': tookSurvey,
+      'should_input_referral': showReferralPage,
     };
   }
 }
@@ -105,6 +110,7 @@ class UserHomeData {
 class HomePage extends StatefulWidget {
   bool showVerifyDialog = false;
   bool surveyIsOpen = false;
+  bool referralIsOpen = false;
 
   final String? totalAllowance;
 
@@ -114,11 +120,13 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 
   UserHomeData _userHomeData = UserHomeData(
-      totalAllowance: "...",
-      allowances: List<Allowance>.empty(),
-      isEmailVerified: false,
-      otherUsers: List<OtherUser>.empty(),
-      tookSurvey: false);
+    totalAllowance: "...",
+    allowances: List<Allowance>.empty(),
+    isEmailVerified: false,
+    otherUsers: List<OtherUser>.empty(),
+    tookSurvey: true,
+    showReferralPage: false,
+  );
 }
 
 class _HomePageState extends State<HomePage> {
@@ -139,6 +147,7 @@ class _HomePageState extends State<HomePage> {
     List<String>? savedOtherUsersJson = prefs.getStringList('otherUsers');
     List<String>? savedAllowancesJson = prefs.getStringList('allowances');
     bool? tookSurvey = prefs.getBool('tookSurvey');
+    bool? showReferralPage = prefs.getBool('showReferralPage');
 
     List<Allowance> savedAllowances = [];
     if (savedAllowancesJson != null) {
@@ -162,7 +171,8 @@ class _HomePageState extends State<HomePage> {
         allowances: savedAllowances,
         isEmailVerified: savedIsEmailVerified ?? false,
         otherUsers: savedOtherUsers,
-        tookSurvey: tookSurvey ?? false,
+        tookSurvey: tookSurvey ?? true,
+        showReferralPage: showReferralPage ?? false,
       );
     });
   }
@@ -191,6 +201,7 @@ class _HomePageState extends State<HomePage> {
         final String newBalance = data['total_allowance'].toString();
         final bool isEmailVerified = data['email_verified'];
         final bool tookSurvey = data['taken_hop_survey'];
+        final bool showReferralPage = data['should_input_referral'];
 
         final List<dynamic> otherUsersData = data['other_users'];
         List<OtherUser> otherUsers =
@@ -208,6 +219,7 @@ class _HomePageState extends State<HomePage> {
             isEmailVerified: isEmailVerified,
             otherUsers: otherUsers,
             tookSurvey: tookSurvey,
+            showReferralPage: showReferralPage,
           );
         });
 
@@ -216,6 +228,7 @@ class _HomePageState extends State<HomePage> {
         await prefs.setString('totalAllowance', newBalance);
         await prefs.setBool('isEmailVerified', isEmailVerified);
         await prefs.setBool('tookSurvey', tookSurvey);
+        await prefs.setBool('showReferralPage', showReferralPage);
 
         List<String> otherUsersJson = otherUsers
             .map((otherUser) => jsonEncode(otherUser.toJson()))
@@ -227,12 +240,18 @@ class _HomePageState extends State<HomePage> {
             .toList();
         await prefs.setStringList('allowances', allowancesJson);
 
-        if (!tookSurvey && !widget.surveyIsOpen) {
+        if (!showReferralPage && !tookSurvey && !widget.surveyIsOpen) {
           widget.surveyIsOpen = true;
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => HopSurvey()),
             (route) => false,
+          );
+        } else if (showReferralPage && !widget.referralIsOpen) {
+          widget.referralIsOpen = true;
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => InputReferral()),
           );
         }
       } else {
@@ -250,8 +269,8 @@ class _HomePageState extends State<HomePage> {
     double ffem = fem * 0.97;
 
     return RefreshIndicator(
-	backgroundColor: Color(0xff083675),
-	color: Color(0xffffff),
+      backgroundColor: Color(0xff083675),
+      color: Color(0xffffff),
       onRefresh: () => _fetchUserBalance(null),
       child: SingleChildScrollView(
         child: Container(
@@ -302,7 +321,13 @@ class _HomePageState extends State<HomePage> {
                                             widget._userHomeData.totalAllowance,
                                             style: SafeGoogleFont(
                                               'Inter',
-                                              fontSize: widget._userHomeData.totalAllowance.length > 6 ? 67 * ffem : 87 * ffem,
+                                              fontSize: widget
+                                                          ._userHomeData
+                                                          .totalAllowance
+                                                          .length >
+                                                      6
+                                                  ? 67 * ffem
+                                                  : 87 * ffem,
                                               fontWeight: FontWeight.w700,
                                               height: 1.2125 * ffem / fem,
                                               color: Color(0xffffffff),
