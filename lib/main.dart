@@ -36,33 +36,33 @@ void main() async {
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  try
-  {
-	  NotificationSettings settings = await messaging.requestPermission(
-		alert: true,
-		announcement: false,
-		badge: true,
-		carPlay: false,
-		criticalAlert: false,
-		provisional: false,
-		sound: true,
-	  );
+  try {
+    var apnsToken = await messaging.getAPNSToken();
+	print("APNS Token: $apnsToken");
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
 
-	  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-		print('User granted permission');
-	  } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
-		print('User granted provisional permission');
-	  } else {
-		print('User declined or has not accepted permission');
-	  }
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('User granted permission');
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      print('User granted provisional permission');
+    } else {
+      print('User declined or has not accepted permission');
+    }
 
-	  print("Token: ${await messaging.getToken()}");
-  }
-  catch (e)
-  {
-	  print("*******************************************");
-	  print("Error setting up Push Notifications!!!!: $e");
-	  print("*******************************************");
+    print("Token: ${await messaging.getToken()}");
+  } catch (e) {
+    print("*******************************************");
+    print("Error setting up Push Notifications!!!!: $e");
+    print("*******************************************");
   }
 
   // Installation ID
