@@ -20,11 +20,15 @@ class Allowance {
   final String balance;
   final String imageUrl;
   final String merchantName;
+  final bool isLocked;
+  final double barPercent;
 
   Allowance({
     required this.balance,
     required this.imageUrl,
     required this.merchantName,
+	required this.isLocked,
+	required this.barPercent,
   });
 
   factory Allowance.fromJson(Map<String, dynamic> json) {
@@ -32,6 +36,8 @@ class Allowance {
       balance: json['amount'],
       imageUrl: json['logo_url'],
       merchantName: json['merchant_name'],
+	  isLocked: json['is_locked'],
+	  barPercent: json['bar_percent'],
     );
   }
 
@@ -658,8 +664,11 @@ class _HomePageState extends State<HomePage> {
                                     return Column(
                                       children: [
                                         StoreCardWidget(
-                                            allowance: widget._userHomeData
-                                                .allowances[index]),
+                                          allowance: widget
+                                              ._userHomeData.allowances[index],
+                                          isLocked: widget._userHomeData.allowances[index].isLocked,
+										  barPercent: widget._userHomeData.allowances[index].barPercent,
+                                        ),
                                         SizedBox(
                                           height: 14 * fem,
                                         ),

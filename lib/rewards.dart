@@ -111,6 +111,8 @@ class _RewardsPageState extends State<RewardsPage> {
                 balance: "\$12.00",
                 imageUrl: "https://specialistsubjectrecords.co.uk/cdn/shop/products/gorilla-biscuits-gorilla-logo-embroidered-patch-merch-661430_large.webp?v=1650193819",
                 merchantName: "Hop",
+				isLocked: false,
+				barPercent: 0.0,
                 ),
 			isRewardPage: true,
 			),

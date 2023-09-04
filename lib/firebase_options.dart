@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDTxNib5A0YZgPl0JKlgFWc8ZNEWGep3lI',
-    appId: '1:402277201733:android:5397375b84bf290029702c',
+    appId: '1:402277201733:android:fe5abbcf3cdc3b3629702c',
     messagingSenderId: '402277201733',
     projectId: 'allowance-fa781',
     storageBucket: 'allowance-fa781.appspot.com',
@@ -63,17 +63,17 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDn-u0IS7xc86YFTcsj1Jx0d4Wq7aM-mS0',
-    appId: '1:402277201733:ios:dca18110f282d33029702c',
+    appId: '1:402277201733:ios:84fe0cfd7545e74d29702c',
     messagingSenderId: '402277201733',
     projectId: 'allowance-fa781',
     storageBucket: 'allowance-fa781.appspot.com',
-    iosClientId: '402277201733-th8d9nr5noosv96a0frodclg6p2l8g9g.apps.googleusercontent.com',
-    iosBundleId: 'com.example.test',
+    iosClientId: '402277201733-87bn5cntgbg0i2tfn4svbm8c7ard5rsh.apps.googleusercontent.com',
+    iosBundleId: 'fund.allowance',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDn-u0IS7xc86YFTcsj1Jx0d4Wq7aM-mS0',
-    appId: '1:402277201733:ios:dca18110f282d33029702c',
+    appId: '1:402277201733:ios:6c818971812244d129702c',
     messagingSenderId: '402277201733',
     projectId: 'allowance-fa781',
     storageBucket: 'allowance-fa781.appspot.com',

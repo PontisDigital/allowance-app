@@ -25,7 +25,7 @@ class UserCardCommunity extends StatelessWidget {
     return Card(
       elevation: 3,
       //color: Colors.grey.shade700,
-      color: Color(0xff14166e),
+      color: spendingAllowance ? Color(0xff14166e) : Colors.green.shade800,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
