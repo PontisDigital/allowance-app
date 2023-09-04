@@ -14,7 +14,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../firebase_options.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 
 class SettingsData {
   final String username;
@@ -36,7 +35,6 @@ void main() async {
   FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  FirebaseInAppMessaging firebaseInAppMessaging = FirebaseInAppMessaging.instance;
 
   NotificationSettings settings = await messaging.requestPermission(
 	alert: true,
@@ -51,6 +49,7 @@ void main() async {
   print('User granted permission: ${settings.authorizationStatus}');
 
   print("Token: ${await messaging.getToken()}");
+
   // Installation ID
   runApp(MyApp());
 }
