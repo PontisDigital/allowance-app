@@ -36,19 +36,34 @@ void main() async {
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  NotificationSettings settings = await messaging.requestPermission(
-	alert: true,
-	announcement: false,
-	badge: true,
-	carPlay: false,
-	criticalAlert: false,
-	provisional: false,
-	sound: true,
-  );
+  try
+  {
+	  NotificationSettings settings = await messaging.requestPermission(
+		alert: true,
+		announcement: false,
+		badge: true,
+		carPlay: false,
+		criticalAlert: false,
+		provisional: false,
+		sound: true,
+	  );
 
-  print('User granted permission: ${settings.authorizationStatus}');
+	  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+		print('User granted permission');
+	  } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+		print('User granted provisional permission');
+	  } else {
+		print('User declined or has not accepted permission');
+	  }
 
-  print("Token: ${await messaging.getToken()}");
+	  print("Token: ${await messaging.getToken()}");
+  }
+  catch (e)
+  {
+	  print("*******************************************");
+	  print("Error setting up Push Notifications!!!!: $e");
+	  print("*******************************************");
+  }
 
   // Installation ID
   runApp(MyApp());
@@ -115,7 +130,7 @@ class _MyAppState extends State<MyApp> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-			return Scaffold(
+            return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
                 leading: IconButton(
