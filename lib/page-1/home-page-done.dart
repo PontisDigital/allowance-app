@@ -20,8 +20,8 @@ class Allowance {
   final String balance;
   final String imageUrl;
   final String merchantName;
-  final bool isLocked;
-  final double barPercent;
+  final bool? isLocked;
+  final double? barPercent;
 
   Allowance({
     required this.balance,
