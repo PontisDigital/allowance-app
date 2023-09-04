@@ -666,8 +666,8 @@ class _HomePageState extends State<HomePage> {
                                         StoreCardWidget(
                                           allowance: widget
                                               ._userHomeData.allowances[index],
-                                          isLocked: widget._userHomeData.allowances[index].isLocked,
-										  barPercent: widget._userHomeData.allowances[index].barPercent,
+                                          isLocked: widget._userHomeData.allowances[index].isLocked ?? false,
+										  barPercent: widget._userHomeData.allowances[index].barPercent ?? 0.0,
                                         ),
                                         SizedBox(
                                           height: 14 * fem,
