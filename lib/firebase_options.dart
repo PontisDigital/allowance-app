@@ -67,8 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '402277201733',
     projectId: 'allowance-fa781',
     storageBucket: 'allowance-fa781.appspot.com',
-    iosClientId: '402277201733-th8d9nr5noosv96a0frodclg6p2l8g9g.apps.googleusercontent.com',
-    iosBundleId: 'com.example.test',
+    iosClientId: '402277201733-87bn5cntgbg0i2tfn4svbm8c7ard5rsh.apps.googleusercontent.com',
+    iosBundleId: 'fund.allowance',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(

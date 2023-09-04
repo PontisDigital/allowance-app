@@ -8,6 +8,7 @@ import 'package:allowance/community_user_card.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -82,7 +83,7 @@ class ContributionData {
 }
 
 class CommunityPage extends StatefulWidget {
-  bool spendingAllowance = true;
+  bool spendingAllowance = false;
   final String merchantName;
 
   CommunityPage({Key? key, required this.merchantName}) : super(key: key);
@@ -105,7 +106,6 @@ class _CommunityPageState extends State<CommunityPage> {
   @override
   void initState() {
     super.initState();
-    widget.spendingAllowance = true;
     _loadSavedData();
     _fetchCommunityData(null, widget.merchantName);
     _timer = Timer.periodic(Duration(milliseconds: 5000),
@@ -114,8 +114,8 @@ class _CommunityPageState extends State<CommunityPage> {
 
   @override
   void dispose() {
-	_timer?.cancel();
-	super.dispose();
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -136,11 +136,11 @@ class _CommunityPageState extends State<CommunityPage> {
             color: Color(0xffffffff),
           ),
         ),
-        backgroundColor: Color.fromRGBO(4, 30, 66, 1),
+        backgroundColor: widget.spendingAllowance ? Color.fromRGBO(4, 30, 66, 1): Colors.brown.shade800,
       ),
-      backgroundColor: Color.fromRGBO(4, 30, 66, 1),
+      backgroundColor: widget.spendingAllowance ? Color.fromRGBO(4, 30, 66, 1) : Colors.brown.shade800,
       body: RefreshIndicator(
-        backgroundColor: Color(0xff083675),
+        backgroundColor: widget.spendingAllowance ? Color(0xff083675) : Colors.brown.shade800,
         color: Color(0xffffff),
         onRefresh: () => _fetchCommunityData(null, widget.merchantName),
         child: SingleChildScrollView(
@@ -151,15 +151,8 @@ class _CommunityPageState extends State<CommunityPage> {
                   child: Column(children: [
                     SizedBox(height: 20),
                     Center(
-                      child: Text(
-                        'Loading...',
-                        style: TextStyle(
-                          fontSize: 24 * ffem,
-                          fontWeight: FontWeight.w700,
-                          height: 1.26 * ffem / fem,
-                          color: Color(0xffffffff),
-                        ),
-                        textAlign: TextAlign.center,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
                       ),
                     ),
                   ])),
@@ -189,7 +182,7 @@ class _CommunityPageState extends State<CommunityPage> {
                       child: LinearPercentIndicator(
                         percent: (!widget.spendingAllowance)
                             ? cd.totalContributions / cd.threshold
-                            : cd.totalAllowanceSpent / cd.threshold,
+                            : min(cd.totalAllowanceSpent / cd.threshold, 1.0),
                         trailing: Text('\$${cd.threshold}',
                             style: TextStyle(color: Colors.white)),
                         center: Text(
@@ -197,7 +190,9 @@ class _CommunityPageState extends State<CommunityPage> {
                                 ? '\$${cd.totalContributions}'
                                 : '\$${cd.totalAllowanceSpent}',
                             style: TextStyle(color: Colors.white)),
-                        progressColor: Colors.green,
+                        progressColor: widget.spendingAllowance
+                            ? Color(0xff4056ff)
+                            : Colors.green.shade800,
                         backgroundColor: Color(0xff7c7c7c),
                         lineHeight: 30.0,
                         barRadius: Radius.circular(20),
@@ -208,7 +203,7 @@ class _CommunityPageState extends State<CommunityPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         (!widget.spendingAllowance)
-                            ? 'Fill this bar up to unlock the next round!'
+                            ? 'Go to ${cd.merchantName} and spend to get more allowance! Once the bar is full, you\'ll get more allowance.'
                             : '${cd.merchantName} is accepting \$${(cd.threshold - cd.totalAllowanceSpent).toStringAsFixed(2)} more allowance this round.',
                         style: TextStyle(
                           fontSize: 18 * ffem,
@@ -300,7 +295,8 @@ class _CommunityPageState extends State<CommunityPage> {
       List<String> contributionsJson =
           cd.contributions.map((c) => jsonEncode(c.toJson())).toList();
 
-	  await prefs.setStringList(widget.merchantName + 'contributions', contributionsJson);
+      await prefs.setStringList(
+          widget.merchantName + 'contributions', contributionsJson);
     } else {
       // Request failed, handle the error
     }

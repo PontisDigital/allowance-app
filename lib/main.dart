@@ -13,6 +13,8 @@ import 'package:allowance/page-1/home-page-done.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../firebase_options.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 
 class SettingsData {
   final String username;
@@ -33,6 +35,23 @@ void main() async {
   );
   FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
 
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  FirebaseInAppMessaging firebaseInAppMessaging = FirebaseInAppMessaging.instance;
+
+  NotificationSettings settings = await messaging.requestPermission(
+	alert: true,
+	announcement: false,
+	badge: true,
+	carPlay: false,
+	criticalAlert: false,
+	provisional: false,
+	sound: true,
+  );
+
+  print('User granted permission: ${settings.authorizationStatus}');
+
+  print("Token: ${await messaging.getToken()}");
+  // Installation ID
   runApp(MyApp());
 }
 
@@ -42,10 +61,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
 
   List<Widget> _widgetOptions = <Widget>[
-    RewardsPage(),
     HomePage(),
   ];
 
@@ -124,10 +142,6 @@ class _MyAppState extends State<MyApp> {
               backgroundColor: Color.fromRGBO(4, 30, 66, 1),
               bottomNavigationBar: BottomNavigationBar(
                 items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.attach_money),
-                    label: 'Rewards',
-                  ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),
                     label: 'Home',

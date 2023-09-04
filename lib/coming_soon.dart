@@ -27,6 +27,8 @@ class ComingSoonWidget extends StatelessWidget {
           balance: "\$0.00",
           imageUrl: imageUrl,
           merchantName: "",
+		  isLocked: false,
+		  barPercent: 0.0,
         )),
       ),
       Positioned.fill(
