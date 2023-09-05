@@ -20,7 +20,7 @@ class Allowance {
   final String balance;
   final String imageUrl;
   final String merchantName;
-  final bool? isLocked;
+  final bool isLocked;
   final double? barPercent;
 
   Allowance({
@@ -46,6 +46,8 @@ class Allowance {
       'amount': balance,
       'logo_url': imageUrl,
       'merchant_name': merchantName,
+	  'is_locked': isLocked,
+	  'bar_percent': barPercent,
     };
   }
 }
@@ -675,12 +677,6 @@ class _HomePageState extends State<HomePage> {
                                       ],
                                     );
                                   },
-                                ),
-                                ComingSoonWidget(
-                                    imageUrl:
-                                        "https://thumbs.dreamstime.com/b/lets-shopping-logo-design-template-cart-icon-designs-134743663.jpg"),
-                                SizedBox(
-                                  height: 14 * fem,
                                 ),
                                 ComingSoonWidget(
                                     imageUrl:
