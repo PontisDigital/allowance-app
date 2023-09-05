@@ -196,9 +196,6 @@ class _CommunityPageState extends State<CommunityPage> {
                                 ? '\$${cd.totalContributions}'
                                 : '\$${cd.totalAllowanceSpent}',
                             style: TextStyle(color: Colors.white)),
-                        leading: widget.spendingAllowance
-                            ? Icon(Icons.lock_open, color: Colors.white)
-                            : Icon(Icons.lock, color: Colors.white),
                         progressColor: widget.spendingAllowance
                             ? Color(0xff4056ff)
                             : Colors.green.shade800,
