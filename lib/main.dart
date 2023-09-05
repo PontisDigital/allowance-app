@@ -94,7 +94,7 @@ class _MyAppState extends State<MyApp> {
 	  FirebaseFirestore.instance
 		  .collection('users')
 		  .doc(FirebaseAuth.instance.currentUser!.uid)
-		  .update({'notification_token': await messaging.getToken()});
+		  .update({'fcm_token': await messaging.getToken()});
     } catch (e) {
       print("*******************************************");
       print("Error setting up Push Notifications!!!!: $e");
