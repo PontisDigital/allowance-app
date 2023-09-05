@@ -687,9 +687,12 @@ class _HomePageState extends State<HomePage> {
                                     );
                                   },
                                 ),
-                                ComingSoonWidget(
-                                    imageUrl:
-                                        "https://www.pngitem.com/pimgs/m/301-3018403_logo-royalty-free-vector-coffee-shop-logos-free.png"),
+                                Visibility(
+								visible: widget._userHomeData.allowances.length < 3,
+                                  child: ComingSoonWidget(
+                                      imageUrl:
+                                          "https://www.pngitem.com/pimgs/m/301-3018403_logo-royalty-free-vector-coffee-shop-logos-free.png"),
+                                ),
                               ],
                             ),
                           ),
