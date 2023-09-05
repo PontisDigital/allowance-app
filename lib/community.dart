@@ -136,11 +136,17 @@ class _CommunityPageState extends State<CommunityPage> {
             color: Color(0xffffffff),
           ),
         ),
-        backgroundColor: widget.spendingAllowance ? Color.fromRGBO(4, 30, 66, 1): Colors.brown.shade800,
+        backgroundColor: widget.spendingAllowance
+            ? Color.fromRGBO(4, 30, 66, 1)
+            : Colors.brown.shade800,
       ),
-      backgroundColor: widget.spendingAllowance ? Color.fromRGBO(4, 30, 66, 1) : Colors.brown.shade800,
+      backgroundColor: widget.spendingAllowance
+          ? Color.fromRGBO(4, 30, 66, 1)
+          : Colors.brown.shade800,
       body: RefreshIndicator(
-        backgroundColor: widget.spendingAllowance ? Color(0xff083675) : Colors.brown.shade800,
+        backgroundColor: widget.spendingAllowance
+            ? Color(0xff083675)
+            : Colors.brown.shade800,
         color: Color(0xffffff),
         onRefresh: () => _fetchCommunityData(null, widget.merchantName),
         child: SingleChildScrollView(
@@ -280,9 +286,11 @@ class _CommunityPageState extends State<CommunityPage> {
 
     if (response.statusCode == 200) {
       // Request successful, handle the response if needed
-      setState(() {
-        cd = ContributionData.fromJson(data);
-      });
+      if (mounted) {
+        setState(() {
+          cd = ContributionData.fromJson(data);
+        });
+      }
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
