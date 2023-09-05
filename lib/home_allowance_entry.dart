@@ -170,49 +170,52 @@ class _StoreCardWidgetState extends State<StoreCardWidget> {
               ),
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text(widget.allowance.merchantName,
-                  style: SafeGoogleFont(
-                    'Outfit',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  )),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                  child: Icon(
-                Icons.lock,
-                size: 50,
-                color: Colors.white,
-              )),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                  child: LinearPercentIndicator(
-                percent: widget.barPercent,
-                progressColor: Colors.green,
-                barRadius: Radius.circular(20),
-              )),
-              SizedBox(
-                height: 10,
-              ),
-              Text("Tap for more details",
-                  style: SafeGoogleFont(
-                    'Outfit',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ))
-            ],
+          Visibility(
+		  visible: widget.isLocked,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text(widget.allowance.merchantName,
+                    style: SafeGoogleFont(
+                      'Outfit',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    )),
+                SizedBox(
+                  height: 10,
+                ),
+                Center(
+                    child: Icon(
+                  Icons.lock,
+                  size: 50,
+                  color: Colors.white,
+                )),
+                SizedBox(
+                  height: 10,
+                ),
+                Center(
+                    child: LinearPercentIndicator(
+                  percent: widget.barPercent,
+                  progressColor: Colors.green,
+                  barRadius: Radius.circular(20),
+                )),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Tap for more details",
+                    style: SafeGoogleFont(
+                      'Outfit',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ))
+              ],
+            ),
           ),
         ],
       ),
