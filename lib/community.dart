@@ -83,10 +83,10 @@ class ContributionData {
 }
 
 class CommunityPage extends StatefulWidget {
-  bool spendingAllowance = false;
+  final bool spendingAllowance;
   final String merchantName;
 
-  CommunityPage({Key? key, required this.merchantName}) : super(key: key);
+  CommunityPage({Key? key, required this.merchantName, required this.spendingAllowance}) : super(key: key);
 
   @override
   State<CommunityPage> createState() => _CommunityPageState();

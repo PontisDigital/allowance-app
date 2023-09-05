@@ -227,7 +227,7 @@ class _StoreCardWidgetState extends State<StoreCardWidget> {
       context,
       MaterialPageRoute(
         builder: (context) =>
-            CommunityPage(merchantName: widget.allowance.merchantName),
+            CommunityPage(merchantName: widget.allowance.merchantName, spendingAllowance: !widget.isLocked),
       ),
     );
   }
