@@ -86,7 +86,9 @@ class CommunityPage extends StatefulWidget {
   final bool spendingAllowance;
   final String merchantName;
 
-  CommunityPage({Key? key, required this.merchantName, required this.spendingAllowance}) : super(key: key);
+  CommunityPage(
+      {Key? key, required this.merchantName, required this.spendingAllowance})
+      : super(key: key);
 
   @override
   State<CommunityPage> createState() => _CommunityPageState();
@@ -126,23 +128,18 @@ class _CommunityPageState extends State<CommunityPage> {
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'allowance',
-          style: TextStyle(
-            fontSize: 25 * ffem,
-            fontWeight: FontWeight.w700,
-            height: 1.26 * ffem / fem,
-            color: Color(0xffffffff),
+          centerTitle: true,
+          title: Text(
+            'allowance',
+            style: TextStyle(
+              fontSize: 25 * ffem,
+              fontWeight: FontWeight.w700,
+              height: 1.26 * ffem / fem,
+              color: Color(0xffffffff),
+            ),
           ),
-        ),
-        backgroundColor: widget.spendingAllowance
-            ? Color.fromRGBO(4, 30, 66, 1)
-            : Colors.brown.shade800,
-      ),
-      backgroundColor: widget.spendingAllowance
-          ? Color.fromRGBO(4, 30, 66, 1)
-          : Colors.brown.shade800,
+          backgroundColor: Color.fromRGBO(4, 30, 66, 1)),
+      backgroundColor: Color.fromRGBO(4, 30, 66, 1),
       body: RefreshIndicator(
         backgroundColor: widget.spendingAllowance
             ? Color(0xff083675)
@@ -189,13 +186,19 @@ class _CommunityPageState extends State<CommunityPage> {
                         percent: (!widget.spendingAllowance)
                             ? cd.totalContributions / cd.threshold
                             : min(cd.totalAllowanceSpent / cd.threshold, 1.0),
-                        trailing: Text('\$${cd.threshold}',
-                            style: TextStyle(color: Colors.white)),
+                        //trailing: Text('\$${cd.threshold}',
+                        //    style: TextStyle(color: Colors.white)),
+                        trailing: widget.spendingAllowance
+                            ? Icon(Icons.lock, color: Colors.white)
+                            : Icon(Icons.lock_open, color: Colors.white),
                         center: Text(
                             !widget.spendingAllowance
                                 ? '\$${cd.totalContributions}'
                                 : '\$${cd.totalAllowanceSpent}',
                             style: TextStyle(color: Colors.white)),
+                        leading: widget.spendingAllowance
+                            ? Icon(Icons.lock_open, color: Colors.white)
+                            : Icon(Icons.lock, color: Colors.white),
                         progressColor: widget.spendingAllowance
                             ? Color(0xff4056ff)
                             : Colors.green.shade800,
