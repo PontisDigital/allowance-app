@@ -59,8 +59,10 @@ class _MyAppState extends State<MyApp> {
   @override
   initState() {
     super.initState();
-    getNotificationTokens();
-    addSettingsToList();
+	if (FirebaseAuth.instance.currentUser != null) {
+		getNotificationTokens();
+		addSettingsToList();
+	}
   }
 
   Future<void> getNotificationTokens() async {
@@ -90,7 +92,6 @@ class _MyAppState extends State<MyApp> {
 
       print("Token: ${await messaging.getToken()}");
 
-	  // add token to firestore
 	  FirebaseFirestore.instance
 		  .collection('users')
 		  .doc(FirebaseAuth.instance.currentUser!.uid)
