@@ -9,6 +9,7 @@ class StoreCardWidget extends StatefulWidget {
   final Allowance allowance;
   final bool isLocked;
   final bool? isRewardPage;
+  final bool? isSendPage;
   final double barPercent;
 
   const StoreCardWidget({
@@ -17,6 +18,7 @@ class StoreCardWidget extends StatefulWidget {
     this.isRewardPage,
     this.isLocked = false,
     this.barPercent = 0.0,
+	this.isSendPage,
   });
 
   @override
@@ -37,7 +39,13 @@ class _StoreCardWidgetState extends State<StoreCardWidget> {
         if (widget.isRewardPage ?? false) {
           return;
         }
-        navigateToCommunityPage(context);
+		if (widget.isSendPage ?? false)
+		{
+		}
+		else
+		{
+			navigateToCommunityPage(context);
+		}
       },
       child: Stack(
         children: [
@@ -92,7 +100,7 @@ class _StoreCardWidgetState extends State<StoreCardWidget> {
                                 child: Text(
                                   (widget.isRewardPage ?? false)
                                       ? 'upcoming allowance'
-                                      : 'available allowance',
+                                      : (widget.isSendPage ?? false) ? 'available to send' : 'available allowance',
                                   style: SafeGoogleFont(
                                     'Inter',
                                     fontSize: !(widget.isRewardPage ?? false)
@@ -155,10 +163,10 @@ class _StoreCardWidgetState extends State<StoreCardWidget> {
                     child: Center(
                       // keepshoppingtorefillyourallowa (324:472)
                       child: Text(
-                        'Tap for more details',
+                        !(widget.isSendPage ?? false) ? 'Tap for more details' : 'Tap to change payment source',
                         style: SafeGoogleFont(
                           'Inter',
-                          fontSize: 12 * ffem,
+                          fontSize: (widget.isSendPage ?? false ? 18 : 12) * ffem,
                           fontWeight: FontWeight.w700,
                           height: 1.8181817609 * ffem / fem,
                           color: Color(0xff525354),

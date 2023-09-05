@@ -69,103 +69,73 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
         ),
       ),
       backgroundColor: Color(0xff041e42),
-      body: Column(
-        children: [
-          SizedBox(height: 20),
-          Text(
-            'enter amount',
-            style: SafeGoogleFont(
-              'Outfit',
-              fontSize: 25 * ffem,
-              fontWeight: FontWeight.w700,
-              height: 1.26 * ffem / fem,
-              color: Color(0xffffffff),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 20),
+            Text(
+              'enter amount',
+              style: SafeGoogleFont(
+                'Outfit',
+                fontSize: 25 * ffem,
+                fontWeight: FontWeight.w700,
+                height: 1.26 * ffem / fem,
+                color: Color(0xffffffff),
+              ),
             ),
-          ),
-          SizedBox(height: 20),
-          UserCard(
-            username: widget.username,
-            imageUrl: widget.imageUrl,
-            isButton: false,
-            currentBalance: '',
-            allowances: [],
-          ),
-          SizedBox(height: 20),
-          Text(
-            '${widget.currentBalance} available',
-            textAlign: TextAlign.center,
-            style: SafeGoogleFont(
-              'Outfit',
-              fontSize: 33 * ffem,
-              fontWeight: FontWeight.w700,
-              height: 1.26 * ffem / fem,
-              color: Color(0x66ffffff),
+            SizedBox(height: 20),
+            UserCard(
+              username: widget.username,
+              imageUrl: widget.imageUrl,
+              isButton: false,
+              currentBalance: '',
+              allowances: [],
             ),
-          ),
-          SizedBox(height: 20),
-          Padding(
-              padding:
-                  EdgeInsets.fromLTRB(43.1 * fem, 0 * fem, 43.1 * fem, 0 * fem),
-              child: TextField(
-                controller: amountController,
-                inputFormatters: [usdInputFormatter],
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  labelText: 'Enter USD amount',
-                  labelStyle: SafeGoogleFont(
+            SizedBox(height: 10),
+		    Transform.scale(scale: 0.75, child: StoreCardWidget(allowance: widget.allowances[_currentAllowanceIndex], isSendPage: true)),
+            SizedBox(height: 10),
+            Padding(
+                padding:
+                    EdgeInsets.fromLTRB(43.1 * fem, 0 * fem, 43.1 * fem, 0 * fem),
+                child: TextField(
+                  controller: amountController,
+                  inputFormatters: [usdInputFormatter],
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    labelText: 'Enter USD amount',
+                    labelStyle: SafeGoogleFont(
+                      'Outfit',
+                      fontSize: 25 * ffem,
+                      fontWeight: FontWeight.w700,
+                      height: 1.26 * ffem / fem,
+                      color: Colors.white,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                      borderRadius: BorderRadius.circular(18.3050861359 * fem),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                      borderRadius: BorderRadius.circular(18.3050861359 * fem),
+                    ),
+                  ),
+                  style: SafeGoogleFont(
                     'Outfit',
-                    fontSize: 25 * ffem,
+                    fontSize: 25 * ffem, // Adjust the size as needed
                     fontWeight: FontWeight.w700,
                     height: 1.26 * ffem / fem,
                     color: Colors.white,
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(18.3050861359 * fem),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(18.3050861359 * fem),
-                  ),
-                ),
-                style: SafeGoogleFont(
-                  'Outfit',
-                  fontSize: 25 * ffem, // Adjust the size as needed
-                  fontWeight: FontWeight.w700,
-                  height: 1.26 * ffem / fem,
-                  color: Colors.white,
-                ),
-              )),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 86.0),
-            child: CustomButton(
-                onPressed: () {}, text: "Send", minHeight: 64.0 * fem),
-          ),
-          SizedBox(height: 20),
-          // Have user select which allowance to send from
-          Text(
-            'select allowance to send from',
-            style: SafeGoogleFont(
-              'Outfit',
-              fontSize: 25 * ffem,
-              fontWeight: FontWeight.w700,
-              height: 1.26 * ffem / fem,
-              color: Color(0xffffffff),
+                )),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 86.0),
+              child: CustomButton(
+                  onPressed: () {}, text: "Send", minHeight: 64.0 * fem),
             ),
-          ),
-          // horizontal swipable list of allowances
-          PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentAllowanceIndex = index;
-                });
-              },
-			  children: widget.allowances.map((allowance) => StoreCardWidget(allowance: allowance)).toList(),
-			  ),
-        ],
+          ],
+        ),
       ),
     );
   }
