@@ -93,13 +93,16 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
             ),
             SizedBox(height: 10),
             GestureDetector(
-                onTap: () => setState(() {
-                      _currentAllowanceIndex++;
-                      if (_currentAllowanceIndex >
-                          widget.allowances.length - 1) {
-                        _currentAllowanceIndex = 0;
-                      }
-                    }),
+                onTap: () {
+                  setState(() {
+                    _currentAllowanceIndex++;
+                  });
+                  if (_currentAllowanceIndex > widget.allowances.length - 1) {
+                    setState(() {
+                      _currentAllowanceIndex = 0;
+                    });
+                  }
+                },
                 child: Transform.scale(
                     scale: 0.75,
                     child: StoreCardWidget(
@@ -163,7 +166,7 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
       'auth_token': await FirebaseAuth.instance.currentUser!.getIdToken(),
       'username_to_send_to': widget.username,
       'amount': '\$' + amountController.text,
-	  'merchant_name': widget.allowances[_currentAllowanceIndex].merchantName,
+      'merchant_name': widget.allowances[_currentAllowanceIndex].merchantName,
     };
 
     final response = await http.post(Uri.parse(url),
