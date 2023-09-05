@@ -1,3 +1,4 @@
+import 'package:allowance/page-1/home-page-done.dart';
 import 'package:allowance/page-1/send-2-done.dart';
 import 'package:allowance/utils.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ class UserCard extends StatelessWidget {
   final String? imageUrl;
   final bool isButton;
   final String currentBalance;
+  final List<Allowance> allowances;
 
   const UserCard({
     super.key,
@@ -14,6 +16,7 @@ class UserCard extends StatelessWidget {
     required this.imageUrl,
     required this.isButton,
     required this.currentBalance,
+	required this.allowances,
   });
 
   void navigateToSendMoney(BuildContext context) {
@@ -21,7 +24,9 @@ class UserCard extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => SendEnterAmountPage(
-            username: username, currentBalance: currentBalance, imageUrl: imageUrl),
+            username: username, currentBalance: currentBalance, imageUrl: imageUrl,
+			allowances: allowances,
+			),
       ),
     );
   }

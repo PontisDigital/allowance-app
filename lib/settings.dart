@@ -41,7 +41,9 @@ class _AllowanceSettingsState extends State<AllowanceSettings> {
                 username: widget.username,
                 imageUrl: widget.photoUrl,
                 isButton: false,
-                currentBalance: '')),
+                currentBalance: '',
+				allowances: [],
+				)),
         SizedBox(height: 20),
         ConstrainedBox(
           constraints: BoxConstraints(minHeight: 50),
