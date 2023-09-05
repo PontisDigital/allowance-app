@@ -34,37 +34,6 @@ void main() async {
   );
   FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
 
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-  try {
-    var apnsToken = await messaging.getAPNSToken();
-	print("APNS Token: $apnsToken");
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
-      print('User granted provisional permission');
-    } else {
-      print('User declined or has not accepted permission');
-    }
-
-    print("Token: ${await messaging.getToken()}");
-  } catch (e) {
-    print("*******************************************");
-    print("Error setting up Push Notifications!!!!: $e");
-    print("*******************************************");
-  }
-
   // Installation ID
   runApp(MyApp());
 }
@@ -90,7 +59,47 @@ class _MyAppState extends State<MyApp> {
   @override
   initState() {
     super.initState();
+    getNotificationTokens();
     addSettingsToList();
+  }
+
+  Future<void> getNotificationTokens() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    try {
+      var apnsToken = await messaging.getAPNSToken();
+      print("APNS Token: $apnsToken");
+      NotificationSettings settings = await messaging.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true,
+      );
+
+      if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+        print('User granted permission');
+      } else if (settings.authorizationStatus ==
+          AuthorizationStatus.provisional) {
+        print('User granted provisional permission');
+      } else {
+        print('User declined or has not accepted permission');
+      }
+
+      print("Token: ${await messaging.getToken()}");
+
+	  // add token to firestore
+	  FirebaseFirestore.instance
+		  .collection('users')
+		  .doc(FirebaseAuth.instance.currentUser!.uid)
+		  .update({'notification_token': await messaging.getToken()});
+    } catch (e) {
+      print("*******************************************");
+      print("Error setting up Push Notifications!!!!: $e");
+      print("*******************************************");
+    }
   }
 
   Future<void> addSettingsToList() async {
