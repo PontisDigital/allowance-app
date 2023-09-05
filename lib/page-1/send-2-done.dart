@@ -32,6 +32,7 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
   final TextEditingController amountController = TextEditingController();
   final PageController _pageController = PageController();
   int _currentAllowanceIndex = 0;
+  bool _isButtonDisabled = false;
 
   @override
   void dispose() {
@@ -146,8 +147,12 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
             SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 86.0),
-              child: CustomButton(
-                  onPressed: () {}, text: "Send", minHeight: 64.0 * fem),
+              child: _isButtonDisabled
+                  ? CircularProgressIndicator(color: Colors.white)
+                  : CustomButton(
+                      onPressed: () => sendAllowance(),
+                      text: "Send",
+                      minHeight: 64.0 * fem),
             ),
           ],
         ),
@@ -156,6 +161,9 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
   }
 
   sendAllowance() async {
+    setState(() {
+      _isButtonDisabled = true;
+    });
     final url = 'https://api.allowance.fund/send';
 
     final headers = {
@@ -178,6 +186,9 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
       Navigator.pop(context);
     } else {
       // Request failed, handle the error
+      setState(() {
+        _isButtonDisabled = false;
+      });
 
       // popup dialogue saying insufficient funds
       showDialog(
