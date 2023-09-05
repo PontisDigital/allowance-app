@@ -197,8 +197,8 @@ class _CommunityPageState extends State<CommunityPage> {
                                 : '\$${cd.totalAllowanceSpent}',
                             style: TextStyle(color: Colors.white)),
                         progressColor: widget.spendingAllowance
-                            ? Color(0xff4056ff)
-                            : Colors.green.shade800,
+                            ? Colors.green.shade800
+                            : Color(0xffff00b8),
                         backgroundColor: Color(0xff7c7c7c),
                         lineHeight: 30.0,
                         barRadius: Radius.circular(20),
