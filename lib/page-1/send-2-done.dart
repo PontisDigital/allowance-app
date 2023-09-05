@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:allowance/button.dart';
+import 'package:allowance/home_allowance_entry.dart';
+import 'package:allowance/page-1/home-page-done.dart';
 import 'package:allowance/user_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +11,7 @@ import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:allowance/utils.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/widgets.dart';
 
 class SendEnterAmountPage extends StatefulWidget {
   @override
@@ -16,11 +20,18 @@ class SendEnterAmountPage extends StatefulWidget {
   final String username;
   final String currentBalance;
   final String? imageUrl;
-  SendEnterAmountPage({required this.username, required this.currentBalance, this.imageUrl});
+  final List<Allowance> allowances;
+  SendEnterAmountPage(
+      {required this.username,
+      required this.currentBalance,
+      this.imageUrl,
+      required this.allowances});
 }
 
 class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
   final TextEditingController amountController = TextEditingController();
+  final PageController _pageController = PageController();
+  int _currentAllowanceIndex = 0;
 
   @override
   void dispose() {
@@ -73,10 +84,12 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
           ),
           SizedBox(height: 20),
           UserCard(
-              username: widget.username,
-              imageUrl: widget.imageUrl,
-              isButton: false,
-              currentBalance: ''),
+            username: widget.username,
+            imageUrl: widget.imageUrl,
+            isButton: false,
+            currentBalance: '',
+            allowances: [],
+          ),
           SizedBox(height: 20),
           Text(
             '${widget.currentBalance} available',
@@ -125,40 +138,33 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
                 ),
               )),
           SizedBox(height: 20),
-          Container(
-            // sendbuttonesZ (301:1210)
-            margin:
-                EdgeInsets.fromLTRB(43.1 * fem, 0 * fem, 43.1 * fem, 0 * fem),
-            child: TextButton(
-              onPressed: () => {if (amountController.text.isNotEmpty) sendAllowance()},
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-              ),
-              child: Container(
-                padding: EdgeInsets.fromLTRB(
-                    27.6 * fem, 7.2 * fem, 27.2 * fem, 7.2 * fem),
-                width: double.infinity,
-                height: 98.4 * fem,
-                decoration: BoxDecoration(
-                  color: Color(0x3f4b39ef),
-                  borderRadius: BorderRadius.circular(18.3050861359 * fem),
-                  border: Border(),
-                ),
-                child: Center(
-                  child: Text(
-                    'send',
-                    style: SafeGoogleFont(
-                      'Outfit',
-                      fontSize: 54.0000038147 * ffem,
-                      fontWeight: FontWeight.w700,
-                      height: 1.26 * ffem / fem,
-                      color: Color(0xffffffff),
-                    ),
-                  ),
-                ),
-              ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 86.0),
+            child: CustomButton(
+                onPressed: () {}, text: "Send", minHeight: 64.0 * fem),
+          ),
+          SizedBox(height: 20),
+          // Have user select which allowance to send from
+          Text(
+            'select allowance to send from',
+            style: SafeGoogleFont(
+              'Outfit',
+              fontSize: 25 * ffem,
+              fontWeight: FontWeight.w700,
+              height: 1.26 * ffem / fem,
+              color: Color(0xffffffff),
             ),
           ),
+          // horizontal swipable list of allowances
+          PageView(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentAllowanceIndex = index;
+                });
+              },
+			  children: widget.allowances.map((allowance) => StoreCardWidget(allowance: allowance)).toList(),
+			  ),
         ],
       ),
     );

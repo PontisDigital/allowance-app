@@ -6,11 +6,13 @@ class CustomSearchDelegate extends SearchDelegate {
   final List<String> searchTerms;
   final String currentBalance;
   final List<OtherUser> otherUsers;
+  final List<Allowance> allowances;
 
   CustomSearchDelegate(
       {required this.searchTerms,
       required this.currentBalance,
-      required this.otherUsers});
+      required this.otherUsers,
+      required this.allowances});
 
   @override
   TextStyle? get searchFieldStyle => TextStyle(color: Colors.white);
@@ -67,9 +69,14 @@ class CustomSearchDelegate extends SearchDelegate {
           itemBuilder: (context, index) {
             return UserCard(
                 username: matchQuery[index],
-                imageUrl: otherUsers.where((element) => element.username == matchQuery[index]).first.photoUrl,
+                imageUrl: otherUsers
+                    .where((element) => element.username == matchQuery[index])
+                    .first
+                    .photoUrl,
                 isButton: true,
-                currentBalance: currentBalance);
+                currentBalance: currentBalance,
+				allowances: allowances,
+				);
           },
         ));
   }

@@ -27,8 +27,8 @@ class Allowance {
     required this.balance,
     required this.imageUrl,
     required this.merchantName,
-	required this.isLocked,
-	required this.barPercent,
+    required this.isLocked,
+    required this.barPercent,
   });
 
   factory Allowance.fromJson(Map<String, dynamic> json) {
@@ -36,8 +36,8 @@ class Allowance {
       balance: json['amount'],
       imageUrl: json['logo_url'],
       merchantName: json['merchant_name'],
-	  isLocked: json['is_locked'],
-	  barPercent: json['bar_percent'],
+      isLocked: json['is_locked'],
+      barPercent: json['bar_percent'],
     );
   }
 
@@ -46,8 +46,8 @@ class Allowance {
       'amount': balance,
       'logo_url': imageUrl,
       'merchant_name': merchantName,
-	  'is_locked': isLocked,
-	  'bar_percent': barPercent,
+      'is_locked': isLocked,
+      'bar_percent': barPercent,
     };
   }
 }
@@ -580,6 +580,9 @@ class _HomePageState extends State<HomePage> {
                                                         otherUsers: widget
                                                             ._userHomeData
                                                             .otherUsers,
+                                                        allowances: widget
+                                                            ._userHomeData
+                                                            .allowances,
                                                       ));
                                                 } else {
                                                   showDialog(
@@ -668,8 +671,14 @@ class _HomePageState extends State<HomePage> {
                                         StoreCardWidget(
                                           allowance: widget
                                               ._userHomeData.allowances[index],
-                                          isLocked: widget._userHomeData.allowances[index].isLocked ?? false,
-										  barPercent: widget._userHomeData.allowances[index].barPercent ?? 0.0,
+                                          isLocked: widget._userHomeData
+                                                  .allowances[index].isLocked ??
+                                              false,
+                                          barPercent: widget
+                                                  ._userHomeData
+                                                  .allowances[index]
+                                                  .barPercent ??
+                                              0.0,
                                         ),
                                         SizedBox(
                                           height: 14 * fem,
