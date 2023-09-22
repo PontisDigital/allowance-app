@@ -190,24 +190,45 @@ class _SendEnterAmountPageState extends State<SendEnterAmountPage> {
         _isButtonDisabled = false;
       });
 
+      final message = jsonDecode(response.body)["message"];
+
       // popup dialogue saying insufficient funds
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Insufficient Funds'),
-              content: Text(
-                  'You do not have enough funds to complete this transaction.'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          });
+      if (message == "Insufficient Funds") {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Insufficient Funds'),
+                content: Text(
+                    'You do not have enough funds to complete this transaction.'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            });
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Error'),
+                content: Text(message),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            });
+      }
     }
   }
 }

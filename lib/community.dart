@@ -141,9 +141,7 @@ class _CommunityPageState extends State<CommunityPage> {
           backgroundColor: Color.fromRGBO(4, 30, 66, 1)),
       backgroundColor: Color.fromRGBO(4, 30, 66, 1),
       body: RefreshIndicator(
-        backgroundColor: widget.spendingAllowance
-            ? Color(0xff083675)
-            : Colors.brown.shade800,
+        backgroundColor: Color(0xff083675),
         color: Color(0xffffff),
         onRefresh: () => _fetchCommunityData(null, widget.merchantName),
         child: SingleChildScrollView(
