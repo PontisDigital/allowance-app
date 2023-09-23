@@ -22,6 +22,8 @@ class Allowance {
   final String merchantName;
   final bool isLocked;
   final double? barPercent;
+  final String? walletMax;
+  final String? minSpend;
 
   Allowance({
     required this.balance,
@@ -29,6 +31,8 @@ class Allowance {
     required this.merchantName,
     required this.isLocked,
     required this.barPercent,
+    required this.walletMax,
+	required this.minSpend,
   });
 
   factory Allowance.fromJson(Map<String, dynamic> json) {
@@ -38,6 +42,8 @@ class Allowance {
       merchantName: json['merchant_name'],
       isLocked: json['is_locked'],
       barPercent: json['bar_percent'],
+	  walletMax: json['wallet_max'],
+	  minSpend: json['min_spend'],
     );
   }
 
@@ -48,6 +54,8 @@ class Allowance {
       'merchant_name': merchantName,
       'is_locked': isLocked,
       'bar_percent': barPercent,
+	  'wallet_max': walletMax,
+	  'min_spend': minSpend,
     };
   }
 }

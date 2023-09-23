@@ -113,6 +113,8 @@ class _RewardsPageState extends State<RewardsPage> {
                 merchantName: "Hop",
 				isLocked: false,
 				barPercent: 0.0,
+				walletMax: null,
+				minSpend: null,
                 ),
 			isRewardPage: true,
 			),

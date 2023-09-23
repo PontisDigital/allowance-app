@@ -29,6 +29,8 @@ class ComingSoonWidget extends StatelessWidget {
           merchantName: "",
 		  isLocked: false,
 		  barPercent: 0.0,
+		  walletMax: null,
+		  minSpend: null,
         )),
       ),
       Positioned.fill(

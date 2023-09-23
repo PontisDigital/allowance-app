@@ -156,12 +156,41 @@ class _StoreCardWidgetState extends State<StoreCardWidget> {
                             height: 74.8 * fem,
                             child: Image.network(
                               widget.allowance.imageUrl,
-                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Visibility(
+                  visible: (widget.allowance.walletMax != null),
+                  child: Center(
+                    // keepshoppingtorefillyourallowa (324:472)
+                    child: Text(
+                      'Maximum wallet amount is ${widget.allowance.walletMax ?? ''}',
+                      style: SafeGoogleFont(
+                        'Inter',
+                        fontSize: 12 * ffem,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xff525354),
+                      ),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: (widget.allowance.minSpend != null),
+                  child: Center(
+                    // keepshoppingtorefillyourallowa (324:472)
+                    child: Text(
+                      'You must make a purchase of at least ${widget.allowance.minSpend ?? ''}',
+                      style: SafeGoogleFont(
+                        'Inter',
+                        fontSize: 12 * ffem,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xff525354),
+                      ),
+                    ),
                   ),
                 ),
                 Visibility(

@@ -50,6 +50,8 @@ class ContributionData {
   final double totalContributions;
   final double threshold;
   final List<Contribution> contributions;
+  final String? walletMax;
+  final String? minSpend;
 
   ContributionData({
     required this.merchantName,
@@ -57,6 +59,8 @@ class ContributionData {
     required this.totalContributions,
     required this.threshold,
     required this.contributions,
+    required this.walletMax,
+    required this.minSpend,
   });
 
   factory ContributionData.fromJson(Map<String, dynamic> json) {
@@ -65,6 +69,8 @@ class ContributionData {
       totalAllowanceSpent: json['total_allowance_spent'],
       totalContributions: json['total_contributions'],
       threshold: json['threshold'],
+      minSpend: json['min_spend'],
+      walletMax: json['wallet_max'],
       contributions: (json['contributions'] as List)
           .map((c) => Contribution.fromJson(c))
           .toList(),
@@ -78,6 +84,8 @@ class ContributionData {
       "total_contributions": totalContributions,
       "threshold": threshold,
       "contributions": contributions.map((c) => c.toJson()).toList(),
+      "min_spend": minSpend,
+      "wallet_max": walletMax,
     };
   }
 }
@@ -101,6 +109,8 @@ class _CommunityPageState extends State<CommunityPage> {
     totalContributions: 0,
     threshold: 0,
     contributions: [],
+    walletMax: null,
+    minSpend: null,
   );
 
   Timer? _timer;
@@ -175,6 +185,39 @@ class _CommunityPageState extends State<CommunityPage> {
                           color: Color(0xffffffff),
                         ),
                         textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Visibility(
+                      visible: cd.walletMax != null,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                              'Max wallet amount: ${cd.walletMax}',
+                          style: TextStyle(
+                            fontSize: 16 * ffem,
+                            fontWeight: FontWeight.w700,
+                            height: 1.26 * ffem / fem,
+                            color: Color(0xffffffff),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: cd.minSpend != null,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                              'You must spend at least ${cd.minSpend} to use Allowance',
+                          style: TextStyle(
+                            fontSize: 16 * ffem,
+                            fontWeight: FontWeight.w700,
+                            height: 1.26 * ffem / fem,
+                            color: Color(0xffffffff),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -298,6 +341,14 @@ class _CommunityPageState extends State<CommunityPage> {
           widget.merchantName + 'total_contributions', cd.totalContributions);
       await prefs.setDouble(widget.merchantName + 'threshold', cd.threshold);
 
+      if (cd.walletMax != null) {
+        await prefs.setString(widget.merchantName + 'walletMax', cd.walletMax!);
+      }
+
+      if (cd.minSpend != null) {
+        await prefs.setString(widget.merchantName + 'minSpend', cd.minSpend!);
+      }
+
       List<String> contributionsJson =
           cd.contributions.map((c) => jsonEncode(c.toJson())).toList();
 
@@ -315,6 +366,9 @@ class _CommunityPageState extends State<CommunityPage> {
     double? totalContributions =
         prefs.getDouble(widget.merchantName + 'total_contributions');
     double? threshold = prefs.getDouble(widget.merchantName + 'threshold');
+    String? walletMax = prefs.getString(widget.merchantName + 'walletMax');
+    String? minSpend = prefs.getString(widget.merchantName + 'minSpend');
+
     List<String>? savedContributionsJson =
         prefs.getStringList(widget.merchantName + 'contributions');
 
@@ -332,6 +386,8 @@ class _CommunityPageState extends State<CommunityPage> {
         totalContributions: totalContributions ?? 0,
         threshold: threshold ?? 0,
         contributions: savedContributions,
+        walletMax: walletMax,
+        minSpend: minSpend,
       );
     });
   }
