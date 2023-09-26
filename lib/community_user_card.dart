@@ -22,6 +22,9 @@ class UserCardCommunity extends StatelessWidget {
     double baseWidth = 386.4799804688;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
+	double amountSpentDbl = double.parse(this.amountSpent);
+	String amountSpent = amountSpentDbl.toStringAsFixed(2);
+
     return Card(
       elevation: 3,
       //color: Colors.grey.shade700,
