@@ -52,6 +52,8 @@ class _DiscountStoreCardWidgetState extends State<DiscountStoreCardWidget> {
   }
 
   Widget buildCard(BuildContext context, double fem, double ffem) {
+  double discountDbl = double.parse(widget.discount.percentOff.substring(0, widget.discount.percentOff.length - 1));
+  String discount = discountDbl.toStringAsFixed(1) + "%";
     return Stack(
       children: [
         Blur(
@@ -124,7 +126,7 @@ class _DiscountStoreCardWidgetState extends State<DiscountStoreCardWidget> {
                                   0 * fem, 0 * fem, 0 * fem, 16 * fem),
                               child: Text(
                                   // MnP (324:467)
-                                  widget.discount.percentOff,
+								  discount,
                                   style: SafeGoogleFont(
                                     'Inter',
                                     fontSize: !(widget.isRewardPage ?? false)

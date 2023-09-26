@@ -52,6 +52,9 @@ class _StoreCardWidgetState extends State<StoreCardWidget> {
   }
 
   Widget buildCard(BuildContext context, double fem, double ffem) {
+    double availableAllowanceDbl =
+        double.parse(widget.allowance.balance.substring(1));
+    String availableAllowance = "\$" + availableAllowanceDbl.toStringAsFixed(2);
     return Stack(
       children: [
         Blur(
@@ -122,9 +125,8 @@ class _StoreCardWidgetState extends State<StoreCardWidget> {
                             Container(
                               margin: EdgeInsets.fromLTRB(
                                   0 * fem, 0 * fem, 0 * fem, 16 * fem),
-                              child: Text(
+                              child: Text(availableAllowance,
                                   // MnP (324:467)
-                                  widget.allowance.balance,
                                   style: SafeGoogleFont(
                                     'Inter',
                                     fontSize: !(widget.isRewardPage ?? false)
