@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:allowance/coming_soon.dart';
 import 'package:allowance/custom_search.dart';
 import 'package:allowance/home_allowance_entry.dart';
+import 'package:allowance/home_discount_entry.dart';
 import 'package:allowance/input_referral_code.dart';
 import 'package:allowance/more_info.dart';
 import 'package:allowance/page-1/loading-page-done.dart';
@@ -15,6 +16,50 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
+
+class Discount {
+  final String percentOff;
+  final String imageUrl;
+  final String merchantName;
+  final bool isLocked;
+  final double? barPercent;
+  final String? walletMax;
+  final String? minSpend;
+
+  Discount({
+    required this.percentOff,
+    required this.imageUrl,
+    required this.merchantName,
+    required this.isLocked,
+    required this.barPercent,
+    required this.walletMax,
+    required this.minSpend,
+  });
+
+  factory Discount.fromJson(Map<String, dynamic> json) {
+    return Discount(
+      imageUrl: json['logo_url'],
+      percentOff: json['percent_off'],
+      merchantName: json['merchant_name'],
+      isLocked: json['is_locked'],
+      barPercent: json['bar_percent'],
+      walletMax: json['wallet_max'],
+      minSpend: json['min_spend'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'logo_url': imageUrl,
+      'percent_off': percentOff,
+      'merchant_name': merchantName,
+      'is_locked': isLocked,
+      'bar_percent': barPercent,
+      'wallet_max': walletMax,
+      'min_spend': minSpend,
+    };
+  }
+}
 
 class Allowance {
   final String balance;
@@ -32,7 +77,7 @@ class Allowance {
     required this.isLocked,
     required this.barPercent,
     required this.walletMax,
-	required this.minSpend,
+    required this.minSpend,
   });
 
   factory Allowance.fromJson(Map<String, dynamic> json) {
@@ -42,8 +87,8 @@ class Allowance {
       merchantName: json['merchant_name'],
       isLocked: json['is_locked'],
       barPercent: json['bar_percent'],
-	  walletMax: json['wallet_max'],
-	  minSpend: json['min_spend'],
+      walletMax: json['wallet_max'],
+      minSpend: json['min_spend'],
     );
   }
 
@@ -54,8 +99,8 @@ class Allowance {
       'merchant_name': merchantName,
       'is_locked': isLocked,
       'bar_percent': barPercent,
-	  'wallet_max': walletMax,
-	  'min_spend': minSpend,
+      'wallet_max': walletMax,
+      'min_spend': minSpend,
     };
   }
 }
@@ -83,6 +128,7 @@ class OtherUser {
 class UserHomeData {
   final String totalAllowance;
   final List<Allowance> allowances;
+  final List<Discount> discounts;
   final bool isEmailVerified;
   final List<OtherUser> otherUsers;
   final bool tookSurvey;
@@ -90,6 +136,7 @@ class UserHomeData {
   UserHomeData({
     required this.totalAllowance,
     required this.allowances,
+    required this.discounts,
     required this.isEmailVerified,
     required this.otherUsers,
     required this.tookSurvey,
@@ -102,6 +149,9 @@ class UserHomeData {
       showReferralPage: json['should_input_referral'],
       allowances: (json['allowance'] as List)
           .map((allowanceJson) => Allowance.fromJson(allowanceJson))
+          .toList(),
+      discounts: (json['discount'] as List)
+          .map((discountJson) => Discount.fromJson(discountJson))
           .toList(),
       isEmailVerified: json['email_verified'],
       otherUsers: (json['other_users'] as List)
@@ -138,6 +188,7 @@ class HomePage extends StatefulWidget {
   UserHomeData _userHomeData = UserHomeData(
     totalAllowance: "...",
     allowances: List<Allowance>.empty(),
+    discounts: List<Discount>.empty(),
     isEmailVerified: false,
     otherUsers: List<OtherUser>.empty(),
     tookSurvey: true,
@@ -162,6 +213,7 @@ class _HomePageState extends State<HomePage> {
     bool? savedIsEmailVerified = prefs.getBool('isEmailVerified');
     List<String>? savedOtherUsersJson = prefs.getStringList('otherUsers');
     List<String>? savedAllowancesJson = prefs.getStringList('allowances');
+    List<String>? savedDiscountsJson = prefs.getStringList('discounts');
     bool? tookSurvey = prefs.getBool('tookSurvey');
     bool? showReferralPage = prefs.getBool('showReferralPage');
 
@@ -170,6 +222,13 @@ class _HomePageState extends State<HomePage> {
       savedAllowances = savedAllowancesJson
           .map(
               (allowanceJson) => Allowance.fromJson(json.decode(allowanceJson)))
+          .toList();
+    }
+
+    List<Discount> savedDiscounts = [];
+    if (savedDiscountsJson != null) {
+      savedDiscounts = savedDiscountsJson
+          .map((discountJson) => Discount.fromJson(json.decode(discountJson)))
           .toList();
     }
 
@@ -185,6 +244,7 @@ class _HomePageState extends State<HomePage> {
       widget._userHomeData = UserHomeData(
         totalAllowance: savedTotalAllowance ?? "...",
         allowances: savedAllowances,
+        discounts: savedDiscounts,
         isEmailVerified: savedIsEmailVerified ?? false,
         otherUsers: savedOtherUsers,
         tookSurvey: tookSurvey ?? true,
@@ -227,11 +287,16 @@ class _HomePageState extends State<HomePage> {
         List<Allowance> allowanceList =
             allowanceData.map((item) => Allowance.fromJson(item)).toList();
 
+        final List<dynamic> discountData = data['discounts'];
+        List<Discount> discountList =
+            discountData.map((item) => Discount.fromJson(item)).toList();
+
         setState(() {
           widget.showVerifyDialog = !isEmailVerified;
           widget._userHomeData = UserHomeData(
             totalAllowance: newBalance,
             allowances: allowanceList,
+            discounts: discountList,
             isEmailVerified: isEmailVerified,
             otherUsers: otherUsers,
             tookSurvey: tookSurvey,
@@ -255,6 +320,11 @@ class _HomePageState extends State<HomePage> {
             .map((allowance) => jsonEncode(allowance.toJson()))
             .toList();
         await prefs.setStringList('allowances', allowancesJson);
+
+        List<String> discountsJson = discountList
+            .map((discount) => jsonEncode(discount.toJson()))
+            .toList();
+        await prefs.setStringList('discounts', discountsJson);
 
         if (!showReferralPage && !tookSurvey && !widget.surveyIsOpen) {
           widget.surveyIsOpen = true;
@@ -296,7 +366,10 @@ class _HomePageState extends State<HomePage> {
             padding:
                 EdgeInsets.fromLTRB(14 * fem, 34 * fem, 14 * fem, 34 * fem),
             width: double.infinity,
-            height: 944 * fem,
+            height: 274 *
+                (widget._userHomeData.discounts.length +
+                    widget._userHomeData.allowances.length) *
+                fem,
             decoration: BoxDecoration(
               color: Color(0xff041e42),
             ),
@@ -672,6 +745,32 @@ class _HomePageState extends State<HomePage> {
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemCount:
+                                      widget._userHomeData.discounts.length,
+                                  itemBuilder: (context, index) {
+                                    return Column(
+                                      children: [
+                                        DiscountStoreCardWidget(
+                                          discount: widget
+                                              ._userHomeData.discounts[index],
+                                          isLocked: widget._userHomeData
+                                              .discounts[index].isLocked,
+                                          barPercent: widget
+                                                  ._userHomeData
+                                                  .discounts[index]
+                                                  .barPercent ??
+                                              0.0,
+                                        ),
+                                        SizedBox(
+                                          height: 14 * fem,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount:
                                       widget._userHomeData.allowances.length,
                                   itemBuilder: (context, index) {
                                     return Column(
@@ -680,8 +779,7 @@ class _HomePageState extends State<HomePage> {
                                           allowance: widget
                                               ._userHomeData.allowances[index],
                                           isLocked: widget._userHomeData
-                                                  .allowances[index].isLocked ??
-                                              false,
+                                              .allowances[index].isLocked,
                                           barPercent: widget
                                                   ._userHomeData
                                                   .allowances[index]
@@ -696,7 +794,9 @@ class _HomePageState extends State<HomePage> {
                                   },
                                 ),
                                 Visibility(
-								visible: widget._userHomeData.allowances.length < 3,
+                                  visible:
+                                      widget._userHomeData.allowances.length <
+                                          3,
                                   child: ComingSoonWidget(
                                       imageUrl:
                                           "https://www.pngitem.com/pimgs/m/301-3018403_logo-royalty-free-vector-coffee-shop-logos-free.png"),
